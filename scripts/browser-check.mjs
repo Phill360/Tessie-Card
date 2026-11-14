@@ -1,0 +1,81 @@
+// Run with a local Playwright install, or pass the absolute playwright/index.mjs path.
+import { pathToFileURL } from 'node:url';
+import { mkdir } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import { once } from 'node:events';
+process.env.TESSIE_PORT = '8125';
+const { server } = await import('./serve.mjs');
+if (!server.listening) await once(server, 'listening');
+const { chromium } = await import(process.argv[2] ? pathToFileURL(process.argv[2]).href : 'playwright');
+const browser = await chromium.launch({ headless: true, ...(process.argv[3] ? { channel: process.argv[3] } : {}) });
+try {
+  const page = await browser.newPage({ viewport: { width: 1100, height: 1200 } });
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('http://127.0.0.1:8125/');
+  const card = page.locator('tessie-card');
+  await card.locator('#vehicle').evaluate(img => img.decode());
+  assert.equal(await card.locator('#status').innerText(), 'Charging');
+  assert.match(await card.locator('#session-cost').innerText(), /3\.72/);
+  assert.match(await card.locator('#remaining-cost').innerText(), /3\.60/);
+  await card.locator('#charge').click();
+  await page.waitForFunction(() => window.tessieDemo.states['switch.demo_charge'].state === 'off');
+  assert.equal(await card.locator('#charge').innerText(), 'Start charging');
+  await card.locator('#limit').fill('85');
+  await card.locator('#limit').dispatchEvent('change');
+  await page.waitForFunction(() => window.tessieDemo.states['number.demo_limit'].state === '85');
+  const future = new Date(Date.now() + 86400000);
+  const local = new Intl.DateTimeFormat('sv-SE', { timeZone: await page.evaluate(() => Intl.DateTimeFormat().resolvedOptions().timeZone), dateStyle: 'short', timeStyle: 'short' }).format(future).replace(' ', 'T');
+  await card.locator('#schedule-time').fill(local);
+  await card.locator('#schedule-save').click();
+  await page.waitForFunction(() => window.tessieDemo.states['input_boolean.demo_armed'].state === 'on');
+  assert.match(await card.locator('#schedule-summary').innerText(), /Scheduled/);
+  await card.locator('#schedule-cancel').click();
+  await page.waitForFunction(() => window.tessieDemo.states['input_boolean.demo_armed'].state === 'off');
+  await page.selectOption('#state', 'error');
+  await card.locator('#charge').click();
+  await page.waitForFunction(() => document.querySelector('tessie-card').shadowRoot.getElementById('feedback').textContent.includes('rejected'));
+  assert.equal(await card.locator('#charge').isEnabled(), true);
+  await page.selectOption('#state', 'unavailable');
+  assert.equal(await card.locator('#battery').innerText(), '—');
+  assert.equal(await card.locator('#charge').isDisabled(), true);
+  assert.equal(await card.locator('#current').isDisabled(), true);
+  await page.selectOption('#state', 'disconnected');
+  assert.equal(await card.locator('#charge').isDisabled(), true);
+  await card.locator('#vehicle').evaluate(img => img.decode());
+  assert.match(await card.locator('#vehicle').getAttribute('src'), /disconnected\.png$/);
+  await page.selectOption('#state', 'charging');
+  await card.locator('#vehicle').evaluate(img => img.decode());
+  await mkdir('test-results', { recursive: true });
+  await card.screenshot({ path: 'docs/build-preview.png' });
+  await page.screenshot({ path: 'test-results/desktop-light.png', fullPage: true });
+  await page.click('#theme');
+  await page.screenshot({ path: 'test-results/desktop-dark.png', fullPage: true });
+  for (const width of [320, 390, 768]) {
+    await page.setViewportSize({ width, height: 1000 });
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `Page overflow at ${width}`);
+    assert.equal(await card.evaluate(el => el.shadowRoot.getElementById('card').scrollWidth <= el.clientWidth), true, `Card overflow at ${width}`);
+    await page.screenshot({ path: `test-results/width-${width}.png`, fullPage: true });
+  }
+  // A hass update must preserve the in-progress date/time draft and focused slider.
+  await card.locator('#schedule-time').fill(local);
+  await page.evaluate(() => window.tessieDemo.publish());
+  assert.equal(await card.locator('#schedule-time').inputValue(), local);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  assert.equal(await card.locator('#flow path').evaluate(el => getComputedStyle(el).animationName), 'none');
+  await card.locator('#limit').focus();
+  await card.locator('#limit').evaluate(el => { el.value = '90'; el.dispatchEvent(new Event('input', { bubbles: true })); });
+  await page.evaluate(() => window.tessieDemo.publish());
+  assert.equal(await card.locator('#limit').inputValue(), '90');
+  await page.evaluate(() => {
+    const d = window.tessieDemo;
+    d.card.setConfig({ ...d.config, entities: { ...d.config.entities, session_cost: 'sensor.demo_cost' } });
+    d.states['sensor.demo_cost'] = { state: '4.20', attributes: { unit_of_measurement: 'AUD' } };
+    d.states['sensor.demo_tariff'].state = 'unavailable';
+    d.publish();
+  });
+  assert.match(await card.locator('#session-cost').innerText(), /4\.20/);
+  assert.equal(await card.locator('#remaining-cost').innerText(), '—');
+  assert.deepEqual(errors, []);
+  console.log('Browser checks passed: controls, scheduling/cancellation, errors, missing data, themes, 320/390/768px layout.');
+} finally { await browser.close(); server.close(); }

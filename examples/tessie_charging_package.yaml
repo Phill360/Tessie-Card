@@ -1,0 +1,134 @@
+# OPTIONAL Home Assistant package. Replace EVERY switch.my_tesla_charge below.
+# Configure homeassistant: packages: !include_dir_named packages in configuration.yaml.
+# Copy this file into /config/packages/, check configuration, then restart HA.
+# Each additional vehicle needs a separately named set of helpers/scripts/automations.
+input_datetime:
+  tessie_charge_start:
+    name: Tessie charge start
+    has_date: true
+    has_time: true
+input_boolean:
+  tessie_charge_start_armed:
+    name: Tessie charge start armed
+input_select:
+  tessie_charge_schedule_status:
+    name: Tessie charge schedule status
+    options: [Idle, Scheduled, Starting, Started, Cancelled, Missed, Failed]
+
+# All mutations share one queue so cancel/save/execute cannot interleave.
+script:
+  tessie_schedule_control:
+    alias: Tessie one-off charging schedule
+    mode: queued
+    max: 10
+    fields:
+      command:
+        required: true
+        selector:
+          select:
+            options: [schedule, cancel, fire, recover]
+      timestamp:
+        selector:
+          number:
+            min: 0
+            max: 4102444800
+            mode: box
+    sequence:
+      - choose:
+          - conditions: "{{ command == 'schedule' }}"
+            sequence:
+              - if: "{{ timestamp | default(0) | float(0) <= as_timestamp(now()) + 60 }}"
+                then:
+                  - stop: Start must be more than one minute in the future
+                    error: true
+              - action: input_boolean.turn_off
+                target:
+                  entity_id: input_boolean.tessie_charge_start_armed
+              - action: input_datetime.set_datetime
+                target:
+                  entity_id: input_datetime.tessie_charge_start
+                data:
+                  timestamp: "{{ timestamp | float }}"
+              - action: input_select.select_option
+                target:
+                  entity_id: input_select.tessie_charge_schedule_status
+                data:
+                  option: Scheduled
+              - action: input_boolean.turn_on
+                target:
+                  entity_id: input_boolean.tessie_charge_start_armed
+          - conditions: "{{ command == 'cancel' }}"
+            sequence:
+              - action: input_boolean.turn_off
+                target:
+                  entity_id: input_boolean.tessie_charge_start_armed
+              - action: input_select.select_option
+                target:
+                  entity_id: input_select.tessie_charge_schedule_status
+                data:
+                  option: Cancelled
+          - conditions: >-
+              {{ command == 'recover' and
+                 (is_state('input_boolean.tessie_charge_start_armed', 'on') and
+                  state_attr('input_datetime.tessie_charge_start', 'timestamp') | float(0) < as_timestamp(now()) - 60
+                  or is_state('input_select.tessie_charge_schedule_status', 'Starting')) }}
+            sequence:
+              - action: input_boolean.turn_off
+                target:
+                  entity_id: input_boolean.tessie_charge_start_armed
+              - action: input_select.select_option
+                target:
+                  entity_id: input_select.tessie_charge_schedule_status
+                data:
+                  option: Missed
+          - conditions: >-
+              {{ command == 'fire' and
+                 is_state('input_boolean.tessie_charge_start_armed', 'on') and
+                 0 <= as_timestamp(now()) - state_attr('input_datetime.tessie_charge_start', 'timestamp') | float(0) < 60 }}
+            sequence:
+              # Consume before calling the vehicle; never retry implicitly.
+              - action: input_boolean.turn_off
+                target:
+                  entity_id: input_boolean.tessie_charge_start_armed
+              - action: input_select.select_option
+                target:
+                  entity_id: input_select.tessie_charge_schedule_status
+                data:
+                  option: Starting
+              - action: switch.turn_on
+                continue_on_error: true
+                target:
+                  entity_id: switch.my_tesla_charge
+              - wait_template: "{{ is_state('switch.my_tesla_charge', 'on') }}"
+                timeout: "00:00:45"
+                continue_on_timeout: true
+              - action: input_select.select_option
+                target:
+                  entity_id: input_select.tessie_charge_schedule_status
+                data:
+                  # Started means charge-switch acknowledgement, not energy delivery.
+                  option: "{{ 'Started' if wait.completed else 'Failed' }}"
+
+automation:
+  - id: tessie_one_off_charge_start
+    alias: Tessie one-off charging start
+    triggers:
+      - trigger: time
+        at: input_datetime.tessie_charge_start
+    actions:
+      - action: script.tessie_schedule_control
+        data:
+          command: fire
+    mode: single
+  - id: tessie_one_off_charge_recovery
+    alias: Tessie mark missed charging starts
+    triggers:
+      - trigger: homeassistant
+        event: start
+      - trigger: time_pattern
+        minutes: /1
+    actions:
+      - action: script.tessie_schedule_control
+        data:
+          command: recover
+    mode: single

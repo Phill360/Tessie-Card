@@ -1,0 +1,28 @@
+type: custom:tessie-card
+name: Model 3
+subtitle: 2025 · White · Nova wheels
+currency: AUD
+# All entity IDs here are examples. Copy yours from Developer Tools > States.
+entities:
+  battery: sensor.my_tesla_battery_level
+  charge: switch.my_tesla_charge
+  charging: binary_sensor.my_tesla_battery_charging
+  plugged_in: binary_sensor.my_tesla_charge_cable
+  charge_limit: number.my_tesla_charge_limit
+  charge_current: number.my_tesla_charge_current
+  power: sensor.my_tesla_charger_power
+  completion: sensor.my_tesla_time_to_full_charge
+  session_energy: sensor.my_tesla_charge_energy_added
+  tariff: sensor.electricity_rate
+# Optional: usable battery capacity, not an assumed capacity for every Model 3.
+# battery_capacity_kwh: 60
+# charging_efficiency: 0.9
+# Prefer a remaining_energy entity measuring required wall energy in kWh if available.
+# An optional session_cost entity in AUD overrides the current-rate session estimate.
+# vehicle_image: /local/tessie-card/assets/my-car.png
+# Enable after installing and configuring examples/tessie_charging_package.yaml:
+# schedule:
+#   control_script: script.tessie_schedule_control
+#   datetime_entity: input_datetime.tessie_charge_start
+#   armed_entity: input_boolean.tessie_charge_start_armed
+#   status_entity: input_select.tessie_charge_schedule_status
