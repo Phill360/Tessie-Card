@@ -1,0 +1,8 @@
+# Select a Tessie vehicle in the card's visual editor when more than one exists.
+# With exactly one vehicle, device_id can be omitted for automatic selection.
+type: custom:tessie-card
+currency: AUD
+entities:
+  tariff: sensor.electricity_rate
+# device_id: your_home_assistant_device_id
+# battery_capacity_kwh: your_verified_usable_capacity

@@ -1,18 +1,18 @@
-# Tessie Card 0.1.1
+# Tessie Card 0.2.0
 
-- Install through HACS as a custom **Dashboard** repository.
-- Both vehicle scenes are embedded in the single `tessie-card.js` download;
-  no additional image folders are required.
-- Charging controls, tariff-based cost estimates and the optional server-side
-  one-off scheduling package are retained from the initial build.
+- Visual card editor with a dropdown of vehicles from the Tessie integration.
+- Automatic charging-entity mappings based on device and integration metadata,
+  supporting renamed entities while keeping multiple vehicles separate.
+- A single vehicle can be selected automatically; with more than one, choose the
+  vehicle in the editor. Explicit device selection is saved to the dashboard.
+- Manual entity overrides remain supported. Tariff and capacity settings are
+  separate; changing vehicle clears vehicle-specific mappings and scheduling.
+- Tessie charging-state sensor fallback supports installations where the charging
+  binary sensor is disabled by default. No entities are enabled automatically.
+- Registry refresh, missing/ambiguous entity feedback, and safe handling of
+  removed devices. Existing fully manual card configurations still work.
 
-Add `https://github.com/Phill360/Tessie-Card` under HACS > Custom repositories,
-choose Dashboard, then download Tessie Card. Reload the browser and add a manual
-`custom:tessie-card` using the entity mappings in the README.
-
-Remove the old manual dashboard resource before switching to HACS to avoid loading
-two card versions. YAML-mode resource URL: `/hacsfiles/Tessie-Card/tessie-card.js`.
-
-The scheduling package is optional and is not installed by HACS. Live Home
-Assistant/Tessie validation and automatic vehicle-configuration discovery remain
-follow-up work. This release is not listed in the HACS default catalogue.
+Update through HACS, reload the browser, then edit the card to select your vehicle.
+The bundled artwork remains the white Model 3. No live Home Assistant/Tessie
+installation was used for validation; automated registry fixtures and browser
+tests cover discovery, editor interaction, rename/removal and failure recovery.

@@ -1,5 +1,5 @@
-/* Tessie Card 0.1.1 — dependency-free Home Assistant dashboard card. */
-export const VERSION = "0.1.1";
+/* Tessie Card 0.2.0 — dependency-free Home Assistant dashboard card. */
+export const VERSION = "0.2.0";
 const invalid = new Set(["unknown", "unavailable", "", "none"]);
 export function numeric(entity) {
   if (!entity || entity.state == null || typeof entity.state === "boolean" || invalid.has(String(entity.state).trim().toLowerCase())) return null;
@@ -56,13 +56,71 @@ export function numberLimits(entity) {
   return [min, max, step].every(Number.isFinite) && max > min && step > 0 && numeric(entity) !== null
     ? { min, max, step } : null;
 }
-const domains = { battery: "sensor", charge_limit: "number", charge_current: "number", charge: "switch", charging: "binary_sensor", plugged_in: "binary_sensor", power: "sensor", completion: "sensor", time_remaining: "sensor", tariff: "sensor", session_energy: "sensor", session_cost: "sensor", remaining_energy: "sensor", location: "device_tracker" };
-export function validateConfig(config) {
-  if (!config?.entities || typeof config.entities !== "object" || Array.isArray(config.entities)) throw new Error("Configure entities for your Tessie vehicle.");
-  for (const required of ["battery", "charge", "charge_limit", "charge_current"]) {
-    if (!config.entities[required]) throw new Error(`Missing entities.${required}`);
+const domains = { battery: "sensor", charge_limit: "number", charge_current: "number", charge: "switch", charging: "binary_sensor", charging_status: "sensor", plugged_in: "binary_sensor", power: "sensor", completion: "sensor", time_remaining: "sensor", tariff: "sensor", session_energy: "sensor", session_cost: "sensor", remaining_energy: "sensor", location: "device_tracker" };
+const requiredMappings = ["battery", "charge", "charge_limit", "charge_current"];
+const tessieKeys = {
+  battery: ["charge_state_usable_battery_level", "charge_state_battery_level"],
+  charge: ["charge_state_charge_enable_request", "charge_state_charging_state"],
+  charge_limit: ["charge_state_charge_limit_soc"],
+  charge_current: ["charge_state_charge_current_request"],
+  charging: ["charge_state_charging_state"],
+  charging_status: ["charge_state_charging_state"],
+  plugged_in: ["charge_state_conn_charge_cable"],
+  power: ["charge_state_charger_power"],
+  completion: ["charge_state_minutes_to_full_charge"],
+  session_energy: ["charge_state_charge_energy_added"],
+  location: ["location"],
+};
+const matchesKey = (entry, key) => entry.translation_key === key || String(entry.unique_id || "").endsWith(`-${key}`);
+// Registry metadata survives renamed/localised entity IDs. Never mix platforms or devices.
+export function discoverVehicles(devices, entries) {
+  return devices.filter(device => !device.disabled_by).map(device => {
+    const owned = entries.filter(entry => entry.platform === "tessie" && entry.device_id === device.id);
+    const isVehicle = owned.some(entry => entry.entity_id?.startsWith("sensor.") && matchesKey(entry, "charge_state_usable_battery_level")) || owned.some(entry => entry.entity_id?.startsWith("switch.") && matchesKey(entry, "charge_state_charge_enable_request"));
+    if (!isVehicle) return null;
+    const entities = {}, disabled = [], ambiguous = [];
+    for (const [mapping, keys] of Object.entries(tessieKeys)) {
+      for (const key of keys) {
+        const matches = owned.filter(entry => entry.entity_id?.startsWith(`${domains[mapping]}.`) && matchesKey(entry, key));
+        const enabled = matches.filter(entry => !entry.disabled_by);
+        if (enabled.length > 1) { ambiguous.push(mapping); break; }
+        if (enabled.length === 1) { entities[mapping] = enabled[0].entity_id; break; }
+        if (matches.length) disabled.push(mapping);
+      }
+    }
+    return { id: device.id, name: device.name_by_user || device.name || device.model || "Tesla vehicle", model: device.model || "", entities, disabled, ambiguous, missing: requiredMappings.filter(key => !entities[key]) };
+  }).filter(Boolean).sort((a, b) => a.name.localeCompare(b.name) || a.id.localeCompare(b.id));
+}
+const discoveryCache = new WeakMap();
+export async function loadVehicles(hass, refresh = false) {
+  const connection = hass.connection || hass;
+  if (!hass.callWS) throw new Error("Vehicle detection is unavailable. Configure entity mappings manually.");
+  if (refresh) discoveryCache.delete(connection);
+  let result = discoveryCache.get(connection);
+  if (!result) {
+    result = Promise.all([hass.callWS({ type: "config/device_registry/list" }), hass.callWS({ type: "config/entity_registry/list" })])
+      .then(([devices, entities]) => discoverVehicles(devices, entities));
+    discoveryCache.set(connection, result);
+    result.catch(() => { if (discoveryCache.get(connection) === result) discoveryCache.delete(connection); });
   }
-  for (const [key, id] of Object.entries(config.entities)) {
+  return result;
+}
+export function resolveVehicleConfig(config, vehicles) {
+  const manual = requiredMappings.every(key => config.entities?.[key]);
+  const vehicle = config.device_id ? vehicles.find(v => v.id === config.device_id) : !manual && vehicles.length === 1 ? vehicles[0] : null;
+  const entities = { ...(vehicle?.entities || {}), ...config.entities };
+  return { ...config, entities, name: config.name || vehicle?.name, detectedVehicle: vehicle, missing: requiredMappings.filter(key => !entities[key]) };
+}
+export function chargingState(binary, status) {
+  if (["on", "off"].includes(binary?.state)) return binary.state;
+  const value = status?.state;
+  return value === "charging" ? "on" : ["starting", "stopped", "complete", "disconnected", "no_power"].includes(value) ? "off" : null;
+}
+export function validateConfig(config) {
+  if (!config || typeof config !== "object") throw new Error("Invalid card configuration.");
+  if (config.entities !== undefined && (!config.entities || typeof config.entities !== "object" || Array.isArray(config.entities))) throw new Error("entities must be a mapping.");
+  if (config.device_id !== undefined && (typeof config.device_id !== "string" || !/^[a-zA-Z0-9_-]+$/.test(config.device_id))) throw new Error("device_id must be a Home Assistant device ID.");
+  for (const [key, id] of Object.entries(config.entities || {})) {
     if (!domains[key]) throw new Error(`Unknown entity mapping: ${key}`);
     if (typeof id !== "string" || !new RegExp(`^${domains[key]}\\.[a-z0-9_]+$`).test(id)) throw new Error(`entities.${key} must be a ${domains[key]} entity ID.`);
   }
@@ -77,7 +135,7 @@ export function validateConfig(config) {
       if (!new RegExp(`^${domain}\\.[a-z0-9_]+$`).test(config.schedule[key] || "")) throw new Error(`schedule.${key} must be a ${domain} entity ID.`);
     }
   }
-  return structuredClone(config);
+  return structuredClone({ ...config, entities: config.entities || {} });
 }
 const css = `
 :host{display:block;--tc-green:#20b940;--tc-bg:var(--ha-card-background,var(--card-background-color,#fff));--tc-text:var(--primary-text-color,#20252b);--tc-muted:var(--secondary-text-color,#67717b);--tc-line:var(--divider-color,#dce0e5);font-family:var(--paper-font-body1_-_font-family,system-ui,sans-serif);color:var(--tc-text)}
@@ -100,20 +158,44 @@ button,input{font:inherit}button{cursor:pointer;border:1px solid var(--tc-line);
 @media(prefers-reduced-motion:reduce){.active .flow path{animation:none;opacity:0}}
 `;
 export class TessieCard extends (globalThis.HTMLElement || class {}) {
-  constructor() { super(); this.attachShadow?.({ mode: "open" }); this._draftSchedule = ""; }
-  setConfig(config) { this._config = validateConfig(config); clearTimeout(this._pendingTimer); this._pending = null; this._message = ""; this._error = false; this._draftSchedule = ""; this._mounted = false; this._render(); }
-  set hass(value) { this._hass = value; this._checkPending(); this._render(); }
+  constructor() { super(); this.attachShadow?.({ mode: "open" }); this._draftSchedule = ""; this._vehicles = []; this._discoverySeq = 0; }
+  setConfig(config) { this._userConfig = validateConfig(config); this._config = this._userConfig; clearTimeout(this._pendingTimer); this._pending = null; this._message = ""; this._error = false; this._discoveryError = ""; this._draftSchedule = ""; this._mounted = false; this._ensureDiscovery(); this._render(); }
+  set hass(value) { this._hass = value; this._ensureDiscovery(); this._checkPending(); this._render(); }
   getCardSize() { return 14; }
   getGridOptions() { return { columns: 12, rows: "auto", min_columns: 6 }; }
-  static getStubConfig() { return { type: "custom:tessie-card", name: "Model 3", entities: { battery: "sensor.my_tesla_battery", charge: "switch.my_tesla_charge", charge_limit: "number.my_tesla_charge_limit", charge_current: "number.my_tesla_charge_current" } }; }
-  connectedCallback() { this._tick = setInterval(() => this._render(), 30000); this._render(); }
-  disconnectedCallback() { clearInterval(this._tick); clearTimeout(this._pendingTimer); this._pending = null; }
+  static getStubConfig() { return { type: "custom:tessie-card" }; }
+  static getConfigElement() { return document.createElement("tessie-card-editor"); }
+  connectedCallback() { this._tick = setInterval(() => this._render(), 30000); this._ensureDiscovery(); this._render(); }
+  disconnectedCallback() { clearInterval(this._tick); clearTimeout(this._pendingTimer); clearTimeout(this._refreshTimer); this._pending = null; this._unwatch?.(); this._unwatch = null; this._watchConnection = null; this._discoveryConnection = null; this._discoverySeq++; this._watchGeneration = (this._watchGeneration || 0) + 1; this._refreshOnConnect = true; }
+  _ensureDiscovery() {
+    if (!this._hass || !this._userConfig) return;
+    const needs = this._userConfig.device_id || requiredMappings.some(key => !this._userConfig.entities[key]);
+    if (!needs) return;
+    const connection = this._hass.connection || this._hass;
+    if (this._discoveryConnection !== connection) { this._discoveryConnection = connection; this._refreshVehicles(Boolean(this._refreshOnConnect)); this._refreshOnConnect = false; }
+    if (this.isConnected && this._hass.connection?.subscribeEvents && this._watchConnection !== connection) {
+      this._unwatch?.(); this._watchConnection = connection;
+      const generation = this._watchGeneration = (this._watchGeneration || 0) + 1;
+      const refresh = () => { if (!this.isConnected || this._watchConnection !== connection) return; clearTimeout(this._refreshTimer); this._refreshTimer = setTimeout(() => this._refreshVehicles(true), 100); };
+      Promise.allSettled(["entity_registry_updated", "device_registry_updated"].map(type => connection.subscribeEvents(refresh, type))).then(results => {
+        const unsubscribe = () => results.filter(result => result.status === "fulfilled").forEach(result => result.value());
+        if (!this.isConnected || this._watchConnection !== connection || this._watchGeneration !== generation) unsubscribe(); else this._unwatch = unsubscribe;
+      });
+    }
+  }
+  async _refreshVehicles(refresh = false) {
+    const sequence = ++this._discoverySeq;
+    this._discoveryLoading = true; this._discoveryError = ""; this._render();
+    try { const vehicles = await loadVehicles(this._hass, refresh); if (sequence === this._discoverySeq) this._vehicles = vehicles; }
+    catch { if (sequence === this._discoverySeq) { this._vehicles = []; this._discoveryError = "Could not read the Home Assistant registries. Use the editor to retry or map entities manually."; } }
+    finally { if (sequence === this._discoverySeq) { this._discoveryLoading = false; this._render(); } }
+  }
   _entity(key) { return this._hass?.states[this._config?.entities[key]]; }
   _el(id) { return this.shadowRoot.getElementById(id); }
   _text(id, text) { this._el(id).textContent = text; }
   _more(key) { const entityId = this._config.entities[key]; if (entityId) this.dispatchEvent(new CustomEvent("hass-more-info", { bubbles: true, composed: true, detail: { entityId } })); }
   _mount() {
-    this.shadowRoot.innerHTML = `<style>${css}</style><ha-card id="card"><header class="head"><div><div id="name" class="name"></div><div id="subtitle" class="sub"></div></div><span id="status" class="badge"></span></header>
+    this.shadowRoot.innerHTML = `<style>${css}.setup{padding:16px 22px;background:color-mix(in srgb,var(--tc-muted) 8%,transparent)}.setup p{margin:0 0 10px;font-size:13px;line-height:1.5}</style><ha-card id="card"><div id="setup" class="setup" hidden><p id="discovery-note" role="status"></p><button id="discovery-retry">Refresh detection</button></div><header class="head"><div><div id="name" class="name"></div><div id="subtitle" class="sub"></div></div><span id="status" class="badge"></span></header>
       <div id="scene" class="scene"><img id="vehicle" alt="White 2025 Model 3 with Nova wheels, viewed from the left rear"><div id="asset-error" class="asset-error" hidden>Vehicle image unavailable. Configure vehicle_image or check the assets folder.</div><div class="power">AC charging<strong id="hero-power"></strong></div><svg id="flow" class="flow" viewBox="0 0 1792 896" aria-hidden="true"><path d="M 102 385 C 110 690 380 790 615 780 C 950 790 1075 600 1090 410"/></svg></div>
       <div class="content"><div class="battery"><div class="battery-text"><div id="battery" class="percent"></div><span class="sub">Battery</span></div><div class="battery-track"><span id="limit-label" class="limit-text"></span><div id="track" class="track" role="meter" aria-label="Battery charge" aria-valuemin="0" aria-valuemax="100"><div id="fill" class="fill"></div></div><div id="marker" class="marker" aria-hidden="true"></div></div></div>
       <div class="metrics"><div class="metric"><button id="power-info"><span class="label">Charging power</span><strong id="power"></strong></button></div><div class="metric"><button id="time-info"><span class="label">Time remaining</span><strong id="remaining"></strong></button></div><div class="metric"><button id="finish-info"><span class="label">Estimated finish</span><strong id="finish"></strong></button></div><div class="metric"><span class="label">Charge limit</span><strong id="limit-metric"></strong></div></div>
@@ -123,6 +205,7 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
       <div class="control"><label for="current">Charging current<output id="current-value" for="current"></output></label><input id="current" type="range"><p id="current-note" class="note"></p></div>
       <section class="schedule"><h3>One-off start</h3><p id="schedule-summary" class="note"></p><label for="schedule-time" id="schedule-label">Start date and time</label><input id="schedule-time" type="datetime-local"><div class="schedule-actions"><button id="schedule-save">Schedule start</button><button id="schedule-cancel">Cancel start</button></div><p class="note">Saving a start time does not stop charging now.</p></section><div id="feedback" class="feedback" role="status" aria-live="polite"></div></div></ha-card>`;
     this._el("vehicle").addEventListener("error", () => { this._el("vehicle").hidden = true; this._el("asset-error").hidden = false; });
+    this._el("discovery-retry").onclick = () => this._refreshVehicles(true);
     this._el("power-info").onclick = () => this._more("power");
     this._el("time-info").onclick = () => this._more(this._config.entities.completion ? "completion" : "time_remaining");
     this._el("finish-info").onclick = () => this._more("completion");
@@ -138,12 +221,13 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
     this._mounted = true;
   }
   _render() {
-    if (!this._hass || !this._config || !this.shadowRoot) return;
+    if (!this._hass || !this._userConfig || !this.shadowRoot) return;
+    this._config = resolveVehicleConfig(this._userConfig, this._vehicles);
     if (!this._mounted) this._mount();
     const c = this._config, h = this._hass, e = key => this._entity(key);
-    const chargingState = e("charging")?.state;
-    const charging = chargingState === "on"; // A charge switch being on is not proof of active charging.
-    const plugged = e("plugged_in")?.state;
+    const actualCharging = chargingState(e("charging"), e("charging_status"));
+    const charging = actualCharging === "on"; // A charge switch being on is not proof of active charging.
+    const plugged = e("plugged_in")?.state || (e("charging_status")?.state === "disconnected" ? "off" : undefined);
     const chargeValid = ["on", "off"].includes(e("charge")?.state);
     const batteryValue = numeric(e("battery"));
     const battery = batteryValue !== null && batteryValue >= 0 && batteryValue <= 100 ? batteryValue : null;
@@ -152,9 +236,14 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
     const dark = h.themes?.darkMode ?? globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
     this._el("card").className = `${charging ? "active" : ""} ${dark ? "dark" : ""}`;
     this._el("scene").classList.toggle("idle", !charging);
-    this._text("name", c.name || "Model 3");
-    this._text("subtitle", c.subtitle || `2025 · ${e("location")?.state && !invalid.has(e("location").state) ? e("location").state.replaceAll("_", " ") : "Tessie"}`);
-    const status = charging ? "Charging" : plugged === "off" ? "Disconnected" : chargingState === "off" ? (battery !== null && limit !== null && battery >= limit ? "At charge limit" : "Not charging") : "Status unavailable";
+    this._text("name", c.name || "Tessie vehicle");
+    const location = e("location")?.state && !invalid.has(e("location").state) ? e("location").state.replaceAll("_", " ") : "Tessie";
+    this._text("subtitle", c.subtitle || [c.detectedVehicle?.model, location].filter(Boolean).join(" · "));
+    let detectionNote = this._discoveryError || (this._discoveryLoading ? "Detecting Tessie vehicles…" : "");
+    if (!detectionNote && c.missing.length) detectionNote = !c.detectedVehicle ? (this._userConfig.device_id ? "Selected Tessie vehicle was not found. Choose a vehicle in the card editor." : this._vehicles.length > 1 ? "Multiple Tessie vehicles found. Choose one in the card editor." : "No Tessie vehicle found. Configure the integration or map entities manually.") : `Missing or ambiguous entities: ${c.missing.join(", ")}. Check disabled entities or use manual overrides in YAML.`;
+    this._el("setup").hidden = !detectionNote; this._text("discovery-note", detectionNote); this._el("discovery-retry").disabled = Boolean(this._discoveryLoading);
+    const chargeStatus = e("charging_status")?.state;
+    const status = charging ? "Charging" : plugged === "off" ? "Disconnected" : chargeStatus === "starting" ? "Starting" : chargeStatus === "no_power" ? "No power" : actualCharging === "off" ? (battery !== null && limit !== null && battery >= limit ? "At charge limit" : "Not charging") : "Status unavailable";
     this._text("status", status);
     const image = c.vehicle_image || (plugged === "off" ? new URL("../assets/model-3-2025-white-nova-disconnected.png", import.meta.url).href : new URL("../assets/model-3-2025-white-nova.png", import.meta.url).href);
     this._el("flow").hidden = Boolean(c.vehicle_image) || !charging;
@@ -232,7 +321,8 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
   }
   _charge() {
     const id = this._config.entities.charge;
-    const stop = this._entity("charging")?.state === "on" || this._entity("charge")?.state === "on";
+    if (!id || this._el("charge").disabled) return;
+    const stop = chargingState(this._entity("charging"), this._entity("charging_status")) === "on" || this._entity("charge")?.state === "on";
     return this._command("switch", stop ? "turn_off" : "turn_on", { entity_id: id }, h => h.states[id]?.state === (stop ? "off" : "on"));
   }
   _number(key, value) {
@@ -249,7 +339,88 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
     } catch (error) { this._message = error.message; this._error = true; this._render(); }
   }
 }
+export class TessieCardEditor extends (globalThis.HTMLElement || class {}) {
+  constructor() { super(); this.attachShadow?.({ mode: "open" }); this._vehicles = []; this._sequence = 0; }
+  setConfig(config) { this._config = validateConfig(config); this._render(); }
+  set hass(hass) {
+    this._hass = hass;
+    const connection = hass.connection || hass;
+    if (connection !== this._connection) { this._connection = connection; this._load(); }
+    this._render();
+  }
+  async _load(refresh = false) {
+    const sequence = ++this._sequence;
+    this._loading = true; this._error = ""; this._render();
+    try { const vehicles = await loadVehicles(this._hass, refresh); if (sequence === this._sequence) this._vehicles = vehicles; }
+    catch { if (sequence === this._sequence) { this._vehicles = []; this._error = "Vehicle detection failed. Refresh to retry, or use YAML entity mappings."; } }
+    finally { if (sequence === this._sequence) { this._loading = false; this._render(); } }
+  }
+  _emit(config) {
+    this._config = config;
+    this.dispatchEvent(new CustomEvent("config-changed", { detail: { config: structuredClone(config) }, bubbles: true, composed: true }));
+    this._render();
+  }
+  _render() {
+    if (!this._config || !this._hass) return;
+    if (!this._mounted) {
+      this.shadowRoot.innerHTML = `<style>:host{display:block;color:var(--primary-text-color,#20252b);font:14px system-ui,sans-serif}*{box-sizing:border-box}label{display:block;margin:16px 0 6px}select,input,button{font:inherit;color:inherit;background:var(--ha-card-background,var(--card-background-color,#fff));min-width:0;border:1px solid var(--divider-color,#cbd1d8);border-radius:8px;padding:11px;width:100%}button{cursor:pointer;width:auto;margin:12px 0}p{font-size:13px;line-height:1.5;color:var(--secondary-text-color,#67717b)}.grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:12px}ul{padding-left:20px;overflow-wrap:anywhere}li{margin:7px 0}summary{cursor:pointer;margin-top:18px}#editor-status{margin:10px 0}input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--primary-color,#20b940);outline-offset:2px}</style>
+        <label for="vehicle-picker">Tessie vehicle</label><select id="vehicle-picker"></select><p id="editor-status" role="status"></p><button id="refresh">Refresh vehicles</button>
+        <label for="card-name">Card name (optional)</label><input id="card-name" placeholder="Use the vehicle name">
+        <div class="grid"><div><label for="tariff-entity">Electricity tariff entity</label><input id="tariff-entity" list="tariff-options" placeholder="sensor.electricity_rate"><datalist id="tariff-options"></datalist></div><div><label for="currency">Currency</label><input id="currency" maxlength="3" placeholder="AUD"></div></div>
+        <label for="capacity">Usable battery capacity in kWh (optional)</label><input id="capacity" type="number" min="0.1" step="any" placeholder="Needed for estimated remaining cost without an energy sensor">
+        <p>Vehicle charging entities are detected automatically. Tariff and battery capacity are configured separately. Artwork currently uses the bundled Model 3 scene.</p>
+        <details><summary>Detected entity mappings</summary><ul id="mapping-list"></ul></details><p>Use YAML for individual entity overrides, a custom scene or scheduling helpers. Selecting a different vehicle clears vehicle-specific mappings, capacity, artwork and scheduling, keeping your tariff and card name.</p>`;
+      const get = id => this.shadowRoot.getElementById(id);
+      get("vehicle-picker").onchange = event => {
+        const config = { ...this._config, entities: { ...this._config.entities } };
+        for (const key of [...Object.keys(tessieKeys), "time_remaining", "session_cost", "remaining_energy"]) delete config.entities[key];
+        delete config.schedule; // Scheduling helpers are vehicle-specific; never carry them to another car.
+        for (const key of ["battery_capacity_kwh", "charging_efficiency", "vehicle_image", "subtitle"]) delete config[key];
+        if (event.target.value) config.device_id = event.target.value; else delete config.device_id;
+        this._emit(config);
+      };
+      get("refresh").onclick = () => this._load(true);
+      get("card-name").onchange = event => { const config = { ...this._config }; if (event.target.value.trim()) config.name = event.target.value.trim(); else delete config.name; this._emit(config); };
+      get("tariff-entity").onchange = event => {
+        const value = event.target.value.trim();
+        if (value && !/^sensor\.[a-z0-9_]+$/.test(value)) { event.target.setCustomValidity("Choose a sensor entity ID."); event.target.reportValidity(); return; }
+        event.target.setCustomValidity(""); const entities = { ...this._config.entities };
+        if (value) entities.tariff = value; else delete entities.tariff;
+        this._emit({ ...this._config, entities });
+      };
+      get("currency").onchange = event => {
+        const value = event.target.value.trim().toUpperCase();
+        if (value && !/^[A-Z]{3}$/.test(value)) { event.target.setCustomValidity("Use a three-letter currency code."); event.target.reportValidity(); return; }
+        event.target.setCustomValidity(""); this._emit({ ...this._config, currency: value || "AUD" });
+      };
+      get("capacity").onchange = event => {
+        if (!event.target.checkValidity()) { event.target.reportValidity(); return; }
+        const config = { ...this._config };
+        if (event.target.value) config.battery_capacity_kwh = Number(event.target.value); else delete config.battery_capacity_kwh;
+        this._emit(config);
+      };
+      this._mounted = true;
+    }
+    const get = id => this.shadowRoot.getElementById(id), picker = get("vehicle-picker");
+    this.style.colorScheme = this._hass.themes?.darkMode ? "dark" : "light";
+    const selected = this._config.device_id || "";
+    const options = [new Option("Automatic (only when one vehicle is found)", ""), ...this._vehicles.map(vehicle => new Option(`${vehicle.name}${vehicle.model ? ` · ${vehicle.model}` : ""}`, vehicle.id))];
+    if (selected && !this._vehicles.some(vehicle => vehicle.id === selected)) options.push(new Option("Previously selected vehicle (not found)", selected));
+    picker.replaceChildren(...options); picker.value = selected;
+    const resolved = resolveVehicleConfig(this._config, this._vehicles);
+    const issues = resolved.detectedVehicle?.ambiguous.length ? ` Ambiguous: ${resolved.detectedVehicle.ambiguous.join(", ")}.` : "";
+    get("editor-status").textContent = this._loading ? "Detecting Tessie vehicles…" : this._error || (resolved.detectedVehicle ? `${resolved.detectedVehicle.name}: ${Object.keys(resolved.detectedVehicle.entities).length} mappings detected.${resolved.missing.length ? ` Missing: ${resolved.missing.join(", ")}.` : ""}${issues}` : requiredMappings.every(key => this._config.entities?.[key]) ? "Manual mappings active. Select a vehicle to switch to automatic detection." : this._vehicles.length > 1 ? `${this._vehicles.length} vehicles found. Select one for this card.` : "No Tessie vehicle found. Check the integration or use manual mappings.");
+    get("refresh").disabled = Boolean(this._loading);
+    for (const [id, value] of [["card-name", this._config.name || ""], ["tariff-entity", this._config.entities?.tariff || ""], ["currency", this._config.currency || "AUD"], ["capacity", this._config.battery_capacity_kwh ?? ""]]) if (this.shadowRoot.activeElement !== get(id)) get(id).value = value;
+    const tariffIds = Object.entries(this._hass.states).filter(([id, entity]) => id.startsWith("sensor.") && /\/kWh$/.test(entity.attributes?.unit_of_measurement || "")).map(([id]) => id).sort();
+    get("tariff-options").replaceChildren(...tariffIds.map(id => new Option(id, id)));
+    const items = Object.entries(resolved.entities).map(([key, id]) => { const item = document.createElement("li"); item.textContent = `${key}: ${id}`; return item; });
+    if (resolved.detectedVehicle?.disabled.length) { const item = document.createElement("li"); item.textContent = `Disabled entities omitted: ${resolved.detectedVehicle.disabled.join(", ")}. Enable them in Home Assistant if needed.`; items.push(item); }
+    get("mapping-list").replaceChildren(...items);
+  }
+}
 if (globalThis.customElements && !customElements.get("tessie-card")) {
+  customElements.define("tessie-card-editor", TessieCardEditor);
   customElements.define("tessie-card", TessieCard);
   window.customCards = window.customCards || [];
   window.customCards.push({ type: "tessie-card", name: "Tessie Card", description: "Vehicle charging, cost estimates and one-off start scheduling", preview: false });

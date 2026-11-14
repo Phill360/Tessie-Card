@@ -1,4 +1,5 @@
 import '../tessie-card.js';
+import { demoRegistry } from './registry.js';
 const card = document.querySelector('tessie-card');
 const entity = (state, attributes = {}) => ({ state: String(state), attributes });
 const config = {
@@ -7,6 +8,10 @@ const config = {
   schedule: { control_script: 'script.demo_schedule', datetime_entity: 'input_datetime.demo_start', armed_entity: 'input_boolean.demo_armed', status_entity: 'input_select.demo_status' }
 };
 let states, dark = false;
+const registry = demoRegistry();
+const registryListeners = new Map();
+const connection = { subscribeEvents: async (callback, type) => { const set = registryListeners.get(type) || new Set(); set.add(callback); registryListeners.set(type, set); return () => set.delete(callback); } };
+async function callWS({ type }) { if (type === 'config/device_registry/list') return structuredClone(registry.devices); if (type === 'config/entity_registry/list') return structuredClone(registry.entries); throw new Error('Unsupported demo request'); }
 const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 function reset(mode = 'charging') {
   card.setConfig(config);
@@ -19,16 +24,19 @@ function reset(mode = 'charging') {
     'number.demo_current': entity(32, { min: 5, max: 32, step: 1, unit_of_measurement: 'A' }),
     'sensor.demo_power': entity(mode === 'charging' || mode === 'error' ? 7.2 : 0, { unit_of_measurement: 'kW' }),
     'sensor.demo_completion': entity(new Date(Date.now() + 105 * 60000).toISOString(), { device_class: 'timestamp' }),
+    'sensor.demo_charging_status': entity(mode === 'charging' || mode === 'error' ? 'charging' : mode === 'disconnected' ? 'disconnected' : 'stopped'),
     'sensor.demo_energy': entity(12.4, { unit_of_measurement: 'kWh' }),
     'sensor.demo_tariff': entity(.3, { unit_of_measurement: 'AUD/kWh' }),
     'script.demo_schedule': entity('off'),
     'input_datetime.demo_start': entity('2026-01-01 00:00:00', { timestamp: 0 }),
     'input_boolean.demo_armed': entity('off'), 'input_select.demo_status': entity('Idle')
   };
+  for (const [id, value] of Object.entries(states)) if (id.includes('.demo_')) states[id.replace('.demo_', '.second_')] = structuredClone(value);
+  states['sensor.second_battery'].state = '45';
   if (mode === 'unavailable') for (const [key, value] of Object.entries(states)) if (!key.startsWith('input_') && !key.startsWith('script.')) value.state = 'unavailable';
   publish();
 }
-function publish() { card.hass = { states: { ...states }, config: { time_zone: zone }, locale: { language: 'en-AU' }, themes: { darkMode: dark }, callService }; }
+function publish() { const hass = { states: { ...states }, connection, callWS, config: { time_zone: zone }, locale: { language: 'en-AU' }, themes: { darkMode: dark }, callService }; document.querySelectorAll('tessie-card,tessie-card-editor').forEach(element => { element.hass = hass; }); }
 async function callService(domain, service, data) {
   document.getElementById('log').textContent = `Simulated: ${domain}.${service}\n${JSON.stringify(data)}`;
   if (document.getElementById('state').value === 'error') throw new Error('Demo: vehicle rejected the command.');
@@ -36,10 +44,12 @@ async function callService(domain, service, data) {
   if (domain === 'number') states[data.entity_id] = { ...states[data.entity_id], state: String(data.value) };
   if (domain === 'switch') {
     const on = service === 'turn_on';
-    states['switch.demo_charge'].state = on ? 'on' : 'off';
-    states['binary_sensor.demo_charging'].state = on ? 'on' : 'off';
-    states['sensor.demo_power'].state = on ? '7.2' : '0';
-    states['sensor.demo_completion'].state = new Date(Date.now() + 105 * 60000).toISOString();
+    const prefix = data.entity_id.includes('.second_') ? 'second' : 'demo';
+    states[`switch.${prefix}_charge`].state = on ? 'on' : 'off';
+    states[`binary_sensor.${prefix}_charging`].state = on ? 'on' : 'off';
+    states[`sensor.${prefix}_charging_status`].state = on ? 'charging' : 'stopped';
+    states[`sensor.${prefix}_power`].state = on ? '7.2' : '0';
+    states[`sensor.${prefix}_completion`].state = new Date(Date.now() + 105 * 60000).toISOString();
   }
   if (domain === 'script') {
     states['input_boolean.demo_armed'].state = data.command === 'schedule' ? 'on' : 'off';
@@ -54,4 +64,4 @@ document.getElementById('state').onchange = e => reset(e.target.value);
 document.getElementById('theme').onclick = () => { dark = !dark; document.body.classList.toggle('dark', dark); document.getElementById('theme').textContent = dark ? 'Light theme' : 'Dark theme'; publish(); };
 card.addEventListener('hass-more-info', e => { document.getElementById('log').textContent = `Entity details: ${e.detail.entityId}`; });
 card.setConfig(config); reset();
-window.tessieDemo = { card, config, get states() { return states; }, reset, publish };
+window.tessieDemo = { card, config, registry, connection, callWS, get states() { return states; }, reset, publish, registryEvent: type => registryListeners.get(type)?.forEach(callback => callback({ event_type: type })) };

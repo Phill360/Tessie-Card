@@ -1,6 +1,6 @@
 # Tessie Card
 
-Version **0.1.1** of a custom Home Assistant charging card for the
+Version **0.2.0** of a custom Home Assistant charging card for the
 [Tessie integration](https://www.home-assistant.io/integrations/tessie/).
 Inspired by the rendered scenes and flow presentation in
 [Sigenergy Flow Card](https://github.com/jyavenard/sigenergy-flow-card).
@@ -17,12 +17,14 @@ Inspired by the rendered scenes and flow presentation in
 - One-off start date/time through an optional persistent Home Assistant package.
 - Home Assistant theme colours, responsive layout, reduced-motion support,
   unavailable states, command-pending feedback and errors.
+- A visual vehicle picker with automatic Tessie entity discovery.
 - No JavaScript dependencies, compilation, external fonts, or direct Tessie API token.
 
 This build has automated local tests and a simulated browser demo. It has **not
 yet been validated against a live Home Assistant/Tessie installation**. Entity IDs
-must be mapped to your vehicle. Only the selected Model 3 artwork is bundled;
-automatic model/trim discovery and other vehicle renders are not implemented yet.
+can be detected from the selected vehicle or mapped manually. Only the selected
+Model 3 artwork is bundled; automatic paint/wheel matching and other vehicle
+renders are not implemented yet.
 Use `vehicle_image` for another complete scene.
 
 ## Install with HACS (recommended)
@@ -34,8 +36,8 @@ custom repository; it has not been admitted to the default HACS catalogue.
 2. Enter `https://github.com/Phill360/Tessie-Card`, choose **Dashboard**, and add it.
 3. Find **Tessie Card**, open it and select **Download**.
 4. Reload the browser when prompted. HACS normally registers the resource for you.
-5. Add a manual card using [examples/card.yaml](examples/card.yaml), replacing
-   every example entity ID with your own IDs from Developer Tools > States.
+5. Add **Tessie Card** from the dashboard card picker. In the visual editor, select
+   your Tessie vehicle and your electricity tariff sensor.
 
 The vehicle scenes are embedded in the download. No image folders need copying.
 Updates are managed through HACS. For YAML-mode dashboards, register this resource
@@ -61,17 +63,67 @@ Your card configuration and entity mappings can stay the same.
 1. Download `tessie-card.js` from the latest GitHub release (or the repository
    root) and copy it to `/config/www/tessie-card/tessie-card.js`.
 2. Add a dashboard resource (Settings > Dashboards > Resources):
-   URL `/local/tessie-card/tessie-card.js?v=0.1.1`, type **JavaScript module**.
+   URL `/local/tessie-card/tessie-card.js?v=0.2.0`, type **JavaScript module**.
 3. Add a manual card using [examples/card.yaml](examples/card.yaml), replacing
    every example entity ID with the real ID from Developer Tools > States.
 4. Reload the dashboard. Increase the resource version query after updating files.
 
 The root `tessie-card.js` is a generated standalone file. The `assets` folder is
-needed only for development, not for installation. Configuration is YAML-only.
+needed only for development, not for installation.
+
+## Automatic vehicle setup
+
+![Vehicle configuration editor using simulated devices](docs/vehicle-picker.png)
+
+The visual editor lists vehicle devices belonging to the Tessie integration and
+maps battery, charge switch, limit, current, power, connection, completion estimate,
+charging status, session energy and location where supported. It uses device IDs
+and integration metadata rather than guessing entity names, so renamed/localised
+entities work. Energy products and entities from other integrations are excluded.
+
+With one detected vehicle, this minimal card automatically selects it:
+
+```yaml
+type: custom:tessie-card
+entities:
+  tariff: sensor.electricity_rate
+currency: AUD
+```
+
+With multiple vehicles, select one in the editor. The saved `device_id` pins the
+card to that vehicle. It never silently switches to another car if the selected
+device disappears. A vehicle can also be pinned in YAML:
+
+```yaml
+type: custom:tessie-card
+device_id: your_home_assistant_device_id
+entities:
+  tariff: sensor.electricity_rate
+```
+
+Only registry reads are performed; the card does not enable disabled entities or
+modify the integration. Ambiguous mappings are left unset. The editor displays
+detected, disabled and missing entities. Tessie's disabled-by-default charging
+binary sensor can be replaced automatically by its charging-state sensor.
+
+Registry events refresh mappings after a rename or removal; **Refresh detection**
+and **Refresh vehicles** provide manual retry. If registry access is unavailable,
+explicit mappings still work. Existing fully manual configurations remain manual.
+For a selected device, individual `entities:` values override detected mappings.
+
+Electricity tariffs, usable battery capacity, custom cost sensors and one-off
+scheduling helpers are separate from the vehicle and must still be configured.
+The editor exposes tariff, currency, optional battery capacity and card name;
+advanced overrides and scheduling remain in YAML. Selecting another vehicle clears
+vehicle-specific entity overrides, capacity, custom artwork and scheduling to
+avoid carrying settings or commands over from a different car. Tariff and card
+name are retained. The default vehicle artwork remains the bundled Model 3 scene.
 
 ## Entity mappings
 
-Configure under `entities:`. IDs are not derived from the vehicle name.
+Optional overrides go under `entities:`. A manual configuration without a selected
+device needs all four core mappings; the card disables missing controls rather
+than guessing. IDs are not derived from the vehicle name.
 
 | Key | Domain | Purpose |
 | --- | --- | --- |
@@ -80,6 +132,7 @@ Configure under `entities:`. IDs are not derived from the vehicle name.
 | `charge_limit` | number | Required; charge-limit control, using entity min/max/step |
 | `charge_current` | number | Required; current control, using entity min/max/step |
 | `charging` | binary_sensor | Actual charging status; recommended |
+| `charging_status` | sensor | Tessie charging-state enum; fallback when the binary sensor is disabled |
 | `plugged_in` | binary_sensor | Cable connection; recommended |
 | `power` | sensor | Charging power, W/kW/MW |
 | `completion` | sensor | ISO timestamp of expected completion; preferred Tessie source |
@@ -91,7 +144,8 @@ Configure under `entities:`. IDs are not derived from the vehicle name.
 | `location` | device_tracker | Optional header location |
 
 The charge switch being on does not establish actual energy delivery; animation
-and completion estimates use the `charging` binary sensor. Completion estimates
+and completion estimates use the charging binary sensor or Tessie charging-state
+sensor fallback. Completion estimates
 are hidden when charging is not confirmed. Missing readings show a dash, not zero.
 Unknown controls are disabled. Sliders send a command on release, then wait for an
 entity update. A 20-second timeout means no confirmation, not proof of failure.
@@ -152,7 +206,7 @@ dashboard closed. Saving does not stop an already charging vehicle.
 The package serializes saves, cancellations and execution. It consumes each start
 before requesting charging, waits up to 45 seconds for charge-switch acknowledgement,
 and reports Started or Failed. Started means the charge switch acknowledged the
-request; active charging is still determined by the binary sensor. A missed start
+request; active charging is still determined by the charging sensors. A missed start
 is marked Missed rather than replayed on startup. Recovery runs each minute.
 Execution within 60 seconds of the intended time is allowed; no implicit retries.
 Cancellation cannot undo a start already sent to the vehicle. Each additional

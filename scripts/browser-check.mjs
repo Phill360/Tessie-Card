@@ -79,6 +79,58 @@ try {
   });
   assert.match(await card.locator('#session-cost').innerText(), /4\.20/);
   assert.equal(await card.locator('#remaining-cost').innerText(), '—');
+  // Exercise the actual custom editor and runtime device discovery against two cars.
+  await page.evaluate(() => {
+    const d = window.tessieDemo;
+    const automatic = document.createElement('tessie-card'); automatic.id = 'automatic-card';
+    automatic.setConfig({ type: 'custom:tessie-card' }); document.body.append(automatic); automatic.hass = d.card._hass;
+    const editor = document.createElement('tessie-card-editor'); editor.id = 'vehicle-editor';
+    editor.setConfig({ type: 'custom:tessie-card', entities: { tariff: 'sensor.demo_tariff', session_cost: 'sensor.demo_cost' }, battery_capacity_kwh: 60, schedule: d.config.schedule });
+    editor.addEventListener('config-changed', event => { window.savedCardConfig = event.detail.config; automatic.setConfig(event.detail.config); automatic.hass = d.card._hass; });
+    document.body.append(editor); editor.hass = d.card._hass;
+  });
+  const automatic = page.locator('#automatic-card'), editor = page.locator('#vehicle-editor');
+  await page.waitForFunction(() => document.getElementById('automatic-card').shadowRoot.getElementById('discovery-note').textContent.includes('Multiple'));
+  assert.equal(await automatic.locator('#charge').isDisabled(), true);
+  await editor.locator('#vehicle-picker').selectOption('demo-vehicle-one');
+  await page.waitForFunction(() => document.getElementById('automatic-card').shadowRoot.getElementById('battery').textContent === '62%');
+  assert.equal(await automatic.locator('#status').innerText(), 'Charging'); // Disabled binary sensor: enum fallback.
+  await editor.locator('#vehicle-picker').selectOption('demo-vehicle-two');
+  await page.waitForFunction(() => document.getElementById('automatic-card').shadowRoot.getElementById('battery').textContent === '45%');
+  assert.equal(await page.evaluate(() => window.savedCardConfig.entities.tariff), 'sensor.demo_tariff');
+  assert.equal(await page.evaluate(() => window.savedCardConfig.schedule), undefined);
+  assert.equal(await page.evaluate(() => window.savedCardConfig.battery_capacity_kwh), undefined);
+  await automatic.locator('#charge').click();
+  await page.waitForFunction(() => window.tessieDemo.states['switch.second_charge'].state === 'off');
+  assert.match(await page.locator('#log').innerText(), /switch.second_charge/);
+  await page.evaluate(() => {
+    const d = window.tessieDemo;
+    d.registry.entries.find(entry => entry.entity_id === 'number.second_current').entity_id = 'number.renamed_current';
+    d.states['number.renamed_current'] = d.states['number.second_current']; delete d.states['number.second_current'];
+    d.publish(); d.registryEvent('entity_registry_updated');
+  });
+  await page.waitForFunction(() => document.getElementById('automatic-card')._config.entities.charge_current === 'number.renamed_current');
+  await page.setViewportSize({ width: 320, height: 1000 });
+  assert.equal(await editor.evaluate(el => el.scrollWidth <= el.clientWidth), true);
+  await page.setViewportSize({ width: 768, height: 1000 });
+  await editor.screenshot({ path: 'test-results/vehicle-picker.png' });
+  await page.evaluate(() => {
+    const d = window.tessieDemo;
+    d.registry.devices = d.registry.devices.filter(device => device.id !== 'demo-vehicle-two');
+    d.registryEvent('device_registry_updated');
+  });
+  await page.waitForFunction(() => document.getElementById('automatic-card').shadowRoot.getElementById('discovery-note').textContent.includes('not found'));
+  assert.equal(await automatic.locator('#charge').isDisabled(), true);
+  await page.evaluate(() => {
+    const element = document.getElementById('vehicle-editor');
+    element.hass = { ...window.tessieDemo.card._hass, connection: {}, callWS: async () => { throw new Error('Registry unavailable'); } };
+  });
+  await page.waitForFunction(() => document.getElementById('vehicle-editor').shadowRoot.getElementById('editor-status').textContent.includes('failed'));
+  await page.evaluate(() => { document.getElementById('vehicle-editor').hass = window.tessieDemo.card._hass; });
+  await editor.locator('#refresh').click();
+  await page.waitForFunction(() => document.getElementById('vehicle-editor').shadowRoot.getElementById('vehicle-picker').options.length === 3);
+  await automatic.evaluate(el => el.remove());
+  await editor.evaluate(el => el.remove());
   assert.deepEqual(errors, []);
-  console.log('Browser checks passed: controls, scheduling/cancellation, errors, missing data, themes, 320/390/768px layout.');
+  console.log('Browser checks passed: controls, scheduling, errors, themes, responsive layout, vehicle editor, multi-car isolation, renamed/deleted entities and discovery retry.');
 } finally { await browser.close(); server.close(); }

@@ -167,5 +167,6 @@ Implemented: responsive custom card, connected/disconnected artwork, charging
 controls, cost estimates, optional server-side one-off scheduling package, and
 interactive demo. Unit and browser checks cover core calculations and controls.
 Next: map the user's real entities and validate the optional package using Home
-Assistant's configuration check. Automatic vehicle configuration discovery and
-additional models remain follow-up work; a manual scene override is supported.
+Assistant's configuration check. Version 0.2.0 adds a vehicle picker and registry
+entity discovery. Automatic paint/wheel matching and additional vehicle renders
+remain follow-up work; a manual scene override is supported.

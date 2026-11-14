@@ -47,7 +47,8 @@ test('number controls require real entity capabilities', () => {
 test('configuration rejects incorrect entity domains, unknown mappings and unsafe asset URLs', () => {
   const config = { entities: { battery: 'sensor.battery', charge: 'switch.charge', charge_limit: 'number.limit', charge_current: 'number.current' } };
   assert.deepEqual(validateConfig(config), config);
-  assert.throws(() => validateConfig({ entities: {} }), /Missing/);
+  assert.deepEqual(validateConfig({ type: 'custom:tessie-card' }).entities, {});
+  assert.throws(() => validateConfig({ entities: null }), /mapping/);
   assert.throws(() => validateConfig({ entities: { ...config.entities, charge: 'button.charge' } }), /switch/);
   assert.throws(() => validateConfig({ ...config, vehicle_image: 'javascript:alert(1)' }), /URL/);
   assert.throws(() => validateConfig({ ...config, schedule: {} }), /control_script/);
