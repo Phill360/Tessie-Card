@@ -1,0 +1,27 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Check version and distribution
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          node --input-type=module -e 'import fs from "node:fs"; const p=JSON.parse(fs.readFileSync("package.json")); if (process.env.RELEASE_TAG !== `v${p.version}`) throw new Error("Tag does not match package version");'
+          node scripts/build.mjs --check
+          node --check tessie-card.js
+          node --test
+      - name: Publish standalone dashboard module
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: gh release create "$RELEASE_TAG" tessie-card.js --verify-tag --title "Tessie Card $RELEASE_TAG" --notes-file docs/release-notes.md

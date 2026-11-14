@@ -1,6 +1,6 @@
 # Tessie Card
 
-Initial build **0.1.0** of a custom Home Assistant charging card for the
+Version **0.1.1** of a custom Home Assistant charging card for the
 [Tessie integration](https://www.home-assistant.io/integrations/tessie/).
 Inspired by the rendered scenes and flow presentation in
 [Sigenergy Flow Card](https://github.com/jyavenard/sigenergy-flow-card).
@@ -25,26 +25,49 @@ must be mapped to your vehicle. Only the selected Model 3 artwork is bundled;
 automatic model/trim discovery and other vehicle renders are not implemented yet.
 Use `vehicle_image` for another complete scene.
 
+## Install with HACS (recommended)
+
+Install [HACS](https://www.hacs.xyz/docs/use/) first. Tessie Card is available as a
+custom repository; it has not been admitted to the default HACS catalogue.
+
+1. Open HACS, select the three-dot menu, then **Custom repositories**.
+2. Enter `https://github.com/Phill360/Tessie-Card`, choose **Dashboard**, and add it.
+3. Find **Tessie Card**, open it and select **Download**.
+4. Reload the browser when prompted. HACS normally registers the resource for you.
+5. Add a manual card using [examples/card.yaml](examples/card.yaml), replacing
+   every example entity ID with your own IDs from Developer Tools > States.
+
+The vehicle scenes are embedded in the download. No image folders need copying.
+Updates are managed through HACS. For YAML-mode dashboards, register this resource
+manually as a JavaScript module:
+
+```yaml
+url: /hacsfiles/Tessie-Card/tessie-card.js
+type: module
+```
+
+The capitalisation of `Tessie-Card` in the resource URL matches the repository.
+The optional one-off scheduling package still needs separate installation; HACS
+installs the dashboard card, not Home Assistant automations or helpers.
+
+### Switching from the original manual installation
+
+Remove the old `/local/tessie-card/tessie-card.js` dashboard resource before
+installing through HACS, then reload. Keep only one registered copy of the card.
+Your card configuration and entity mappings can stay the same.
+
 ## Install manually
 
-1. Copy `tessie-card.js` and the `assets` directory into
-   `/config/www/tessie-card/`, preserving the folder structure:
-
-   ```text
-   www/tessie-card/
-     tessie-card.js
-     assets/
-       model-3-2025-white-nova.png
-       model-3-2025-white-nova-disconnected.png
-   ```
-
+1. Download `tessie-card.js` from the latest GitHub release (or the repository
+   root) and copy it to `/config/www/tessie-card/tessie-card.js`.
 2. Add a dashboard resource (Settings > Dashboards > Resources):
-   URL `/local/tessie-card/tessie-card.js?v=0.1.0`, type **JavaScript module**.
+   URL `/local/tessie-card/tessie-card.js?v=0.1.1`, type **JavaScript module**.
 3. Add a manual card using [examples/card.yaml](examples/card.yaml), replacing
    every example entity ID with the real ID from Developer Tools > States.
 4. Reload the dashboard. Increase the resource version query after updating files.
 
-No HACS release is published yet. Configuration is YAML-only in this first build.
+The root `tessie-card.js` is a generated standalone file. The `assets` folder is
+needed only for development, not for installation. Configuration is YAML-only.
 
 ## Entity mappings
 
@@ -141,9 +164,10 @@ visible but disabled if the package is absent.
 
 ## Local development
 
-Requires Node.js 20 or later. No installation step:
+Requires Node.js 20 or later. No dependency installation step:
 
 ```sh
+node scripts/build.mjs
 node scripts/serve.mjs
 node --test
 ```
@@ -160,7 +184,17 @@ node scripts/browser-check.mjs /absolute/path/to/playwright/index.mjs msedge
 
 The script starts its own test server on port 8125 and saves screenshots in
 `test-results/`. Without arguments it uses an installed `playwright` package and
-its default Chromium browser. CI runs the dependency-free unit tests and syntax check.
+its default Chromium browser. CI runs unit tests, syntax and distribution checks.
+HACS validation runs separately for the plugin category. Its license check is
+excluded until the repository owner chooses an open-source license; this does not
+imply default-catalogue approval.
+
+Edit `src/tessie-card.js`, then run `node scripts/build.mjs` and commit the generated
+root module. Both PNG scenes are embedded as data URLs so HACS installs one file.
+`node scripts/build.mjs --check` checks reproducibility without writing files.
+For a new version, update `package.json` and the source version, rebuild, then push
+a matching `vX.Y.Z` tag. The release workflow tests the build and publishes the
+standalone module as a GitHub release asset.
 
 ## Artwork and design
 

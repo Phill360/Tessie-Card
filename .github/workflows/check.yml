@@ -11,4 +11,5 @@ jobs:
         with:
           node-version: 24
       - run: node --check tessie-card.js
+      - run: node scripts/build.mjs --check
       - run: node --test

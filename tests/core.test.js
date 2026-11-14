@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { numeric, quantity, tariffRate, estimateCosts, scheduleTimestamp, numberLimits, validateConfig } from '../tessie-card.js';
+import { numeric, quantity, tariffRate, estimateCosts, scheduleTimestamp, numberLimits, validateConfig } from '../src/tessie-card.js';
 const e = (state, unit) => ({ state, attributes: { unit_of_measurement: unit } });
 test('unavailable and malformed measurements never become zero', () => {
   for (const value of [undefined, null, '', ' ', 'unknown', 'unavailable', 'NaN', 'Infinity', true]) assert.equal(numeric(e(value)), null);

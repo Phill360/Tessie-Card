@@ -15,6 +15,8 @@ try {
   await page.goto('http://127.0.0.1:8125/');
   const card = page.locator('tessie-card');
   await card.locator('#vehicle').evaluate(img => img.decode());
+  const connectedImage = await card.locator('#vehicle').getAttribute('src');
+  assert.match(connectedImage, /^data:image\/png;base64,/);
   assert.equal(await card.locator('#status').innerText(), 'Charging');
   assert.match(await card.locator('#session-cost').innerText(), /3\.72/);
   assert.match(await card.locator('#remaining-cost').innerText(), /3\.60/);
@@ -43,11 +45,12 @@ try {
   await page.selectOption('#state', 'disconnected');
   assert.equal(await card.locator('#charge').isDisabled(), true);
   await card.locator('#vehicle').evaluate(img => img.decode());
-  assert.match(await card.locator('#vehicle').getAttribute('src'), /disconnected\.png$/);
+  assert.notEqual(await card.locator('#vehicle').getAttribute('src'), connectedImage);
+  assert.match(await card.locator('#vehicle').getAttribute('src'), /^data:image\/png;base64,/);
   await page.selectOption('#state', 'charging');
   await card.locator('#vehicle').evaluate(img => img.decode());
   await mkdir('test-results', { recursive: true });
-  await card.screenshot({ path: 'docs/build-preview.png' });
+  if (process.env.TESSIE_CAPTURE_PREVIEW === '1') await card.screenshot({ path: 'docs/build-preview.png' });
   await page.screenshot({ path: 'test-results/desktop-light.png', fullPage: true });
   await page.click('#theme');
   await page.screenshot({ path: 'test-results/desktop-dark.png', fullPage: true });

@@ -1,0 +1,16 @@
+name: HACS
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions: {}
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hacs/action@main
+        with:
+          category: plugin
+          # Custom-repository install does not require default-catalogue admission.
+          # An open-source license is a separate owner decision before submission.
+          ignore: license
