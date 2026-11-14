@@ -1,6 +1,6 @@
 # Tessie Card
 
-Version **0.2.0** of a custom Home Assistant charging card for the
+Version **0.2.1** (test prerelease) of a custom Home Assistant charging card for the
 [Tessie integration](https://www.home-assistant.io/integrations/tessie/).
 Inspired by the rendered scenes and flow presentation in
 [Sigenergy Flow Card](https://github.com/jyavenard/sigenergy-flow-card).
@@ -9,8 +9,9 @@ Inspired by the rendered scenes and flow presentation in
 
 ## Included
 
-- White 2025 Model 3, Nova wheels, black trim, rear-left three-quarter artwork with
-  the cable connected at the left rear taillight. Separate disconnected artwork.
+- Official white Model 3 Highland render with Nova wheels and black interior,
+  viewed from the left rear. A cable enters from outside the scene, with no charger
+  visible. The cable animates while charging and hides when disconnected.
 - Battery percentage, target marker, charging power, remaining time and finish time.
 - Session cost and estimated additional cost to reach the limit, using a tariff entity.
 - Always-visible start/stop, charge-limit and charging-current controls.
@@ -63,7 +64,7 @@ Your card configuration and entity mappings can stay the same.
 1. Download `tessie-card.js` from the latest GitHub release (or the repository
    root) and copy it to `/config/www/tessie-card/tessie-card.js`.
 2. Add a dashboard resource (Settings > Dashboards > Resources):
-   URL `/local/tessie-card/tessie-card.js?v=0.2.0`, type **JavaScript module**.
+   URL `/local/tessie-card/tessie-card.js?v=0.2.1`, type **JavaScript module**.
 3. Add a manual card using [examples/card.yaml](examples/card.yaml), replacing
    every example entity ID with the real ID from Developer Tools > States.
 4. Reload the dashboard. Increase the resource version query after updating files.
@@ -252,11 +253,15 @@ standalone module as a GitHub release asset.
 
 ## Artwork and design
 
-Vehicle scenes are generated approximations, not official Tesla renders. Prompt
-records: [docs/vehicle-asset-prompts.md](docs/vehicle-asset-prompts.md).
+The bundled vehicle image is a locally stored Tesla compositor render. A separate
+SVG cable and connector overlay follows the left-rear charge port, with a green
+pulse moving towards the car only during confirmed charging. Connected idle
+shows a static cable; disconnected or unknown connection states hide it (unless
+charging is confirmed). Reduced-motion settings retain a static cable.
 `vehicle_image` accepts a local absolute URL or an HTTP(S) URL for a complete
-scene; custom scenes disable the cable overlay animation. The bundled disconnected
-scene is selected when `plugged_in` is off. A custom scene is used for all states.
+scene; custom scenes disable the built-in cable overlay. A custom scene is used
+for all states. The larger downloaded vehicle library is separate from the card
+bundle. Artwork source details are recorded in [assets/README.md](assets/README.md).
 
 The [design brief](docs/design-brief.md) records the agreed scope. Climate controls,
 recurring schedules, charging history and multi-vehicle switching are outside

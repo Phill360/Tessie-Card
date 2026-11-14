@@ -7,7 +7,7 @@ export async function buildBundle() {
   const pkg = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'));
   let source = await readFile(resolve(root, 'src/tessie-card.js'), 'utf8');
   if (!source.includes(`export const VERSION = "${pkg.version}"`)) throw new Error('Source and package versions differ.');
-  for (const filename of ['model-3-2025-white-nova.png', 'model-3-2025-white-nova-disconnected.png']) {
+  for (const filename of ['model-3-highland-white-nova.png']) {
     const expression = `new URL("../assets/${filename}", import.meta.url).href`;
     if (source.split(expression).length !== 2) throw new Error(`Expected one image reference: ${filename}`);
     const bytes = await readFile(resolve(root, 'assets', filename));

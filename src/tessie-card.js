@@ -1,5 +1,5 @@
-/* Tessie Card 0.2.0 — dependency-free Home Assistant dashboard card. */
-export const VERSION = "0.2.0";
+/* Tessie Card 0.2.1 — dependency-free Home Assistant dashboard card. */
+export const VERSION = "0.2.1";
 const invalid = new Set(["unknown", "unavailable", "", "none"]);
 export function numeric(entity) {
   if (!entity || entity.state == null || typeof entity.state === "boolean" || invalid.has(String(entity.state).trim().toLowerCase())) return null;
@@ -141,21 +141,28 @@ const css = `
 :host{display:block;--tc-green:#20b940;--tc-bg:var(--ha-card-background,var(--card-background-color,#fff));--tc-text:var(--primary-text-color,#20252b);--tc-muted:var(--secondary-text-color,#67717b);--tc-line:var(--divider-color,#dce0e5);font-family:var(--paper-font-body1_-_font-family,system-ui,sans-serif);color:var(--tc-text)}
 *{box-sizing:border-box}ha-card{display:block;background:var(--tc-bg);border-radius:var(--ha-card-border-radius,20px);overflow:hidden;border:1px solid var(--tc-line);color:var(--tc-text)}
 .head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 24px 0}.name{font-size:24px;font-weight:650;letter-spacing:-.6px}.sub,.note{color:var(--tc-muted);font-size:13px}.sub{margin-top:4px}.badge{border-radius:20px;padding:7px 12px;background:color-mix(in srgb,var(--tc-muted) 12%,transparent);font-size:13px;font-weight:600;white-space:nowrap}.active .badge{color:var(--tc-green);background:color-mix(in srgb,var(--tc-green) 13%,transparent)}
-.scene{position:relative;aspect-ratio:1.92;overflow:hidden;background:radial-gradient(ellipse at 50% 90%,color-mix(in srgb,var(--tc-muted) 8%,transparent),transparent 65%)}.scene img{width:100%;height:100%;object-fit:contain;display:block}.scene .power{position:absolute;right:24px;top:16px;text-align:right;text-shadow:0 0 8px var(--tc-bg);font-size:13px;color:var(--tc-muted)}.power strong{display:block;font-size:21px;color:var(--tc-green);margin-top:3px}.scene.idle img{filter:saturate(.35)}.flow{position:absolute;bottom:13%;left:20%;width:13%;height:2px;background:linear-gradient(90deg,transparent,var(--tc-green),transparent);opacity:0}.active .flow{opacity:.8;animation:flow 2.5s ease-in-out infinite}@keyframes flow{0%{transform:translateX(0);opacity:0}50%{opacity:1}100%{transform:translateX(130%);opacity:0}}
+.scene{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 90%,color-mix(in srgb,var(--tc-muted) 8%,transparent),transparent 65%)}.scene img{display:block}.scene .power{position:absolute;right:24px;top:16px;text-align:right;text-shadow:0 0 8px var(--tc-bg);font-size:13px;color:var(--tc-muted)}.power strong{display:block;font-size:21px;color:var(--tc-green);margin-top:3px}.scene.idle img{filter:saturate(.35)}
 .content{padding:0 22px 22px}.battery{display:flex;gap:20px;align-items:center;margin:10px 0 18px}.percent{font-size:36px;font-weight:650;letter-spacing:-1px}.battery-text{min-width:76px}.battery-track{flex:1;position:relative;padding-top:25px}.track{height:13px;border-radius:9px;background:color-mix(in srgb,var(--tc-muted) 18%,transparent);overflow:hidden}.fill{height:100%;width:0;background:var(--tc-green);border-radius:9px;transition:width .4s}.marker{position:absolute;top:18px;height:27px;border-left:2px solid var(--tc-text)}.limit-text{position:absolute;right:0;top:0;font-size:12px;color:var(--tc-muted)}
 .metrics,.costs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--tc-line);border-radius:13px;overflow:hidden;margin-bottom:12px}.metric{padding:13px 14px;min-width:0}.metric:nth-child(even){border-left:1px solid var(--tc-line)}.metric .label{font-size:12px;color:var(--tc-muted);display:block;margin-bottom:5px}.metric strong{font-size:20px;font-weight:600;display:block;font-variant-numeric:tabular-nums}.metric button{font:inherit;text-align:left;padding:0;border:0;background:none;color:inherit;cursor:pointer;width:100%}.costs strong{font-size:19px}.note{font-size:12px;margin:5px 0 0;line-height:1.4}.tariff{margin:-3px 0 17px}
 button,input{font:inherit}button{cursor:pointer;border:1px solid var(--tc-line);color:var(--tc-text);background:color-mix(in srgb,var(--tc-muted) 8%,var(--tc-bg));border-radius:9px;padding:10px 14px;min-height:42px}button:disabled{opacity:.5;cursor:default}.primary{width:100%;background:var(--tc-green);border:0;color:#fff;font-weight:600;margin:0 0 14px}.control{margin:0 0 15px}.control label{display:flex;justify-content:space-between;font-size:14px;font-weight:550;gap:12px}.control output{font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--tc-green);margin:12px 0 0;height:22px}input:disabled{opacity:.4}input[type=datetime-local]{width:100%;min-width:0;background:var(--tc-bg);color:var(--tc-text);border:1px solid var(--tc-line);border-radius:8px;padding:11px;margin:8px 0 10px;color-scheme:light}.dark input[type=datetime-local]{color-scheme:dark}.schedule{padding:14px;border:1px solid var(--tc-line);border-radius:13px}.schedule h3{font-size:16px;margin:0 0 5px;font-weight:600}.schedule label{font-size:12px;color:var(--tc-muted)}.schedule-actions{display:flex;gap:8px;flex-wrap:wrap}.schedule-actions button{flex:1}.feedback{font-size:13px;padding:10px 0 0;line-height:1.5}.error{color:var(--error-color,#c54242)}[hidden]{display:none!important}:focus-visible{outline:2px solid var(--tc-green);outline-offset:3px}.asset-error{padding:35px 24px;text-align:center;color:var(--tc-muted)}
 @media(max-width:360px){.head{padding:18px 16px 0}.content{padding:0 14px 16px}.name{font-size:21px}.metric{padding:12px 10px}.metric strong{font-size:17px}.scene .power{right:16px;font-size:12px}.power strong{font-size:18px}.battery{gap:12px}.percent{font-size:32px}}
-@media(prefers-reduced-motion:reduce){.active .flow{animation:none;opacity:.6}.fill{transition:none}}
-/* Keep the power label above the render on narrow cards. */
-.scene img{position:absolute;left:0;bottom:0;height:calc(100% - 34px)}
+@media(prefers-reduced-motion:reduce){.fill{transition:none}}
+/* Car and cable share a cropped 880 x 550 coordinate system. */
+.scene{aspect-ratio:auto;padding-top:calc(62.5% + 34px)}
+.vehicle-art{position:absolute;inset:34px 0 0;overflow:hidden}
+.scene img{position:absolute;left:-34.090909%;top:-38.181818%;width:163.636364%;height:147.272727%;object-fit:fill}
+.scene.custom-image{aspect-ratio:1.92;padding-top:0}
+.custom-image .vehicle-art img{inset:0;width:100%;height:100%;object-fit:contain}
 .scene .power{top:4px}
-.flow{inset:34px 0 0;width:100%;height:calc(100% - 34px);background:none;opacity:1;pointer-events:none}
-.active .flow{animation:none}
-.flow path{fill:none;stroke:var(--tc-green);stroke-width:6;stroke-linecap:round;stroke-dasharray:20 1200;opacity:0}
-.active .flow path{opacity:.9;animation:charge-flow 3s linear infinite}
-@keyframes charge-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-1220}}
-@media(prefers-reduced-motion:reduce){.active .flow path{animation:none;opacity:0}}
+.flow{position:absolute;inset:0;width:100%;height:100%;background:none;opacity:1;pointer-events:none}
+.flow .cable-base,.flow .cable-pulse{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:5}
+.cable-base{stroke:#69747b}
+.active .cable-base{stroke:#349d7d}
+.flow .cable-pulse{stroke:#8beec2;stroke-width:3;stroke-dasharray:90 910;opacity:0}
+.active .cable-pulse{opacity:.9;animation:charge-flow 2.8s linear infinite}
+.charge-plug{fill:#30383c;stroke:#7d898e;stroke-width:1.5}
+@keyframes charge-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-1000}}
+@media(prefers-reduced-motion:reduce){.active .cable-pulse{animation:none;opacity:0}}
 `;
 export class TessieCard extends (globalThis.HTMLElement || class {}) {
   constructor() { super(); this.attachShadow?.({ mode: "open" }); this._draftSchedule = ""; this._vehicles = []; this._discoverySeq = 0; }
@@ -196,7 +203,7 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
   _more(key) { const entityId = this._config.entities[key]; if (entityId) this.dispatchEvent(new CustomEvent("hass-more-info", { bubbles: true, composed: true, detail: { entityId } })); }
   _mount() {
     this.shadowRoot.innerHTML = `<style>${css}.setup{padding:16px 22px;background:color-mix(in srgb,var(--tc-muted) 8%,transparent)}.setup p{margin:0 0 10px;font-size:13px;line-height:1.5}</style><ha-card id="card"><div id="setup" class="setup" hidden><p id="discovery-note" role="status"></p><button id="discovery-retry">Refresh detection</button></div><header class="head"><div><div id="name" class="name"></div><div id="subtitle" class="sub"></div></div><span id="status" class="badge"></span></header>
-      <div id="scene" class="scene"><img id="vehicle" alt="White 2025 Model 3 with Nova wheels, viewed from the left rear"><div id="asset-error" class="asset-error" hidden>Vehicle image unavailable. Configure vehicle_image or check the assets folder.</div><div class="power">AC charging<strong id="hero-power"></strong></div><svg id="flow" class="flow" viewBox="0 0 1792 896" aria-hidden="true"><path d="M 102 385 C 110 690 380 790 615 780 C 950 790 1075 600 1090 410"/></svg></div>
+      <div id="scene" class="scene"><div class="vehicle-art"><img id="vehicle" alt="White Model 3 Highland with Nova wheels, viewed from the left rear"><svg id="flow" class="flow" viewBox="300 210 880 550" aria-hidden="true" hidden><defs><path id="cable-route" d="M 295 748 C 430 714 610 723 730 675 C 793 647 798 582 811 477 C 818 421 823 389 842 376" pathLength="1000"/><linearGradient id="cable-fade" gradientUnits="userSpaceOnUse" x1="295" y1="748" x2="842" y2="376"><stop offset="0" stop-color="white" stop-opacity="0"/><stop offset=".4" stop-color="white"/></linearGradient><mask id="cable-mask" maskUnits="userSpaceOnUse" x="240" y="185" width="1000" height="625"><rect x="240" y="185" width="1000" height="625" fill="url(#cable-fade)"/></mask></defs><g mask="url(#cable-mask)"><use class="cable-base" href="#cable-route"/><use class="cable-pulse" href="#cable-route"/></g><path class="charge-plug" d="M 837 371 L 852 363 Q 858 365 858 371 L 844 382 Z"/><path class="charge-plug" d="M 849 362 L 841 347 L 863 346 L 869 357 Z"/></svg></div><div id="asset-error" class="asset-error" hidden>Vehicle image unavailable. Configure vehicle_image or check the bundled artwork.</div><div class="power">AC charging<strong id="hero-power"></strong></div></div>
       <div class="content"><div class="battery"><div class="battery-text"><div id="battery" class="percent"></div><span class="sub">Battery</span></div><div class="battery-track"><span id="limit-label" class="limit-text"></span><div id="track" class="track" role="meter" aria-label="Battery charge" aria-valuemin="0" aria-valuemax="100"><div id="fill" class="fill"></div></div><div id="marker" class="marker" aria-hidden="true"></div></div></div>
       <div class="metrics"><div class="metric"><button id="power-info"><span class="label">Charging power</span><strong id="power"></strong></button></div><div class="metric"><button id="time-info"><span class="label">Time remaining</span><strong id="remaining"></strong></button></div><div class="metric"><button id="finish-info"><span class="label">Estimated finish</span><strong id="finish"></strong></button></div><div class="metric"><span class="label">Charge limit</span><strong id="limit-metric"></strong></div></div>
       <div class="costs"><div class="metric"><span id="session-label" class="label">Session so far</span><strong id="session-cost"></strong><p id="session-note" class="note"></p></div><div class="metric"><span class="label">To charge limit (est.)</span><strong id="remaining-cost"></strong><p id="estimate-note" class="note"></p></div></div><p id="tariff" class="note tariff"></p>
@@ -204,7 +211,7 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
       <div class="control"><label for="limit">Charge limit<output id="limit-value" for="limit"></output></label><input id="limit" type="range"><p id="limit-note" class="note"></p></div>
       <div class="control"><label for="current">Charging current<output id="current-value" for="current"></output></label><input id="current" type="range"><p id="current-note" class="note"></p></div>
       <section class="schedule"><h3>One-off start</h3><p id="schedule-summary" class="note"></p><label for="schedule-time" id="schedule-label">Start date and time</label><input id="schedule-time" type="datetime-local"><div class="schedule-actions"><button id="schedule-save">Schedule start</button><button id="schedule-cancel">Cancel start</button></div><p class="note">Saving a start time does not stop charging now.</p></section><div id="feedback" class="feedback" role="status" aria-live="polite"></div></div></ha-card>`;
-    this._el("vehicle").addEventListener("error", () => { this._el("vehicle").hidden = true; this._el("asset-error").hidden = false; });
+    this._el("vehicle").addEventListener("error", () => { this._vehicleAssetFailed = true; this._el("vehicle").hidden = true; this._el("flow").toggleAttribute("hidden", true); this._el("asset-error").hidden = false; });
     this._el("discovery-retry").onclick = () => this._refreshVehicles(true);
     this._el("power-info").onclick = () => this._more("power");
     this._el("time-info").onclick = () => this._more(this._config.entities.completion ? "completion" : "time_remaining");
@@ -245,9 +252,11 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
     const chargeStatus = e("charging_status")?.state;
     const status = charging ? "Charging" : plugged === "off" ? "Disconnected" : chargeStatus === "starting" ? "Starting" : chargeStatus === "no_power" ? "No power" : actualCharging === "off" ? (battery !== null && limit !== null && battery >= limit ? "At charge limit" : "Not charging") : "Status unavailable";
     this._text("status", status);
-    const image = c.vehicle_image || (plugged === "off" ? new URL("../assets/model-3-2025-white-nova-disconnected.png", import.meta.url).href : new URL("../assets/model-3-2025-white-nova.png", import.meta.url).href);
-    this._el("flow").hidden = Boolean(c.vehicle_image) || !charging;
-    if (this._el("vehicle").getAttribute("src") !== image) { this._el("vehicle").hidden = false; this._el("asset-error").hidden = true; this._el("vehicle").src = image; }
+    const image = c.vehicle_image || new URL("../assets/model-3-highland-white-nova.png", import.meta.url).href;
+    this._el("scene").classList.toggle("custom-image", Boolean(c.vehicle_image));
+    this._el("vehicle").alt = c.vehicle_image ? "Custom vehicle scene" : "White Model 3 Highland with Nova wheels, viewed from the left rear";
+    if (this._el("vehicle").getAttribute("src") !== image) { this._vehicleAssetFailed = false; this._el("vehicle").hidden = false; this._el("asset-error").hidden = true; this._el("vehicle").src = image; }
+    this._el("flow").toggleAttribute("hidden", Boolean(c.vehicle_image) || Boolean(this._vehicleAssetFailed) || plugged === "off" || !(plugged === "on" || charging));
     const power = quantity(e("power"), "power");
     const formatNumber = (n, digits = 1) => n === null ? "—" : new Intl.NumberFormat(h.locale?.language || "en", { maximumFractionDigits: digits }).format(n);
     const powerText = power === null ? "—" : `${formatNumber(power)} kW`;

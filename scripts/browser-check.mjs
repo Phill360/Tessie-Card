@@ -18,11 +18,17 @@ try {
   const connectedImage = await card.locator('#vehicle').getAttribute('src');
   assert.match(connectedImage, /^data:image\/png;base64,/);
   assert.equal(await card.locator('#status').innerText(), 'Charging');
+  assert.equal(await card.locator('#flow').isVisible(), true);
+  assert.equal(await card.locator('.cable-pulse').evaluate(el => getComputedStyle(el).animationName), 'charge-flow');
+  const initialOffset = await card.locator('.cable-pulse').evaluate(el => getComputedStyle(el).strokeDashoffset);
+  await page.waitForFunction(offset => getComputedStyle(document.querySelector('tessie-card').shadowRoot.querySelector('.cable-pulse')).strokeDashoffset !== offset, initialOffset);
   assert.match(await card.locator('#session-cost').innerText(), /3\.72/);
   assert.match(await card.locator('#remaining-cost').innerText(), /3\.60/);
   await card.locator('#charge').click();
   await page.waitForFunction(() => window.tessieDemo.states['switch.demo_charge'].state === 'off');
   assert.equal(await card.locator('#charge').innerText(), 'Start charging');
+  assert.equal(await card.locator('#flow').isVisible(), true, 'Connected idle retains the cable');
+  assert.equal(await card.locator('.cable-pulse').evaluate(el => getComputedStyle(el).animationName), 'none');
   await card.locator('#limit').fill('85');
   await card.locator('#limit').dispatchEvent('change');
   await page.waitForFunction(() => window.tessieDemo.states['number.demo_limit'].state === '85');
@@ -42,17 +48,23 @@ try {
   assert.equal(await card.locator('#battery').innerText(), '—');
   assert.equal(await card.locator('#charge').isDisabled(), true);
   assert.equal(await card.locator('#current').isDisabled(), true);
+  assert.equal(await card.locator('#flow').isVisible(), false, 'Unknown connection and charging states hide the cable');
   await page.selectOption('#state', 'disconnected');
   assert.equal(await card.locator('#charge').isDisabled(), true);
   await card.locator('#vehicle').evaluate(img => img.decode());
-  assert.notEqual(await card.locator('#vehicle').getAttribute('src'), connectedImage);
+  assert.equal(await card.locator('#vehicle').getAttribute('src'), connectedImage);
+  assert.equal(await card.locator('#flow').isVisible(), false, 'Disconnected hides the cable and connector');
   assert.match(await card.locator('#vehicle').getAttribute('src'), /^data:image\/png;base64,/);
   await page.selectOption('#state', 'charging');
   await card.locator('#vehicle').evaluate(img => img.decode());
   await mkdir('test-results', { recursive: true });
-  if (process.env.TESSIE_CAPTURE_PREVIEW === '1') await card.screenshot({ path: 'docs/build-preview.png' });
+  if (process.env.TESSIE_CAPTURE_PREVIEW === '1' || process.argv.includes('--capture-preview')) {
+    await card.screenshot({ path: 'docs/build-preview.png' });
+    await card.locator('#scene').screenshot({ path: 'docs/charging-scene-preview.png' });
+  }
   await page.screenshot({ path: 'test-results/desktop-light.png', fullPage: true });
   await page.click('#theme');
+  if (process.argv.includes('--capture-preview')) await card.locator('#scene').screenshot({ path: 'docs/charging-scene-dark-preview.png' });
   await page.screenshot({ path: 'test-results/desktop-dark.png', fullPage: true });
   for (const width of [320, 390, 768]) {
     await page.setViewportSize({ width, height: 1000 });
@@ -65,7 +77,9 @@ try {
   await page.evaluate(() => window.tessieDemo.publish());
   assert.equal(await card.locator('#schedule-time').inputValue(), local);
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  assert.equal(await card.locator('#flow path').evaluate(el => getComputedStyle(el).animationName), 'none');
+  assert.equal(await card.locator('.cable-pulse').evaluate(el => getComputedStyle(el).animationName), 'none');
+  assert.equal(await card.locator('.cable-pulse').evaluate(el => getComputedStyle(el).opacity), '0');
+  assert.equal(await card.locator('#flow').isVisible(), true, 'Reduced motion keeps the static connected cable');
   await card.locator('#limit').focus();
   await card.locator('#limit').evaluate(el => { el.value = '90'; el.dispatchEvent(new Event('input', { bubbles: true })); });
   await page.evaluate(() => window.tessieDemo.publish());
@@ -131,6 +145,21 @@ try {
   await page.waitForFunction(() => document.getElementById('vehicle-editor').shadowRoot.getElementById('vehicle-picker').options.length === 3);
   await automatic.evaluate(el => el.remove());
   await editor.evaluate(el => el.remove());
+  // Custom artwork and image failures must never leave a stray cable visible.
+  await page.evaluate(() => {
+    const d = window.tessieDemo;
+    d.card.setConfig({ ...d.config, vehicle_image: '/assets/model-3-highland-white-nova.png' });
+    d.publish();
+  });
+  await card.locator('#vehicle').evaluate(img => img.decode());
+  assert.equal(await card.locator('#flow').isVisible(), false);
+  assert.equal(await card.locator('#scene').evaluate(el => el.classList.contains('custom-image')), true);
+  await page.evaluate(() => { const d = window.tessieDemo; d.card.setConfig(d.config); d.publish(); });
+  await card.locator('#vehicle').evaluate(img => img.decode());
+  await card.locator('#vehicle').dispatchEvent('error');
+  await page.evaluate(() => window.tessieDemo.publish());
+  assert.equal(await card.locator('#flow').isVisible(), false);
+  assert.equal(await card.locator('#asset-error').isVisible(), true);
   assert.deepEqual(errors, []);
   console.log('Browser checks passed: controls, scheduling, errors, themes, responsive layout, vehicle editor, multi-car isolation, renamed/deleted entities and discovery retry.');
 } finally { await browser.close(); server.close(); }

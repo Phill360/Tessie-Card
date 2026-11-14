@@ -2,3 +2,5 @@ node_modules/
 test-results/
 dist/
 *.log
+# Keep the large source artwork archive local; only the selected render ships.
+assets/tesla/library/

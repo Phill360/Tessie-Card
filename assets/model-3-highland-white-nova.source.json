@@ -1,0 +1,29 @@
+{
+  "model": "m3",
+  "modelLabel": "Model 3",
+  "profile": "modern",
+  "years": "2024-2026",
+  "trimLabel": "All-Wheel Drive (Premium)",
+  "kind": "exterior",
+  "trim": "$MT370",
+  "paint": "$PPSW",
+  "wheel": "$W39G",
+  "interior": "$IPB3",
+  "layout": "",
+  "steering": "",
+  "view": "STUD_REAR34",
+  "labels": {
+    "paint": "Pearl White Multi-Coat",
+    "wheel": "19\" Nova",
+    "interior": "All Black"
+  },
+  "file": "m3/modern/mt370/exterior_ppsw_w39g_ipb3_default_default_stud-rear34.png",
+  "url": "https://static-assets.tesla.com/configurator/compositor?options=$MT370,$PPSW,$W39G,$IPB3&view=STUD_REAR34&model=m3&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+  "status": "downloaded",
+  "downloadedAt": "2026-11-14T21:16:34.107Z",
+  "width": 1440,
+  "height": 810,
+  "bytes": 260323,
+  "sha256": "15a2554f13fcffc83c6bd66d56384d96f37869560ce76ce6a47bd00e3fbb74fd",
+  "review": "pending visual review; HTTP success does not verify option fidelity"
+}

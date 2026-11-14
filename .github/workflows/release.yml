@@ -24,4 +24,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ github.ref_name }}
-        run: gh release create "$RELEASE_TAG" tessie-card.js --verify-tag --title "Tessie Card $RELEASE_TAG" --notes-file docs/release-notes.md
+          # v0.2.1 is the cable-preview test release. Hyphenated tags are also tests.
+          PRERELEASE: ${{ github.ref_name == 'v0.2.1' || contains(github.ref_name, '-') }}
+        run: |
+          release_args=()
+          if [[ "$PRERELEASE" == "true" ]]; then
+            release_args+=(--prerelease --latest=false)
+          fi
+          gh release create "$RELEASE_TAG" tessie-card.js --verify-tag --title "Tessie Card $RELEASE_TAG" --notes-file docs/release-notes.md "${release_args[@]}"

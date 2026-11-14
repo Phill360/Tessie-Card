@@ -1,6 +1,6 @@
-# Initial build validation
+# Test release validation
 
-Build: 0.2.0.
+Build: 0.2.1 (test prerelease).
 
 - `node --test`: twelve tests pass. Covers missing/invalid measurements, power and
   energy units, tariff units and negative tariffs, session-cost precedence,
@@ -12,8 +12,9 @@ Build: 0.2.0.
 - `node --check tessie-card.js`: passes.
 - Headless Edge browser regression: passes. Covers simulated start/stop, number
   updates, one-off schedule/cancel, command rejection, missing entities/readings,
-  persistent session-cost override, disconnected artwork, draft preservation,
-  reduced motion, and no horizontal overflow at 320/390/768px.
+  persistent session-cost override, static connected cable, hidden disconnected
+  cable, moving charging pulse, draft preservation, reduced motion, custom-image
+  suppression, failed-image handling, and no horizontal overflow at 320/390/768px.
   Visual editor checks cover selecting either of two vehicles, command isolation,
   clearing vehicle-specific settings when switching, live entity renames, device
   removal without fallback, failed registry access/retry, and 320px editor layout.
