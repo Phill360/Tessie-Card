@@ -62,6 +62,15 @@ for(const a of selections){
     port:transformPort(normalization.sourceBounds,normalization,fraction)});
   provenance.push({configuration:entries.at(-1).id,image:id,source:a.url,sourceSha256:a.sha256});
 }
+const aliases=JSON.parse(await readFile(resolve(destination,'aliases.json'),'utf8'));
+for(const alias of aliases){
+  for(const source of entries.filter(a=>a.model===alias.model&&a.generation===alias.generation&&a.trim===alias.sourceTrim)){
+    const parts=source.id.split(':');parts[2]=alias.trim;
+    const entry={...source,id:parts.join(':'),trim:alias.trim,trimLabel:alias.trimLabel,artworkAliasOf:source.id};
+    entries.push(entry);
+    provenance.push({...provenance.find(p=>p.configuration===source.id),configuration:entry.id,artworkAliasOf:source.id});
+  }
+}
 entries.sort((a,b)=>a.id.localeCompare(b.id));provenance.sort((a,b)=>a.configuration.localeCompare(b.configuration));
 const ordered=Object.fromEntries(Object.entries(images).sort(([a],[b])=>a.localeCompare(b)));
 const catalog={schema:2,width:1000,height:625,framing:framing.layout,entries,images:ordered};

@@ -1,0 +1,10 @@
+[
+  {
+    "model": "my",
+    "generation": "legacy2020",
+    "trim": "RWD",
+    "trimLabel": "Rear-Wheel Drive",
+    "sourceTrim": "MTY09",
+    "note": "Original Model Y RWD uses the matching Long Range AWD appearance; this is a local artwork alias, not a Tesla option code."
+  }
+]

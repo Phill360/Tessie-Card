@@ -61,3 +61,13 @@ test('appearance validation rejects unavailable or incomplete combinations and p
   assert.throws(()=>validateConfig({...config,artwork:{model:'my'}}),/artwork/);
   assert.throws(()=>validateConfig({...config,artwork:{...DEFAULT_ARTWORK,source:'https://example.com'}}),/artwork/);
 });
+
+test('original Model Y RWD exposes the matching Long Range artwork without duplicate image data',()=>{
+  const selection={model:'my',generation:'legacy2020',trim:'RWD',paint:'PPSW',interior:'INPB0',wheel:'WY19B'};
+  const rwd=selectArtwork(selection),longRange=selectArtwork({...selection,trim:'MTY09'});
+  assert.equal(rwd.trimLabel,'Rear-Wheel Drive');
+  assert.equal(rwd.artworkAliasOf,longRange.id);
+  assert.equal(rwd.image,longRange.image);
+  assert.deepEqual(rwd.port,longRange.port);
+  assert.ok(artworkOptions(selection,'trim').some(o=>o.value==='RWD'));
+});

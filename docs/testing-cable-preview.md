@@ -1,6 +1,6 @@
-# Vehicle appearance test build (0.2.3)
+# Vehicle appearance test build (0.2.4)
 
-This test build embeds 368 Model 3 and Model Y appearance configurations and draws
+This test build embeds 388 Model 3 and Model Y appearance configurations and draws
 the charging cable separately. It runs without the original archive or Tesla URLs.
 The card type and existing entity configuration are unchanged.
 
@@ -12,7 +12,7 @@ The card type and existing entity configuration are unchanged.
    Tessie Card resource URL to:
 
    ```text
-   /local/tessie-card-test/tessie-card.js?v=0.2.3
+   /local/tessie-card-test/tessie-card.js?v=0.2.4
    ```
 
    Keep the resource type **JavaScript module**. Save the previous resource URL
@@ -21,8 +21,8 @@ The card type and existing entity configuration are unchanged.
 3. Fully reload the dashboard. Keep your existing card and entity mappings.
    If your configuration sets `vehicle_image`, remove that override from the
    test card to see the bundled artwork and animated cable. Edit the card and
-   use Vehicle appearance to select model, generation, vehicle trim, paint,
-   interior/trim colour and wheels. Check that the preview updates and saved
+   use Vehicle appearance to select model, generation, vehicle variant, paint,
+   trim colour and wheels. Check that the preview updates and saved
    choices survive closing and reopening the card editor.
 4. Confirm these visual states with the vehicle's real reported states:
 
@@ -43,7 +43,7 @@ The card type and existing entity configuration are unchanged.
 6. Check the scene on your usual dashboard widths and in light and dark themes.
 
 To roll back, restore the previous resource URL and fully reload the dashboard.
-Version 0.2.3 is a test prerelease. It corrects vehicle sizing and cable alignment
+Version 0.2.4 is a test prerelease. It corrects vehicle sizing and cable alignment
 across appearance options. Select it in HACS with prerelease versions enabled.
 
 ## Local simulation

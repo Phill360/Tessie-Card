@@ -2,7 +2,7 @@
 
 ## Current bundled catalog
 
-`vehicles/catalog.json` lists 368 available full-car configurations across Model
+`vehicles/catalog.json` lists 388 available full-car configurations across Model
 3 and Model Y generations. There are 304 unique prepared transparent WebP images
 under `vehicles/`; they are normalized to a 1000 x 625 canvas and embedded into
 the standalone JavaScript module. `vehicles/sources.json` records the original
@@ -59,3 +59,7 @@ with the charge flap closed. Selected when the configured connection sensor is o
 
 Generated with the built-in image-generation tool. Prompt records are in
 `docs/vehicle-asset-prompts.md`. Use `vehicle_image` to override the full scene.
+
+Original Model Y RWD selections reuse the corresponding Long Range AWD image
+and cable anchor. The explicit local mapping is stored in vehicles/aliases.json;
+source option codes and source provenance remain unchanged.

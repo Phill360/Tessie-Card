@@ -1,21 +1,15 @@
-# Tessie Card 0.2.3 — vehicle framing correction
+# Tessie Card 0.2.4 — trim colour and RWD selection
 
-Corrects inconsistent vehicle size and detached charging cables when changing
-paint, interior or wheel options. The original Model Y Gemini render is the
-reference for apparent vehicle width and top position.
+- Renames the drivetrain selector to Vehicle variant and the interior selector
+  to Trim colour, showing only Black or White where available.
+- Groups duplicate interior codes under their colour while retaining existing
+  saved selections. Compatible colour choices survive variant changes.
+- Adds Rear-Wheel Drive for the original 2020–2024 Model Y generation, using
+  matching Long Range AWD artwork. This is an artwork alias rather than a new
+  Tesla API option code, and it does not change the physical vehicle controlled.
+- Covers 388 selectable appearance configurations with the same 304 prepared
+  images and corrected cable registration from 0.2.3.
 
-- Measures the main opaque car silhouette instead of cropping around stray
-  compositor pixels in the transparent background.
-- Rebuilds all 304 prepared images with consistent framing while preserving
-  the car's proportions. The 368 saved appearance combinations are retained.
-- Projects each charge-port anchor using the same image scale and offset,
-  keeping the connector attached when artwork changes.
-- Adds artifact framing checks and regression coverage for source padding,
-  isolated pixels and the Model Y Gemini/Induction case.
-
-The card configuration and charging controls are unchanged. Front-view fallbacks
-continue to hide the cable. Testing uses simulated Home Assistant data; the
-reported live screenshots were used as the visual reference.
-
-Install the v0.2.3 test prerelease through HACS and fully reload the dashboard so
-its embedded images replace the previous cached module.
+Validation: 20 automated tests plus browser checks for the colour labels, RWD
+selection, dependent artwork options, charging animation and vehicle isolation.
+Install the test prerelease in HACS and fully reload the dashboard.

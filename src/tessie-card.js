@@ -1,6 +1,6 @@
-/* Tessie Card 0.2.3 — dependency-free Home Assistant dashboard card. */
-import { ARTWORK_IMAGES, ARTWORK_FIELDS, DEFAULT_ARTWORK, selectArtwork, artworkOptions, changeArtwork } from './vehicle-artwork.js';
-export const VERSION = "0.2.3";
+/* Tessie Card 0.2.4 — dependency-free Home Assistant dashboard card. */
+import { ARTWORK_IMAGES, ARTWORK_FIELDS, DEFAULT_ARTWORK, selectArtwork, artworkOptions, changeArtwork, interiorColour } from './vehicle-artwork.js';
+export const VERSION = "0.2.4";
 const invalid = new Set(["unknown", "unavailable", "", "none"]);
 export function numeric(entity) {
   if (!entity || entity.state == null || typeof entity.state === "boolean" || invalid.has(String(entity.state).trim().toLowerCase())) return null;
@@ -262,7 +262,7 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
     this._text("status", status);
     const artwork = selectArtwork(c.artwork), image = c.vehicle_image || ARTWORK_IMAGES[artwork.image];
     this._el("scene").classList.toggle("custom-image", Boolean(c.vehicle_image));
-    this._el("vehicle").alt = c.vehicle_image ? "Custom vehicle scene" : [artwork.modelLabel, artwork.years, artwork.trimLabel, artwork.paintLabel, artwork.interiorLabel, artwork.wheelLabel, artwork.view === "rear" ? "left rear view" : "front view"].join(" · ");
+    this._el("vehicle").alt = c.vehicle_image ? "Custom vehicle scene" : [artwork.modelLabel, artwork.years, artwork.trimLabel, artwork.paintLabel, interiorColour(artwork.interiorLabel), artwork.wheelLabel, artwork.view === "rear" ? "left rear view" : "front view"].join(" · ");
     if (this._el("vehicle").getAttribute("src") !== image) { this._vehicleAssetFailed = false; this._el("vehicle").hidden = false; this._el("asset-error").hidden = true; this._el("vehicle").src = image; }
     const showCable = !c.vehicle_image && !this._vehicleAssetFailed && artwork.port && plugged !== "off" && (plugged === "on" || charging);
     this._el("flow").toggleAttribute("hidden", !showCable);
@@ -397,8 +397,8 @@ export class TessieCardEditor extends (globalThis.HTMLElement || class {}) {
         <style>.artwork-section{border:1px solid var(--divider-color,#dce0e5);border-radius:12px;padding:16px;margin-top:20px}.artwork-section h3{margin:0;font-size:17px}.artwork-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}.artwork-preview{margin:16px 0 0}.artwork-preview img{width:100%;aspect-ratio:1.6;object-fit:contain;display:block;border-radius:9px;background:color-mix(in srgb,var(--secondary-text-color,#67717b) 9%,transparent)}.artwork-preview figcaption{font-size:12px;line-height:1.5;margin-top:8px;overflow-wrap:anywhere}[hidden]{display:none!important}@media(max-width:360px){.artwork-grid{grid-template-columns:minmax(0,1fr)}}</style>
         <section class="artwork-section"><h3>Vehicle appearance</h3><p>Match the artwork to your vehicle. Charging controls continue to use the Tessie vehicle selected above.</p><div class="artwork-grid">
         <div><label for="artwork-model">Vehicle model</label><select id="artwork-model"></select></div><div><label for="artwork-generation">Generation</label><select id="artwork-generation"></select></div>
-        <div><label for="artwork-trim">Vehicle trim</label><select id="artwork-trim"></select></div><div><label for="artwork-paint">Paint colour</label><select id="artwork-paint"></select></div>
-        <div><label for="artwork-interior">Interior / trim colour</label><select id="artwork-interior"></select></div><div><label for="artwork-wheel">Wheels</label><select id="artwork-wheel"></select></div></div>
+        <div><label for="artwork-trim">Vehicle variant</label><select id="artwork-trim"></select></div><div><label for="artwork-paint">Paint colour</label><select id="artwork-paint"></select></div>
+        <div><label for="artwork-interior">Trim colour</label><select id="artwork-interior"></select></div><div><label for="artwork-wheel">Wheels</label><select id="artwork-wheel"></select></div></div>
         <figure class="artwork-preview"><img id="artwork-preview" alt=""><figcaption id="artwork-caption"></figcaption></figure><p id="artwork-status" role="status"></p><button id="artwork-builtin" hidden>Use selected vehicle artwork</button></section>
         <p>Vehicle charging entities are detected automatically. Tariff and battery capacity are configured separately.</p>
         <details><summary>Detected entity mappings</summary><ul id="mapping-list"></ul></details><p>Use YAML for individual entity overrides, a custom scene or scheduling helpers. Selecting a different vehicle clears vehicle-specific mappings, capacity, artwork and scheduling, keeping your tariff and card name.</p>`;
@@ -455,8 +455,8 @@ export class TessieCardEditor extends (globalThis.HTMLElement || class {}) {
     }
     const preview=get("artwork-preview"), image=this._config.vehicle_image || ARTWORK_IMAGES[artwork.image];
     if(preview.getAttribute("src")!==image)preview.src=image;
-    preview.alt=this._config.vehicle_image ? "Custom vehicle artwork" : [artwork.modelLabel,artwork.paintLabel,artwork.interiorLabel,artwork.wheelLabel].join(" · ");
-    get("artwork-caption").textContent=[artwork.modelLabel,artwork.years,artwork.trimLabel,artwork.paintLabel,artwork.interiorLabel,artwork.wheelLabel].join(" · ");
+    preview.alt=this._config.vehicle_image ? "Custom vehicle artwork" : [artwork.modelLabel,artwork.paintLabel,interiorColour(artwork.interiorLabel),artwork.wheelLabel].join(" · ");
+    get("artwork-caption").textContent=[artwork.modelLabel,artwork.years,artwork.trimLabel,artwork.paintLabel,interiorColour(artwork.interiorLabel),artwork.wheelLabel].join(" · ");
     get("artwork-status").textContent=this._config.vehicle_image ? "Your custom image is active. Choose an option or use the button below to show the selected artwork." : artwork.port ? "Rear view with charging cable animation. Only available downloaded combinations are offered." : "Full-car front view. A usable rear render was unavailable, so the charging cable is hidden for this configuration.";
     get("artwork-builtin").hidden=!this._config.vehicle_image;
     for (const [id, value] of [["card-name", this._config.name || ""], ["tariff-entity", this._config.entities?.tariff || ""], ["currency", this._config.currency || "AUD"], ["capacity", this._config.battery_capacity_kwh ?? ""]]) if (this.shadowRoot.activeElement !== get(id)) get(id).value = value;

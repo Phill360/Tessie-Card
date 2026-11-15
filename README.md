@@ -1,6 +1,6 @@
 # Tessie Card
 
-Version **0.2.3** (test prerelease) of a custom Home Assistant charging card for the
+Version **0.2.4** (test prerelease) of a custom Home Assistant charging card for the
 [Tessie integration](https://www.home-assistant.io/integrations/tessie/).
 Inspired by the rendered scenes and flow presentation in
 [Sigenergy Flow Card](https://github.com/jyavenard/sigenergy-flow-card).
@@ -66,7 +66,7 @@ Your card configuration and entity mappings can stay the same.
 1. Download `tessie-card.js` from the latest GitHub release (or the repository
    root) and copy it to `/config/www/tessie-card/tessie-card.js`.
 2. Add a dashboard resource (Settings > Dashboards > Resources):
-   URL `/local/tessie-card/tessie-card.js?v=0.2.3`, type **JavaScript module**.
+   URL `/local/tessie-card/tessie-card.js?v=0.2.4`, type **JavaScript module**.
 3. Add a manual card using [examples/card.yaml](examples/card.yaml), replacing
    every example entity ID with the real ID from Developer Tools > States.
 4. Reload the dashboard. Increase the resource version query after updating files.
@@ -78,11 +78,16 @@ needed only for development, not for installation.
 
 In the card editor, use **Tessie vehicle** to choose the physical car and
 **Vehicle appearance** to choose its render. The artwork selectors cover vehicle
-model, generation, vehicle trim, paint colour, interior/trim colour and wheels.
+model, generation, vehicle variant, paint colour, trim colour and wheels.
 Each dropdown offers only available downloaded combinations; changing a parent
 preserves compatible choices and resets incompatible ones. The editor shows a
 live image preview. Changing the physical Tessie vehicle clears its appearance
 settings, along with other vehicle-specific settings.
+
+**Vehicle variant** selects RWD, Long Range/AWD or Performance as available.
+**Trim colour** contains Black or White, without duplicate interior-code entries.
+The original Model Y RWD uses the matching Long Range artwork, retaining the same
+vehicle size and cable alignment.
 
 The 2018–2020 Model 3 rear-view code returned a taillight close-up, so this group
 uses full-car front views. Three newer Model 3 combinations also use front views

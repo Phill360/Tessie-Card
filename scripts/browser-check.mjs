@@ -112,18 +112,25 @@ try {
   // Artwork selectors must update the actual card, retain entity targeting and
   // offer only real downloaded combinations when parents change.
   await editor.locator('#artwork-model').selectOption('my');
+  assert.deepEqual(await editor.locator('#artwork-interior option').allTextContents(),['Black','White']);
+  assert.equal(await editor.locator('label[for="artwork-trim"]').innerText(),'Vehicle variant');
   await editor.locator('#artwork-paint').selectOption('PX02');
   await editor.locator('#artwork-interior').selectOption('IPW12');
   await editor.locator('#artwork-wheel').selectOption('WY20B');
   await automatic.locator('#vehicle').evaluate(img=>img.decode());
-  assert.match(await automatic.locator('#vehicle').getAttribute('alt'), /Model Y.*Diamond Black.*Black & White.*Helix/);
+  assert.match(await automatic.locator('#vehicle').getAttribute('alt'), /Model Y.*Diamond Black.*White.*Helix/);
   assert.equal(await automatic.locator('#flow').isVisible(),true);
+  assert.doesNotMatch(await editor.locator('#artwork-caption').innerText(),/Black & White|All Black|Dash Trim/);
   await automatic.locator('#scene').screenshot({path:'test-results/model-y-juniper-charging.png'});
   assert.equal(await page.evaluate(()=>window.savedCardConfig.device_id),'demo-vehicle-one');
   assert.equal(await page.evaluate(()=>window.savedCardConfig.entities.tariff),'sensor.demo_tariff');
   await editor.screenshot({path:'test-results/artwork-picker.png'});
   if(process.argv.includes('--capture-preview'))await editor.locator('.artwork-section').screenshot({path:'docs/artwork-picker-preview.png'});
   await editor.locator('#artwork-generation').selectOption('legacy2020');
+  await editor.locator('#artwork-trim').selectOption('RWD');
+  await automatic.locator('#vehicle').evaluate(img=>img.decode());
+  assert.match(await automatic.locator('#vehicle').getAttribute('alt'),/Rear-Wheel Drive/);
+  await editor.locator('#artwork-trim').selectOption('MTY09');
   await editor.locator('#artwork-paint').selectOption('PPSW');
   await editor.locator('#artwork-interior').selectOption('INPB0');
   await editor.locator('#artwork-wheel').selectOption('WY19B');
@@ -137,6 +144,7 @@ try {
   assert.equal(await editor.locator('#artwork-paint option[value="PX02"]').count(),0);
   await editor.locator('#artwork-model').selectOption('m3');
   await editor.locator('#artwork-generation').selectOption('legacy2018');
+  assert.deepEqual(await editor.locator('#artwork-interior option').allTextContents(),['Black','White']);
   await automatic.locator('#vehicle').evaluate(img=>img.decode());
   assert.equal(await automatic.locator('#flow').isVisible(),false);
   assert.match(await automatic.locator('#artwork-note').innerText(),/Front view/);
