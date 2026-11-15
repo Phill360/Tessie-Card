@@ -16,7 +16,7 @@ try {
   const card = page.locator('tessie-card');
   await card.locator('#vehicle').evaluate(img => img.decode());
   const connectedImage = await card.locator('#vehicle').getAttribute('src');
-  assert.match(connectedImage, /^data:image\/png;base64,/);
+  assert.match(connectedImage, /^data:image\/webp;base64,/);
   assert.equal(await card.locator('#status').innerText(), 'Charging');
   assert.equal(await card.locator('#flow').isVisible(), true);
   assert.equal(await card.locator('.cable-pulse').evaluate(el => getComputedStyle(el).animationName), 'charge-flow');
@@ -54,7 +54,7 @@ try {
   await card.locator('#vehicle').evaluate(img => img.decode());
   assert.equal(await card.locator('#vehicle').getAttribute('src'), connectedImage);
   assert.equal(await card.locator('#flow').isVisible(), false, 'Disconnected hides the cable and connector');
-  assert.match(await card.locator('#vehicle').getAttribute('src'), /^data:image\/png;base64,/);
+  assert.match(await card.locator('#vehicle').getAttribute('src'), /^data:image\/webp;base64,/);
   await page.selectOption('#state', 'charging');
   await card.locator('#vehicle').evaluate(img => img.decode());
   await mkdir('test-results', { recursive: true });
@@ -109,11 +109,38 @@ try {
   await editor.locator('#vehicle-picker').selectOption('demo-vehicle-one');
   await page.waitForFunction(() => document.getElementById('automatic-card').shadowRoot.getElementById('battery').textContent === '62%');
   assert.equal(await automatic.locator('#status').innerText(), 'Charging'); // Disabled binary sensor: enum fallback.
+  // Artwork selectors must update the actual card, retain entity targeting and
+  // offer only real downloaded combinations when parents change.
+  await editor.locator('#artwork-model').selectOption('my');
+  await editor.locator('#artwork-paint').selectOption('PX02');
+  await editor.locator('#artwork-interior').selectOption('IPW12');
+  await editor.locator('#artwork-wheel').selectOption('WY20B');
+  await automatic.locator('#vehicle').evaluate(img=>img.decode());
+  assert.match(await automatic.locator('#vehicle').getAttribute('alt'), /Model Y.*Diamond Black.*Black & White.*Helix/);
+  assert.equal(await automatic.locator('#flow').isVisible(),true);
+  await automatic.locator('#scene').screenshot({path:'test-results/model-y-juniper-charging.png'});
+  assert.equal(await page.evaluate(()=>window.savedCardConfig.device_id),'demo-vehicle-one');
+  assert.equal(await page.evaluate(()=>window.savedCardConfig.entities.tariff),'sensor.demo_tariff');
+  await editor.screenshot({path:'test-results/artwork-picker.png'});
+  if(process.argv.includes('--capture-preview'))await editor.locator('.artwork-section').screenshot({path:'docs/artwork-picker-preview.png'});
+  await editor.locator('#artwork-generation').selectOption('legacy2020');
+  await editor.locator('#artwork-wheel').selectOption('WY20P');
+  await automatic.locator('#vehicle').evaluate(img=>img.decode());
+  assert.match(await automatic.locator('#vehicle').getAttribute('alt'), /2020-2024.*Induction/);
+  await automatic.locator('#scene').screenshot({path:'test-results/model-y-original-charging.png'});
+  assert.equal(await editor.locator('#artwork-paint option[value="PX02"]').count(),0);
+  await editor.locator('#artwork-model').selectOption('m3');
+  await editor.locator('#artwork-generation').selectOption('legacy2018');
+  await automatic.locator('#vehicle').evaluate(img=>img.decode());
+  assert.equal(await automatic.locator('#flow').isVisible(),false);
+  assert.match(await automatic.locator('#artwork-note').innerText(),/Front view/);
+  // Selecting a different physical vehicle clears the previous appearance.
   await editor.locator('#vehicle-picker').selectOption('demo-vehicle-two');
   await page.waitForFunction(() => document.getElementById('automatic-card').shadowRoot.getElementById('battery').textContent === '45%');
   assert.equal(await page.evaluate(() => window.savedCardConfig.entities.tariff), 'sensor.demo_tariff');
   assert.equal(await page.evaluate(() => window.savedCardConfig.schedule), undefined);
   assert.equal(await page.evaluate(() => window.savedCardConfig.battery_capacity_kwh), undefined);
+  assert.equal(await page.evaluate(() => window.savedCardConfig.artwork), undefined);
   await automatic.locator('#charge').click();
   await page.waitForFunction(() => window.tessieDemo.states['switch.second_charge'].state === 'off');
   assert.match(await page.locator('#log').innerText(), /switch.second_charge/);
@@ -160,6 +187,15 @@ try {
   await page.evaluate(() => window.tessieDemo.publish());
   assert.equal(await card.locator('#flow').isVisible(), false);
   assert.equal(await card.locator('#asset-error').isVisible(), true);
+  await page.selectOption('#state','charging');
+  await page.locator('#appearance-settings > summary').click();
+  const demoEditor=page.locator('#appearance-editor');
+  await demoEditor.locator('#artwork-model').selectOption('my');
+  await card.locator('#vehicle').evaluate(img=>img.decode());
+  assert.match(await card.locator('#vehicle').getAttribute('alt'),/Model Y/);
+  await page.selectOption('#state','idle');
+  assert.match(await card.locator('#vehicle').getAttribute('alt'),/Model Y/);
+  assert.equal(await card.locator('#flow').isVisible(),true);
   assert.deepEqual(errors, []);
-  console.log('Browser checks passed: controls, scheduling, errors, themes, responsive layout, vehicle editor, multi-car isolation, renamed/deleted entities and discovery retry.');
+  console.log('Browser checks passed: artwork selectors, live previews, front-view fallbacks, demo editor, controls, charging cable, reduced motion, responsive themes and vehicle isolation.');
 } finally { await browser.close(); server.close(); }

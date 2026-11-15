@@ -2,14 +2,16 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { buildBundle } from '../scripts/build.mjs';
-test('HACS embeds the local Tesla render in a reproducible single file', async () => {
+import { ARTWORK_IMAGES } from '../src/vehicle-artwork.js';
+test('HACS embeds all prepared artwork in a reproducible single file', async () => {
   const root = new URL('../', import.meta.url);
   const manifest = JSON.parse(await readFile(new URL('hacs.json', root), 'utf8'));
   assert.equal(manifest.content_in_root, true);
   assert.equal(manifest.filename, 'tessie-card.js');
   const artifact = await readFile(new URL(manifest.filename, root), 'utf8');
   assert.equal(artifact, await buildBundle());
-  assert.equal((artifact.match(/data:image\/png;base64,/g) || []).length, 1);
+  assert.equal((artifact.match(/data:image\/webp;base64,/g) || []).length, Object.keys(ARTWORK_IMAGES).length);
+  assert.doesNotMatch(artifact, /^import /m);
   assert.doesNotMatch(artifact, /new URL\([^\n]*assets\//);
   const { VERSION, tariffRate } = await import('../tessie-card.js');
   const pkg = JSON.parse(await readFile(new URL('package.json', root), 'utf8'));

@@ -1,6 +1,6 @@
 # Tessie Card
 
-Version **0.2.1** (test prerelease) of a custom Home Assistant charging card for the
+Version **0.2.2** (local test build) of a custom Home Assistant charging card for the
 [Tessie integration](https://www.home-assistant.io/integrations/tessie/).
 Inspired by the rendered scenes and flow presentation in
 [Sigenergy Flow Card](https://github.com/jyavenard/sigenergy-flow-card).
@@ -9,9 +9,11 @@ Inspired by the rendered scenes and flow presentation in
 
 ## Included
 
-- Official white Model 3 Highland render with Nova wheels and black interior,
-  viewed from the left rear. A cable enters from outside the scene, with no charger
-  visible. The cable animates while charging and hides when disconnected.
+- Local Tesla renders for Model 3 (2018–2020, 2021–2023 and Highland) and Model Y
+  (original and Juniper), with model, generation, trim, paint, interior and wheel
+  selectors in the visual editor. The default is a white Model 3 Highland.
+- A cable enters from outside the scene with no charger visible. Rear views show
+  charging animation; front-view fallbacks are labelled and hide the cable.
 - Battery percentage, target marker, charging power, remaining time and finish time.
 - Session cost and estimated additional cost to reach the limit, using a tariff entity.
 - Always-visible start/stop, charge-limit and charging-current controls.
@@ -24,8 +26,8 @@ Inspired by the rendered scenes and flow presentation in
 This build has automated local tests and a simulated browser demo. It has **not
 yet been validated against a live Home Assistant/Tessie installation**. Entity IDs
 can be detected from the selected vehicle or mapped manually. Only the selected
-Model 3 artwork is bundled; automatic paint/wheel matching and other vehicle
-renders are not implemented yet.
+Model 3 and Model Y artwork is bundled. Choose the appearance in the visual
+editor; paint and wheels are not inferred from vehicle telemetry.
 Use `vehicle_image` for another complete scene.
 
 ## Install with HACS (recommended)
@@ -64,13 +66,45 @@ Your card configuration and entity mappings can stay the same.
 1. Download `tessie-card.js` from the latest GitHub release (or the repository
    root) and copy it to `/config/www/tessie-card/tessie-card.js`.
 2. Add a dashboard resource (Settings > Dashboards > Resources):
-   URL `/local/tessie-card/tessie-card.js?v=0.2.1`, type **JavaScript module**.
+   URL `/local/tessie-card/tessie-card.js?v=0.2.2`, type **JavaScript module**.
 3. Add a manual card using [examples/card.yaml](examples/card.yaml), replacing
    every example entity ID with the real ID from Developer Tools > States.
 4. Reload the dashboard. Increase the resource version query after updating files.
 
 The root `tessie-card.js` is a generated standalone file. The `assets` folder is
 needed only for development, not for installation.
+
+## Vehicle appearance
+
+In the card editor, use **Tessie vehicle** to choose the physical car and
+**Vehicle appearance** to choose its render. The artwork selectors cover vehicle
+model, generation, vehicle trim, paint colour, interior/trim colour and wheels.
+Each dropdown offers only available downloaded combinations; changing a parent
+preserves compatible choices and resets incompatible ones. The editor shows a
+live image preview. Changing the physical Tessie vehicle clears its appearance
+settings, along with other vehicle-specific settings.
+
+The 2018–2020 Model 3 rear-view code returned a taillight close-up, so this group
+uses full-car front views. Three newer Model 3 combinations also use front views
+where rear requests failed. These views are labelled and have no cable overlay.
+The remaining configurations use rear renders with the charging animation.
+
+Advanced YAML can specify the same selection:
+
+```yaml
+artwork:
+  model: my
+  generation: legacy2020
+  trim: MTY09
+  paint: PPSW
+  interior: INPB0
+  wheel: WY20P
+```
+
+This example selects an original Model Y Long Range AWD with white paint, black
+interior and 20-inch Induction wheels. `vehicle_image`, when set, overrides the
+selected render and hides the built-in cable. Choose an appearance option in the
+editor to return to the bundled renders.
 
 ## Automatic vehicle setup
 
@@ -253,15 +287,16 @@ standalone module as a GitHub release asset.
 
 ## Artwork and design
 
-The bundled vehicle image is a locally stored Tesla compositor render. A separate
+The bundled vehicle images are locally stored Tesla compositor renders. A separate
 SVG cable and connector overlay follows the left-rear charge port, with a green
 pulse moving towards the car only during confirmed charging. Connected idle
 shows a static cable; disconnected or unknown connection states hide it (unless
 charging is confirmed). Reduced-motion settings retain a static cable.
 `vehicle_image` accepts a local absolute URL or an HTTP(S) URL for a complete
 scene; custom scenes disable the built-in cable overlay. A custom scene is used
-for all states. The larger downloaded vehicle library is separate from the card
-bundle. Artwork source details are recorded in [assets/README.md](assets/README.md).
+for all states. Prepared WebP renders are deduplicated and embedded in the card;
+only the selected image is decoded for display. The larger original PNG archive
+stays local. Artwork source details are recorded in [assets/README.md](assets/README.md).
 
 The [design brief](docs/design-brief.md) records the agreed scope. Climate controls,
 recurring schedules, charging history and multi-vehicle switching are outside

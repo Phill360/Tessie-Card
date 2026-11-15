@@ -7,14 +7,14 @@ const config = {
   entities: { battery: 'sensor.demo_battery', charge: 'switch.demo_charge', charging: 'binary_sensor.demo_charging', plugged_in: 'binary_sensor.demo_plugged', charge_limit: 'number.demo_limit', charge_current: 'number.demo_current', power: 'sensor.demo_power', completion: 'sensor.demo_completion', session_energy: 'sensor.demo_energy', tariff: 'sensor.demo_tariff' },
   schedule: { control_script: 'script.demo_schedule', datetime_entity: 'input_datetime.demo_start', armed_entity: 'input_boolean.demo_armed', status_entity: 'input_select.demo_status' }
 };
-let states, dark = false;
+let states, dark = false, currentConfig = config;
 const registry = demoRegistry();
 const registryListeners = new Map();
 const connection = { subscribeEvents: async (callback, type) => { const set = registryListeners.get(type) || new Set(); set.add(callback); registryListeners.set(type, set); return () => set.delete(callback); } };
 async function callWS({ type }) { if (type === 'config/device_registry/list') return structuredClone(registry.devices); if (type === 'config/entity_registry/list') return structuredClone(registry.entries); throw new Error('Unsupported demo request'); }
 const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 function reset(mode = 'charging') {
-  card.setConfig(config);
+  card.setConfig(currentConfig);
   states = {
     'sensor.demo_battery': entity(mode === 'complete' ? 80 : 62, { unit_of_measurement: '%' }),
     'switch.demo_charge': entity(mode === 'charging' || mode === 'error' ? 'on' : 'off'),
@@ -64,4 +64,10 @@ document.getElementById('state').onchange = e => reset(e.target.value);
 document.getElementById('theme').onclick = () => { dark = !dark; document.body.classList.toggle('dark', dark); document.getElementById('theme').textContent = dark ? 'Light theme' : 'Dark theme'; publish(); };
 card.addEventListener('hass-more-info', e => { document.getElementById('log').textContent = `Entity details: ${e.detail.entityId}`; });
 card.setConfig(config); reset();
+const appearanceEditor = document.getElementById('appearance-editor');
+appearanceEditor.setConfig(config);
+appearanceEditor.addEventListener('config-changed', event => {
+  currentConfig=event.detail.config; card.setConfig(currentConfig); publish();
+});
+publish();
 window.tessieDemo = { card, config, registry, connection, callWS, get states() { return states; }, reset, publish, registryEvent: type => registryListeners.get(type)?.forEach(callback => callback({ event_type: type })) };

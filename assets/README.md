@@ -1,6 +1,31 @@
 # Vehicle artwork
 
-## Current bundled render
+## Current bundled catalog
+
+`vehicles/catalog.json` lists 368 available full-car configurations across Model
+3 and Model Y generations. There are 304 unique prepared transparent WebP images
+under `vehicles/`; they are normalized to a 1000 x 625 canvas and embedded into
+the standalone JavaScript module. `vehicles/sources.json` records the original
+Tesla URL and source checksum for every configuration.
+
+`scripts/prepare-vehicle-artwork.mjs` prepares the catalog from the original local
+PNG archive using Sharp. It verifies original checksums, trims transparent space,
+fits the vehicle into a consistent frame, and writes the WebP files and generated
+`src/vehicle-artwork-data.js`. The runtime has no Sharp dependency. Use the
+`--reuse-images` flag when recalibrating metadata without changing image encoding.
+
+Each rear configuration includes a charge-port anchor for its generation. These
+anchors drive the cable overlay. The 2018–2020 Model 3 group and three newer
+Model 3 combinations use full-car front fallbacks; their cable overlay is hidden.
+Source option labels are retained; individual option fidelity can be corrected
+as discrepancies are discovered. A valid checksum does not certify fidelity.
+
+The prepared images total about 13.6 MB; the self-contained module is about
+18.3 MB because the images are base64 encoded. Shared image data is included
+once per unique source image, and only selected images are decoded for display.
+The original approximately 315 MB archive stays outside Git and the card bundle.
+
+## Previous single-render release (0.2.1)
 
 `model-3-highland-white-nova.png` is an unchanged Tesla compositor PNG, copied
 from the local library's Model 3 / modern / MT370 / PPSW / W39G / IPB3 /

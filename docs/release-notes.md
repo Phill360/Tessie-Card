@@ -1,25 +1,27 @@
-# Tessie Card 0.2.1 — test prerelease
+# Tessie Card 0.2.2 — appearance picker test build
 
-Replaces the generated car-and-charger scene with a locally embedded white
-Model 3 Highland render with Nova wheels and a separate animated charging cable.
-The wall charger is no longer visible.
+Adds a visual artwork picker covering 368 configurations across five Model 3
+and Model Y generation groups, with 304 unique prepared vehicle images.
 
-- Green pulse moves along the cable towards the car during confirmed charging.
-- Connected idle keeps a static cable; disconnected hides the cable and plug.
-- Unknown connection states hide the cable unless charging is confirmed.
-- Reduced-motion settings keep the connected cable static.
-- Custom vehicle images retain their own scene without the built-in cable overlay.
-- The render is embedded in the standalone module. No Tesla image URLs or
-  additional image downloads are needed when using the card.
+- Select model, generation, vehicle trim, paint colour, interior/trim colour and
+  wheels in the card editor. A live preview shows the selected configuration.
+- Dropdowns offer available downloaded combinations and preserve compatible
+  choices when a parent changes. Saved appearance does not alter entity targeting.
+- Changing the physical Tessie vehicle clears its previous appearance selection.
+- Rear renders retain the animated cable; full-car front fallbacks are labelled
+  and hide the cable. No wall charger is shown.
+- Prepared transparent WebP images are deduplicated and embedded in the module,
+  preserving the single-file HACS installation with no Tesla image requests.
+- The approximately 18.3 MB card contains about 13.6 MB of compressed images.
+  The original approximately 315 MB PNG archive remains local.
+- The local demo includes the card editor so artwork can be tried without a car.
 
-The test render is fixed to the white Model 3. Automatic paint, wheel and model
-selection from the downloaded artwork library is not part of this release.
+Validation: 15 automated tests, all prepared image checksums, and browser checks
+covering dependent options, live previews, generation fallbacks, saved config,
+entity isolation, controls, cable states, reduced motion and responsive themes.
+This local build has not been validated against a live Home Assistant vehicle.
 
-Validation: 12 automated tests plus browser checks for animation progression,
-connection states, reduced motion, custom artwork, failed-image handling,
-responsive light/dark layouts, controls, scheduling and vehicle discovery.
-Validation used simulated Home Assistant data; live installation testing remains.
-
-For HACS testing, enable prerelease versions and redownload 0.2.1, then fully
-reload the browser. Existing card configuration and entity mappings are retained.
-Remove any vehicle_image override from the test card to see the bundled render.
+The 2018–2020 Model 3 rear-view code returned a taillight detail, so this group
+uses front views. Three newer Model 3 configurations use front fallbacks where
+rear requests failed. Other individual artwork discrepancies will be corrected
+as they are discovered.

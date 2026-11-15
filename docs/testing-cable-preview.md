@@ -1,7 +1,7 @@
-# White Model 3 cable preview
+# Vehicle appearance test build (0.2.2)
 
-This test build embeds the white Model 3 Highland render and draws the charging
-cable separately. It runs without the downloaded artwork library or Tesla URLs.
+This test build embeds 368 Model 3 and Model Y appearance configurations and draws
+the charging cable separately. It runs without the original archive or Tesla URLs.
 The card type and existing entity configuration are unchanged.
 
 ## Test in Home Assistant
@@ -12,7 +12,7 @@ The card type and existing entity configuration are unchanged.
    Tessie Card resource URL to:
 
    ```text
-   /local/tessie-card-test/tessie-card.js?v=0.2.1
+   /local/tessie-card-test/tessie-card.js?v=0.2.2
    ```
 
    Keep the resource type **JavaScript module**. Save the previous resource URL
@@ -20,7 +20,10 @@ The card type and existing entity configuration are unchanged.
    copies load, the first custom element registration wins.
 3. Fully reload the dashboard. Keep your existing card and entity mappings.
    If your configuration sets `vehicle_image`, remove that override from the
-   test card to see the bundled white Model 3 and animated cable.
+   test card to see the bundled artwork and animated cable. Edit the card and
+   use Vehicle appearance to select model, generation, vehicle trim, paint,
+   interior/trim colour and wheels. Check that the preview updates and saved
+   choices survive closing and reopening the card editor.
 4. Confirm these visual states with the vehicle's real reported states:
 
    | Vehicle state | Expected appearance |
@@ -31,18 +34,19 @@ The card type and existing entity configuration are unchanged.
    | Unknown connection and no confirmed charging | Cable is hidden |
    | Reduced motion enabled | Connected cable is static |
 
-   The wall charger is absent in every state. The render is fixed to the white
-   Model 3 for this test; automatic model/paint/wheel selection is not enabled.
+   The wall charger is absent in every state. Front-view fallbacks hide the cable
+   and are labelled. Appearance is selected manually and does not change which
+   physical Tessie vehicle receives commands.
 5. Check the scene on your usual dashboard widths and in light and dark themes.
 
 To roll back, restore the previous resource URL and fully reload the dashboard.
-Version 0.2.1 is published as a GitHub prerelease for testing. In HACS, enable
-prerelease versions and select 0.2.1 when redownloading the card, or use the
-manual test installation above.
+Version 0.2.2 is a local test build and has not been published. The existing
+published 0.2.1 prerelease contains only the original white Model 3 preview.
 
 ## Local simulation
 
 From the project directory run `node scripts/serve.mjs`, then open
-`http://127.0.0.1:8124/`. The simulated state selector can exercise the visual
+`http://127.0.0.1:8124/`. Expand Configure card appearance to try the artwork
+selectors. The simulated state selector can exercise the visual
 states without contacting Home Assistant or a vehicle. Demo buttons only change
 simulated data; buttons in Home Assistant retain their normal real controls.

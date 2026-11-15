@@ -1,14 +1,16 @@
 # Test release validation
 
-Build: 0.2.1 (test prerelease).
+Build: 0.2.2 (local test build).
 
-- `node --test`: twelve tests pass. Covers missing/invalid measurements, power and
+- `node --test`: fifteen tests pass. Covers missing/invalid measurements, power and
   energy units, tariff units and negative tariffs, session-cost precedence,
   remaining-cost assumptions, number-entity capabilities, configuration validation,
   and one-off times in the Home Assistant timezone, including DST gaps/overlaps.
   Discovery tests cover platform/device boundaries, renamed entities, duplicate
   mappings, disabled entities, one/multiple vehicle selection, manual overrides,
   charging-state fallback, registry caching/retry and the standalone HACS bundle.
+  Artwork tests verify every prepared file checksum, configuration coverage,
+  cascading option compatibility and invalid-combination rejection.
 - `node --check tessie-card.js`: passes.
 - Headless Edge browser regression: passes. Covers simulated start/stop, number
   updates, one-off schedule/cancel, command rejection, missing entities/readings,
@@ -18,6 +20,9 @@ Build: 0.2.1 (test prerelease).
   Visual editor checks cover selecting either of two vehicles, command isolation,
   clearing vehicle-specific settings when switching, live entity renames, device
   removal without fallback, failed registry access/retry, and 320px editor layout.
+  Appearance checks cover model/generation/trim/paint/interior/wheel changes,
+  preview image decoding, full-car front fallbacks, retained entity targeting,
+  clearing appearance when changing physical car and the live demo editor.
 - Light/dark desktop and narrow-screen screenshots visually reviewed.
 - `git diff --check`: passes.
 
@@ -26,5 +31,7 @@ check and live validation. No real vehicle commands or schedules were issued. Th
 browser tests simulate Home Assistant; they do not establish compatibility with
 the user's exact entities, permissions, or Tesla firmware. Vehicle and entity
 discovery use simulated registry fixtures and the official Tessie entity metadata.
-Automatic paint/wheel matching is not implemented. Only the selected Model 3
-render and a manual full-scene override are available.
+Automatic paint/wheel matching is not implemented. A visual artwork picker covers
+368 configurations with 304 unique prepared renders. A manual full-scene override
+remains available. The approximately 18.3 MB module embeds the prepared images;
+the original approximately 315 MB PNG archive is not shipped.

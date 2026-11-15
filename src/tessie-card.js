@@ -1,5 +1,6 @@
-/* Tessie Card 0.2.1 — dependency-free Home Assistant dashboard card. */
-export const VERSION = "0.2.1";
+/* Tessie Card 0.2.2 — dependency-free Home Assistant dashboard card. */
+import { ARTWORK_IMAGES, ARTWORK_FIELDS, DEFAULT_ARTWORK, selectArtwork, artworkOptions, changeArtwork } from './vehicle-artwork.js';
+export const VERSION = "0.2.2";
 const invalid = new Set(["unknown", "unavailable", "", "none"]);
 export function numeric(entity) {
   if (!entity || entity.state == null || typeof entity.state === "boolean" || invalid.has(String(entity.state).trim().toLowerCase())) return null;
@@ -130,6 +131,7 @@ export function validateConfig(config) {
   if (config.vehicle_image) {
     if (typeof config.vehicle_image !== "string" || !/^(https?:\/\/|\/(?!\/))/.test(config.vehicle_image)) throw new Error("vehicle_image must be an http(s) or local absolute URL.");
   }
+  if (config.artwork !== undefined && (!config.artwork || typeof config.artwork !== "object" || Array.isArray(config.artwork) || Object.keys(config.artwork).some(key => !ARTWORK_FIELDS.includes(key)) || !selectArtwork(config.artwork))) throw new Error("artwork must select an available model, generation, trim, paint, interior and wheel combination.");
   if (config.schedule) {
     for (const [key, domain] of Object.entries({ control_script: "script", datetime_entity: "input_datetime", armed_entity: "input_boolean", status_entity: "input_select" })) {
       if (!new RegExp(`^${domain}\\.[a-z0-9_]+$`).test(config.schedule[key] || "")) throw new Error(`schedule.${key} must be a ${domain} entity ID.`);
@@ -147,10 +149,10 @@ const css = `
 button,input{font:inherit}button{cursor:pointer;border:1px solid var(--tc-line);color:var(--tc-text);background:color-mix(in srgb,var(--tc-muted) 8%,var(--tc-bg));border-radius:9px;padding:10px 14px;min-height:42px}button:disabled{opacity:.5;cursor:default}.primary{width:100%;background:var(--tc-green);border:0;color:#fff;font-weight:600;margin:0 0 14px}.control{margin:0 0 15px}.control label{display:flex;justify-content:space-between;font-size:14px;font-weight:550;gap:12px}.control output{font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--tc-green);margin:12px 0 0;height:22px}input:disabled{opacity:.4}input[type=datetime-local]{width:100%;min-width:0;background:var(--tc-bg);color:var(--tc-text);border:1px solid var(--tc-line);border-radius:8px;padding:11px;margin:8px 0 10px;color-scheme:light}.dark input[type=datetime-local]{color-scheme:dark}.schedule{padding:14px;border:1px solid var(--tc-line);border-radius:13px}.schedule h3{font-size:16px;margin:0 0 5px;font-weight:600}.schedule label{font-size:12px;color:var(--tc-muted)}.schedule-actions{display:flex;gap:8px;flex-wrap:wrap}.schedule-actions button{flex:1}.feedback{font-size:13px;padding:10px 0 0;line-height:1.5}.error{color:var(--error-color,#c54242)}[hidden]{display:none!important}:focus-visible{outline:2px solid var(--tc-green);outline-offset:3px}.asset-error{padding:35px 24px;text-align:center;color:var(--tc-muted)}
 @media(max-width:360px){.head{padding:18px 16px 0}.content{padding:0 14px 16px}.name{font-size:21px}.metric{padding:12px 10px}.metric strong{font-size:17px}.scene .power{right:16px;font-size:12px}.power strong{font-size:18px}.battery{gap:12px}.percent{font-size:32px}}
 @media(prefers-reduced-motion:reduce){.fill{transition:none}}
-/* Car and cable share a cropped 880 x 550 coordinate system. */
+/* Prepared car images and cable use the same 1000 x 625 coordinates. */
 .scene{aspect-ratio:auto;padding-top:calc(62.5% + 34px)}
 .vehicle-art{position:absolute;inset:34px 0 0;overflow:hidden}
-.scene img{position:absolute;left:-34.090909%;top:-38.181818%;width:163.636364%;height:147.272727%;object-fit:fill}
+.scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .scene.custom-image{aspect-ratio:1.92;padding-top:0}
 .custom-image .vehicle-art img{inset:0;width:100%;height:100%;object-fit:contain}
 .scene .power{top:4px}
@@ -164,6 +166,12 @@ button,input{font:inherit}button{cursor:pointer;border:1px solid var(--tc-line);
 @keyframes charge-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-1000}}
 @media(prefers-reduced-motion:reduce){.active .cable-pulse{animation:none;opacity:0}}
 `;
+const cableSvg = `<svg id="flow" class="flow" viewBox="0 0 1000 625" aria-hidden="true" hidden><defs>
+  <path id="cable-route" d="M 10 600 L 650 190" pathLength="1000"/>
+  <linearGradient id="cable-fade" gradientUnits="userSpaceOnUse" x1="10" y1="600" x2="650" y2="190"><stop offset="0" stop-color="white" stop-opacity="0"/><stop offset=".4" stop-color="white"/></linearGradient>
+  <mask id="cable-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="625"><rect width="1000" height="625" fill="url(#cable-fade)"/></mask>
+  </defs><g mask="url(#cable-mask)"><use class="cable-base" href="#cable-route"/><use class="cable-pulse" href="#cable-route"/></g>
+  <g id="charge-connector" class="charge-plug"><path d="M -15 2 L 0 -6 Q 6 -4 6 2 L -8 13 Z"/><path d="M -3 -7 L -11 -22 L 11 -23 L 17 -12 Z"/></g></svg>`;
 export class TessieCard extends (globalThis.HTMLElement || class {}) {
   constructor() { super(); this.attachShadow?.({ mode: "open" }); this._draftSchedule = ""; this._vehicles = []; this._discoverySeq = 0; }
   setConfig(config) { this._userConfig = validateConfig(config); this._config = this._userConfig; clearTimeout(this._pendingTimer); this._pending = null; this._message = ""; this._error = false; this._discoveryError = ""; this._draftSchedule = ""; this._mounted = false; this._ensureDiscovery(); this._render(); }
@@ -203,8 +211,8 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
   _more(key) { const entityId = this._config.entities[key]; if (entityId) this.dispatchEvent(new CustomEvent("hass-more-info", { bubbles: true, composed: true, detail: { entityId } })); }
   _mount() {
     this.shadowRoot.innerHTML = `<style>${css}.setup{padding:16px 22px;background:color-mix(in srgb,var(--tc-muted) 8%,transparent)}.setup p{margin:0 0 10px;font-size:13px;line-height:1.5}</style><ha-card id="card"><div id="setup" class="setup" hidden><p id="discovery-note" role="status"></p><button id="discovery-retry">Refresh detection</button></div><header class="head"><div><div id="name" class="name"></div><div id="subtitle" class="sub"></div></div><span id="status" class="badge"></span></header>
-      <div id="scene" class="scene"><div class="vehicle-art"><img id="vehicle" alt="White Model 3 Highland with Nova wheels, viewed from the left rear"><svg id="flow" class="flow" viewBox="300 210 880 550" aria-hidden="true" hidden><defs><path id="cable-route" d="M 295 748 C 430 714 610 723 730 675 C 793 647 798 582 811 477 C 818 421 823 389 842 376" pathLength="1000"/><linearGradient id="cable-fade" gradientUnits="userSpaceOnUse" x1="295" y1="748" x2="842" y2="376"><stop offset="0" stop-color="white" stop-opacity="0"/><stop offset=".4" stop-color="white"/></linearGradient><mask id="cable-mask" maskUnits="userSpaceOnUse" x="240" y="185" width="1000" height="625"><rect x="240" y="185" width="1000" height="625" fill="url(#cable-fade)"/></mask></defs><g mask="url(#cable-mask)"><use class="cable-base" href="#cable-route"/><use class="cable-pulse" href="#cable-route"/></g><path class="charge-plug" d="M 837 371 L 852 363 Q 858 365 858 371 L 844 382 Z"/><path class="charge-plug" d="M 849 362 L 841 347 L 863 346 L 869 357 Z"/></svg></div><div id="asset-error" class="asset-error" hidden>Vehicle image unavailable. Configure vehicle_image or check the bundled artwork.</div><div class="power">AC charging<strong id="hero-power"></strong></div></div>
-      <div class="content"><div class="battery"><div class="battery-text"><div id="battery" class="percent"></div><span class="sub">Battery</span></div><div class="battery-track"><span id="limit-label" class="limit-text"></span><div id="track" class="track" role="meter" aria-label="Battery charge" aria-valuemin="0" aria-valuemax="100"><div id="fill" class="fill"></div></div><div id="marker" class="marker" aria-hidden="true"></div></div></div>
+      <div id="scene" class="scene"><div class="vehicle-art"><img id="vehicle" alt="White Model 3 Highland with Nova wheels, viewed from the left rear">${cableSvg}</div><div id="asset-error" class="asset-error" hidden>Vehicle image unavailable. Configure vehicle_image or check the bundled artwork.</div><div class="power">AC charging<strong id="hero-power"></strong></div></div>
+      <div class="content"><p id="artwork-note" class="note" hidden></p><div class="battery"><div class="battery-text"><div id="battery" class="percent"></div><span class="sub">Battery</span></div><div class="battery-track"><span id="limit-label" class="limit-text"></span><div id="track" class="track" role="meter" aria-label="Battery charge" aria-valuemin="0" aria-valuemax="100"><div id="fill" class="fill"></div></div><div id="marker" class="marker" aria-hidden="true"></div></div></div>
       <div class="metrics"><div class="metric"><button id="power-info"><span class="label">Charging power</span><strong id="power"></strong></button></div><div class="metric"><button id="time-info"><span class="label">Time remaining</span><strong id="remaining"></strong></button></div><div class="metric"><button id="finish-info"><span class="label">Estimated finish</span><strong id="finish"></strong></button></div><div class="metric"><span class="label">Charge limit</span><strong id="limit-metric"></strong></div></div>
       <div class="costs"><div class="metric"><span id="session-label" class="label">Session so far</span><strong id="session-cost"></strong><p id="session-note" class="note"></p></div><div class="metric"><span class="label">To charge limit (est.)</span><strong id="remaining-cost"></strong><p id="estimate-note" class="note"></p></div></div><p id="tariff" class="note tariff"></p>
       <button id="charge" class="primary"></button>
@@ -252,11 +260,20 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
     const chargeStatus = e("charging_status")?.state;
     const status = charging ? "Charging" : plugged === "off" ? "Disconnected" : chargeStatus === "starting" ? "Starting" : chargeStatus === "no_power" ? "No power" : actualCharging === "off" ? (battery !== null && limit !== null && battery >= limit ? "At charge limit" : "Not charging") : "Status unavailable";
     this._text("status", status);
-    const image = c.vehicle_image || new URL("../assets/model-3-highland-white-nova.png", import.meta.url).href;
+    const artwork = selectArtwork(c.artwork), image = c.vehicle_image || ARTWORK_IMAGES[artwork.image];
     this._el("scene").classList.toggle("custom-image", Boolean(c.vehicle_image));
-    this._el("vehicle").alt = c.vehicle_image ? "Custom vehicle scene" : "White Model 3 Highland with Nova wheels, viewed from the left rear";
+    this._el("vehicle").alt = c.vehicle_image ? "Custom vehicle scene" : [artwork.modelLabel, artwork.years, artwork.trimLabel, artwork.paintLabel, artwork.interiorLabel, artwork.wheelLabel, artwork.view === "rear" ? "left rear view" : "front view"].join(" · ");
     if (this._el("vehicle").getAttribute("src") !== image) { this._vehicleAssetFailed = false; this._el("vehicle").hidden = false; this._el("asset-error").hidden = true; this._el("vehicle").src = image; }
-    this._el("flow").toggleAttribute("hidden", Boolean(c.vehicle_image) || Boolean(this._vehicleAssetFailed) || plugged === "off" || !(plugged === "on" || charging));
+    const showCable = !c.vehicle_image && !this._vehicleAssetFailed && artwork.port && plugged !== "off" && (plugged === "on" || charging);
+    this._el("flow").toggleAttribute("hidden", !showCable);
+    if (artwork.port) {
+      const [x,y] = artwork.port;
+      this._el("cable-route").setAttribute("d", `M 10 600 C 180 550 ${x - 210} 575 ${x - 95} 510 C ${x - 30} 475 ${x - 45} ${y + 60} ${x - 10} ${y + 7}`);
+      this._el("charge-connector").setAttribute("transform", `translate(${x} ${y})`);
+      this._el("cable-fade").setAttribute("x2", x); this._el("cable-fade").setAttribute("y2", y);
+    }
+    this._el("artwork-note").hidden = Boolean(c.vehicle_image) || Boolean(artwork.port);
+    this._text("artwork-note", artwork.port ? "" : "Front view — charging cable is not shown for this artwork.");
     const power = quantity(e("power"), "power");
     const formatNumber = (n, digits = 1) => n === null ? "—" : new Intl.NumberFormat(h.locale?.language || "en", { maximumFractionDigits: digits }).format(n);
     const powerText = power === null ? "—" : `${formatNumber(power)} kW`;
@@ -377,18 +394,29 @@ export class TessieCardEditor extends (globalThis.HTMLElement || class {}) {
         <label for="card-name">Card name (optional)</label><input id="card-name" placeholder="Use the vehicle name">
         <div class="grid"><div><label for="tariff-entity">Electricity tariff entity</label><input id="tariff-entity" list="tariff-options" placeholder="sensor.electricity_rate"><datalist id="tariff-options"></datalist></div><div><label for="currency">Currency</label><input id="currency" maxlength="3" placeholder="AUD"></div></div>
         <label for="capacity">Usable battery capacity in kWh (optional)</label><input id="capacity" type="number" min="0.1" step="any" placeholder="Needed for estimated remaining cost without an energy sensor">
-        <p>Vehicle charging entities are detected automatically. Tariff and battery capacity are configured separately. Artwork currently uses the bundled Model 3 scene.</p>
+        <style>.artwork-section{border:1px solid var(--divider-color,#dce0e5);border-radius:12px;padding:16px;margin-top:20px}.artwork-section h3{margin:0;font-size:17px}.artwork-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}.artwork-preview{margin:16px 0 0}.artwork-preview img{width:100%;aspect-ratio:1.6;object-fit:contain;display:block;border-radius:9px;background:color-mix(in srgb,var(--secondary-text-color,#67717b) 9%,transparent)}.artwork-preview figcaption{font-size:12px;line-height:1.5;margin-top:8px;overflow-wrap:anywhere}[hidden]{display:none!important}@media(max-width:360px){.artwork-grid{grid-template-columns:minmax(0,1fr)}}</style>
+        <section class="artwork-section"><h3>Vehicle appearance</h3><p>Match the artwork to your vehicle. Charging controls continue to use the Tessie vehicle selected above.</p><div class="artwork-grid">
+        <div><label for="artwork-model">Vehicle model</label><select id="artwork-model"></select></div><div><label for="artwork-generation">Generation</label><select id="artwork-generation"></select></div>
+        <div><label for="artwork-trim">Vehicle trim</label><select id="artwork-trim"></select></div><div><label for="artwork-paint">Paint colour</label><select id="artwork-paint"></select></div>
+        <div><label for="artwork-interior">Interior / trim colour</label><select id="artwork-interior"></select></div><div><label for="artwork-wheel">Wheels</label><select id="artwork-wheel"></select></div></div>
+        <figure class="artwork-preview"><img id="artwork-preview" alt=""><figcaption id="artwork-caption"></figcaption></figure><p id="artwork-status" role="status"></p><button id="artwork-builtin" hidden>Use selected vehicle artwork</button></section>
+        <p>Vehicle charging entities are detected automatically. Tariff and battery capacity are configured separately.</p>
         <details><summary>Detected entity mappings</summary><ul id="mapping-list"></ul></details><p>Use YAML for individual entity overrides, a custom scene or scheduling helpers. Selecting a different vehicle clears vehicle-specific mappings, capacity, artwork and scheduling, keeping your tariff and card name.</p>`;
       const get = id => this.shadowRoot.getElementById(id);
       get("vehicle-picker").onchange = event => {
         const config = { ...this._config, entities: { ...this._config.entities } };
         for (const key of [...Object.keys(tessieKeys), "time_remaining", "session_cost", "remaining_energy"]) delete config.entities[key];
         delete config.schedule; // Scheduling helpers are vehicle-specific; never carry them to another car.
-        for (const key of ["battery_capacity_kwh", "charging_efficiency", "vehicle_image", "subtitle"]) delete config[key];
+        for (const key of ["battery_capacity_kwh", "charging_efficiency", "vehicle_image", "artwork", "subtitle"]) delete config[key];
         if (event.target.value) config.device_id = event.target.value; else delete config.device_id;
         this._emit(config);
       };
       get("refresh").onclick = () => this._load(true);
+      for (const field of ARTWORK_FIELDS) get(`artwork-${field}`).onchange = event => {
+        const config = { ...this._config, artwork: changeArtwork(this._config.artwork || DEFAULT_ARTWORK, field, event.target.value) };
+        delete config.vehicle_image; this._emit(config);
+      };
+      get("artwork-builtin").onclick = () => { const config={...this._config}; delete config.vehicle_image; this._emit(config); };
       get("card-name").onchange = event => { const config = { ...this._config }; if (event.target.value.trim()) config.name = event.target.value.trim(); else delete config.name; this._emit(config); };
       get("tariff-entity").onchange = event => {
         const value = event.target.value.trim();
@@ -420,6 +448,17 @@ export class TessieCardEditor extends (globalThis.HTMLElement || class {}) {
     const issues = resolved.detectedVehicle?.ambiguous.length ? ` Ambiguous: ${resolved.detectedVehicle.ambiguous.join(", ")}.` : "";
     get("editor-status").textContent = this._loading ? "Detecting Tessie vehicles…" : this._error || (resolved.detectedVehicle ? `${resolved.detectedVehicle.name}: ${Object.keys(resolved.detectedVehicle.entities).length} mappings detected.${resolved.missing.length ? ` Missing: ${resolved.missing.join(", ")}.` : ""}${issues}` : requiredMappings.every(key => this._config.entities?.[key]) ? "Manual mappings active. Select a vehicle to switch to automatic detection." : this._vehicles.length > 1 ? `${this._vehicles.length} vehicles found. Select one for this card.` : "No Tessie vehicle found. Check the integration or use manual mappings.");
     get("refresh").disabled = Boolean(this._loading);
+    const appearance = this._config.artwork || DEFAULT_ARTWORK, artwork = selectArtwork(appearance);
+    for (const field of ARTWORK_FIELDS) {
+      const select=get(`artwork-${field}`), options=artworkOptions(appearance,field);
+      select.replaceChildren(...options.map(o=>new Option(o.label,o.value))); select.value=appearance[field];
+    }
+    const preview=get("artwork-preview"), image=this._config.vehicle_image || ARTWORK_IMAGES[artwork.image];
+    if(preview.getAttribute("src")!==image)preview.src=image;
+    preview.alt=this._config.vehicle_image ? "Custom vehicle artwork" : [artwork.modelLabel,artwork.paintLabel,artwork.interiorLabel,artwork.wheelLabel].join(" · ");
+    get("artwork-caption").textContent=[artwork.modelLabel,artwork.years,artwork.trimLabel,artwork.paintLabel,artwork.interiorLabel,artwork.wheelLabel].join(" · ");
+    get("artwork-status").textContent=this._config.vehicle_image ? "Your custom image is active. Choose an option or use the button below to show the selected artwork." : artwork.port ? "Rear view with charging cable animation. Only available downloaded combinations are offered." : "Full-car front view. A usable rear render was unavailable, so the charging cable is hidden for this configuration.";
+    get("artwork-builtin").hidden=!this._config.vehicle_image;
     for (const [id, value] of [["card-name", this._config.name || ""], ["tariff-entity", this._config.entities?.tariff || ""], ["currency", this._config.currency || "AUD"], ["capacity", this._config.battery_capacity_kwh ?? ""]]) if (this.shadowRoot.activeElement !== get(id)) get(id).value = value;
     const tariffIds = Object.entries(this._hass.states).filter(([id, entity]) => id.startsWith("sensor.") && /\/kWh$/.test(entity.attributes?.unit_of_measurement || "")).map(([id]) => id).sort();
     get("tariff-options").replaceChildren(...tariffIds.map(id => new Option(id, id)));
