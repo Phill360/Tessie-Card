@@ -1,6 +1,6 @@
 # Test release validation
 
-Build: 0.2.4 (test prerelease).
+Build: 0.2.5 (test prerelease).
 
 - `node --test`: twenty tests pass. Covers missing/invalid measurements, power and
   energy units, tariff units and negative tariffs, session-cost precedence,
@@ -49,3 +49,8 @@ The 0.2.4 update adds the original Model Y RWD as an explicit alias of matching
 Long Range artwork, without adding duplicate images. Browser checks exercise
 RWD selection and verify Black/White-only trim colour labels. Duplicate interior
 option codes are grouped by colour while existing selections remain valid.
+
+The 0.2.5 update removes the idle image saturation filter. Browser checks verify
+that Ultra Red and Red Multi-Coat have no CSS colour filter, and that the same
+Red Multi-Coat image is displayed while charging, idle and disconnected. The
+idle screenshot was visually checked against the original/editor colour.

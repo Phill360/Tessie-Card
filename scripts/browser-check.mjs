@@ -210,6 +210,26 @@ try {
   await page.selectOption('#state','idle');
   assert.match(await card.locator('#vehicle').getAttribute('alt'),/Model Y/);
   assert.equal(await card.locator('#flow').isVisible(),true);
+  // Paint colour must remain identical to the source/editor preview in idle,
+  // charging and disconnected states, including both Tesla red paint families.
+  await demoEditor.locator('#artwork-paint').selectOption('PR01');
+  await card.locator('#vehicle').evaluate(img=>img.decode());
+  assert.equal(await card.locator('#vehicle').evaluate(img=>getComputedStyle(img).filter),'none');
+  await demoEditor.locator('#artwork-generation').selectOption('legacy2020');
+  await demoEditor.locator('#artwork-trim').selectOption('RWD');
+  await demoEditor.locator('#artwork-paint').selectOption('PPMR');
+  await demoEditor.locator('#artwork-interior').selectOption('INPB0');
+  await demoEditor.locator('#artwork-wheel').selectOption('WY19B');
+  await card.locator('#vehicle').evaluate(img=>img.decode());
+  const redSource=await card.locator('#vehicle').getAttribute('src');
+  assert.equal(await card.locator('#vehicle').evaluate(img=>getComputedStyle(img).filter),'none');
+  if(process.argv.includes('--capture-preview'))await card.locator('#scene').screenshot({path:'docs/red-paint-idle-preview.png'});
+  for(const state of ['charging','disconnected','idle']){
+    await page.selectOption('#state',state);
+    await card.locator('#vehicle').evaluate(img=>img.decode());
+    assert.equal(await card.locator('#vehicle').getAttribute('src'),redSource);
+    assert.equal(await card.locator('#vehicle').evaluate(img=>getComputedStyle(img).filter),'none');
+  }
   assert.deepEqual(errors, []);
   console.log('Browser checks passed: artwork selectors, live previews, front-view fallbacks, demo editor, controls, charging cable, reduced motion, responsive themes and vehicle isolation.');
 } finally { await browser.close(); server.close(); }
