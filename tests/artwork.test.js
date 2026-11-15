@@ -79,7 +79,7 @@ test('Model 3 Long Range RWD inherits every RWD Premium paint, trim colour and w
   assert.equal(longRange.length,premium.length);
   for(const source of premium){
     const alias=selectArtwork({...source,trim:'LR_RWD'});
-    assert.equal(alias.trimLabel,'Long Range RWD');
+    assert.equal(alias.trimLabel,'Long Range RWD (Premium)');
     assert.equal(alias.artworkAliasOf,source.id);
     assert.equal(alias.image,source.image);
     assert.deepEqual(alias.port,source.port);

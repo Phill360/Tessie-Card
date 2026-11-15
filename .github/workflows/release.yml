@@ -25,7 +25,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ github.ref_name }}
           # Cable/appearance previews are test releases. Hyphenated tags are also tests.
-          PRERELEASE: ${{ github.ref_name == 'v0.2.1' || github.ref_name == 'v0.2.2' || github.ref_name == 'v0.2.3' || github.ref_name == 'v0.2.4' || github.ref_name == 'v0.2.5' || github.ref_name == 'v0.2.6' || contains(github.ref_name, '-') }}
+          PRERELEASE: ${{ github.ref_name == 'v0.2.1' || github.ref_name == 'v0.2.2' || github.ref_name == 'v0.2.3' || github.ref_name == 'v0.2.4' || github.ref_name == 'v0.2.5' || github.ref_name == 'v0.2.6' || github.ref_name == 'v0.2.7' || contains(github.ref_name, '-') }}
         run: |
           release_args=()
           if [[ "$PRERELEASE" == "true" ]]; then

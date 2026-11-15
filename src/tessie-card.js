@@ -1,6 +1,6 @@
-/* Tessie Card 0.2.6 — dependency-free Home Assistant dashboard card. */
+/* Tessie Card 0.2.7 — dependency-free Home Assistant dashboard card. */
 import { ARTWORK_IMAGES, ARTWORK_FIELDS, DEFAULT_ARTWORK, selectArtwork, artworkOptions, changeArtwork, interiorColour } from './vehicle-artwork.js';
-export const VERSION = "0.2.6";
+export const VERSION = "0.2.7";
 const invalid = new Set(["unknown", "unavailable", "", "none"]);
 export function numeric(entity) {
   if (!entity || entity.state == null || typeof entity.state === "boolean" || invalid.has(String(entity.state).trim().toLowerCase())) return null;

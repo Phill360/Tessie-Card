@@ -11,7 +11,7 @@
     "model": "m3",
     "generation": "modern",
     "trim": "LR_RWD",
-    "trimLabel": "Long Range RWD",
+    "trimLabel": "Long Range RWD (Premium)",
     "sourceTrim": "MT369",
     "note": "Model 3 Highland Long Range RWD (including 2025) uses matching RWD Premium artwork. This is a local artwork alias, not a Tesla API option code."
   }

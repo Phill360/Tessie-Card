@@ -150,6 +150,7 @@ try {
   assert.match(await automatic.locator('#artwork-note').innerText(),/Front view/);
   await editor.locator('#artwork-generation').selectOption('modern');
   await editor.locator('#artwork-trim').selectOption('LR_RWD');
+  assert.equal(await editor.locator('#artwork-trim option[value="LR_RWD"]').innerText(),'Long Range RWD (Premium)');
   await editor.locator('#artwork-interior').selectOption('IPW2');
   await editor.locator('#artwork-wheel').selectOption('W39G');
   await automatic.locator('#vehicle').evaluate(img=>img.decode());

@@ -1,6 +1,6 @@
 # Test release validation
 
-Build: 0.2.6 (test prerelease).
+Build: 0.2.7 (test prerelease).
 
 - `node --test`: twenty-one tests pass. Covers missing/invalid measurements, power and
   energy units, tariff units and negative tariffs, session-cost precedence,
@@ -58,3 +58,6 @@ idle screenshot was visually checked against the original/editor colour.
 The 0.2.6 Model 3 Highland Long Range RWD selection aliases every matching RWD
 Premium paint, trim colour and wheel combination. Browser checks confirm the
 same image and connector placement, along with saved selection and entity isolation.
+
+The 0.2.7 update displays Long Range RWD (Premium) in the Model 3 variant
+selector while retaining the saved LR_RWD code and existing artwork mappings.
