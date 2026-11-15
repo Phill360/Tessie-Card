@@ -124,10 +124,16 @@ try {
   await editor.screenshot({path:'test-results/artwork-picker.png'});
   if(process.argv.includes('--capture-preview'))await editor.locator('.artwork-section').screenshot({path:'docs/artwork-picker-preview.png'});
   await editor.locator('#artwork-generation').selectOption('legacy2020');
+  await editor.locator('#artwork-paint').selectOption('PPSW');
+  await editor.locator('#artwork-interior').selectOption('INPB0');
+  await editor.locator('#artwork-wheel').selectOption('WY19B');
+  await automatic.locator('#vehicle').evaluate(img=>img.decode());
+  await automatic.locator('#scene').screenshot({path:'test-results/model-y-gemini-framing.png'});
   await editor.locator('#artwork-wheel').selectOption('WY20P');
   await automatic.locator('#vehicle').evaluate(img=>img.decode());
   assert.match(await automatic.locator('#vehicle').getAttribute('alt'), /2020-2024.*Induction/);
   await automatic.locator('#scene').screenshot({path:'test-results/model-y-original-charging.png'});
+  await automatic.locator('#scene').screenshot({path:'test-results/model-y-induction-framing.png'});
   assert.equal(await editor.locator('#artwork-paint option[value="PX02"]').count(),0);
   await editor.locator('#artwork-model').selectOption('m3');
   await editor.locator('#artwork-generation').selectOption('legacy2018');

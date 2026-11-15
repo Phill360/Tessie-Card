@@ -10,18 +10,22 @@ Tesla URL and source checksum for every configuration.
 
 `scripts/prepare-vehicle-artwork.mjs` prepares the catalog from the original local
 PNG archive using Sharp. It verifies original checksums, trims transparent space,
-fits the vehicle into a consistent frame, and writes the WebP files and generated
+measures the largest opaque car silhouette (ignoring isolated compositor pixels),
+fits the vehicle into the Gemini reference frame, and writes the WebP files and generated
 `src/vehicle-artwork-data.js`. The runtime has no Sharp dependency. Use the
 `--reuse-images` flag when recalibrating metadata without changing image encoding.
 
-Each rear configuration includes a charge-port anchor for its generation. These
-anchors drive the cable overlay. The 2018–2020 Model 3 group and three newer
+`vehicles/framing.json` stores the reference vehicle bounds and port calibration.
+Each prepared file records its source bounds, scale, offset and measured final
+bounds. Rear configuration anchors are projected through that same transform,
+so changes in source padding cannot move the car away from its cable.
+The 2018–2020 Model 3 group and three newer
 Model 3 combinations use full-car front fallbacks; their cable overlay is hidden.
 Source option labels are retained; individual option fidelity can be corrected
 as discrepancies are discovered. A valid checksum does not certify fidelity.
 
-The prepared images total about 13.6 MB; the self-contained module is about
-18.3 MB because the images are base64 encoded. Shared image data is included
+The prepared images total about 14.2 MB; the self-contained module is about
+19.1 MB because the images are base64 encoded. Shared image data is included
 once per unique source image, and only selected images are decoded for display.
 The original approximately 315 MB archive stays outside Git and the card bundle.
 

@@ -1,4 +1,4 @@
-# Vehicle appearance test build (0.2.2)
+# Vehicle appearance test build (0.2.3)
 
 This test build embeds 368 Model 3 and Model Y appearance configurations and draws
 the charging cable separately. It runs without the original archive or Tesla URLs.
@@ -12,7 +12,7 @@ The card type and existing entity configuration are unchanged.
    Tessie Card resource URL to:
 
    ```text
-   /local/tessie-card-test/tessie-card.js?v=0.2.2
+   /local/tessie-card-test/tessie-card.js?v=0.2.3
    ```
 
    Keep the resource type **JavaScript module**. Save the previous resource URL
@@ -37,11 +37,14 @@ The card type and existing entity configuration are unchanged.
    The wall charger is absent in every state. Front-view fallbacks hide the cable
    and are labelled. Appearance is selected manually and does not change which
    physical Tessie vehicle receives commands.
-5. Check the scene on your usual dashboard widths and in light and dark themes.
+5. Compare Model Y 2020–2024 / Long Range AWD / Pearl White / All Black with
+   both 19-inch Gemini and 20-inch Induction wheels. The car should keep the
+   same size and the connector should remain on the left-rear charge port.
+6. Check the scene on your usual dashboard widths and in light and dark themes.
 
 To roll back, restore the previous resource URL and fully reload the dashboard.
-Version 0.2.2 is a local test build and has not been published. The existing
-published 0.2.1 prerelease contains only the original white Model 3 preview.
+Version 0.2.3 is a test prerelease. It corrects vehicle sizing and cable alignment
+across appearance options. Select it in HACS with prerelease versions enabled.
 
 ## Local simulation
 

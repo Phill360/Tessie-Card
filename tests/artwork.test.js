@@ -12,13 +12,27 @@ test('prepared catalog covers every downloaded exterior configuration with a ful
   assert.deepEqual([...new Set(ARTWORK.map(a=>a.model))].sort(),['m3','my']);
   assert.equal(new Set(ARTWORK.map(a=>`${a.model}/${a.generation}`)).size,5);
   assert.equal(new Set(ARTWORK.map(a=>a.id)).size,ARTWORK.length);
+  assert.equal(catalog.schema,2);
   for(const a of ARTWORK){assert.ok(ARTWORK_IMAGES[a.image]);assert.ok(a.port===null||a.port.every(Number.isFinite));if(a.generation==='legacy2018')assert.equal(a.view,'front');}
   for(const image of Object.values(catalog.images)){
+    assert.equal(image.normalization.version,2);
+    const bounds=image.normalization.renderedBounds;
+    assert.ok(Math.abs(bounds.width-catalog.framing.width)<=3,image.file+' changed vehicle size');
+    assert.ok(Math.abs(bounds.left-catalog.framing.left)<=3,image.file+' shifted horizontally');
+    assert.ok(Math.abs(bounds.top-catalog.framing.top)<=3,image.file+' shifted vertically');
     const bytes=await readFile(new URL('../assets/vehicles/'+image.file,import.meta.url));
     assert.equal(bytes.length,image.bytes);
     assert.equal(bytes.toString('ascii',0,4),'RIFF');assert.equal(bytes.toString('ascii',8,12),'WEBP');
     assert.equal(createHash('sha256').update(bytes).digest('hex'),image.sha256);
   }
+});
+
+test('Model Y Gemini and Induction retain matching scale and charge-port registration',()=>{
+  const base={model:'my',generation:'legacy2020',trim:'MTY09',paint:'PPSW',interior:'INPB0'};
+  const gemini=selectArtwork({...base,wheel:'WY19B'}),induction=selectArtwork({...base,wheel:'WY20P'});
+  assert.ok(gemini.port&&induction.port);
+  assert.ok(Math.abs(gemini.port[0]-induction.port[0])<1);
+  assert.ok(Math.abs(gemini.port[1]-induction.port[1])<3);
 });
 
 test('all cascading artwork choices resolve to an available configuration', () => {

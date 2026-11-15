@@ -1,27 +1,21 @@
-# Tessie Card 0.2.2 — appearance picker test build
+# Tessie Card 0.2.3 — vehicle framing correction
 
-Adds a visual artwork picker covering 368 configurations across five Model 3
-and Model Y generation groups, with 304 unique prepared vehicle images.
+Corrects inconsistent vehicle size and detached charging cables when changing
+paint, interior or wheel options. The original Model Y Gemini render is the
+reference for apparent vehicle width and top position.
 
-- Select model, generation, vehicle trim, paint colour, interior/trim colour and
-  wheels in the card editor. A live preview shows the selected configuration.
-- Dropdowns offer available downloaded combinations and preserve compatible
-  choices when a parent changes. Saved appearance does not alter entity targeting.
-- Changing the physical Tessie vehicle clears its previous appearance selection.
-- Rear renders retain the animated cable; full-car front fallbacks are labelled
-  and hide the cable. No wall charger is shown.
-- Prepared transparent WebP images are deduplicated and embedded in the module,
-  preserving the single-file HACS installation with no Tesla image requests.
-- The approximately 18.3 MB card contains about 13.6 MB of compressed images.
-  The original approximately 315 MB PNG archive remains local.
-- The local demo includes the card editor so artwork can be tried without a car.
+- Measures the main opaque car silhouette instead of cropping around stray
+  compositor pixels in the transparent background.
+- Rebuilds all 304 prepared images with consistent framing while preserving
+  the car's proportions. The 368 saved appearance combinations are retained.
+- Projects each charge-port anchor using the same image scale and offset,
+  keeping the connector attached when artwork changes.
+- Adds artifact framing checks and regression coverage for source padding,
+  isolated pixels and the Model Y Gemini/Induction case.
 
-Validation: 15 automated tests, all prepared image checksums, and browser checks
-covering dependent options, live previews, generation fallbacks, saved config,
-entity isolation, controls, cable states, reduced motion and responsive themes.
-This local build has not been validated against a live Home Assistant vehicle.
+The card configuration and charging controls are unchanged. Front-view fallbacks
+continue to hide the cable. Testing uses simulated Home Assistant data; the
+reported live screenshots were used as the visual reference.
 
-The 2018–2020 Model 3 rear-view code returned a taillight detail, so this group
-uses front views. Three newer Model 3 configurations use front fallbacks where
-rear requests failed. Other individual artwork discrepancies will be corrected
-as they are discovered.
+Install the v0.2.3 test prerelease through HACS and fully reload the dashboard so
+its embedded images replace the previous cached module.

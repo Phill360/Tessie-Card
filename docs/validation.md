@@ -1,8 +1,8 @@
 # Test release validation
 
-Build: 0.2.2 (local test build).
+Build: 0.2.3 (test prerelease).
 
-- `node --test`: fifteen tests pass. Covers missing/invalid measurements, power and
+- `node --test`: nineteen tests pass. Covers missing/invalid measurements, power and
   energy units, tariff units and negative tariffs, session-cost precedence,
   remaining-cost assumptions, number-entity capabilities, configuration validation,
   and one-off times in the Home Assistant timezone, including DST gaps/overlaps.
@@ -33,5 +33,14 @@ the user's exact entities, permissions, or Tesla firmware. Vehicle and entity
 discovery use simulated registry fixtures and the official Tessie entity metadata.
 Automatic paint/wheel matching is not implemented. A visual artwork picker covers
 368 configurations with 304 unique prepared renders. A manual full-scene override
-remains available. The approximately 18.3 MB module embeds the prepared images;
+remains available. The approximately 19.1 MB module embeds the prepared images;
 the original approximately 315 MB PNG archive is not shipped.
+
+For the 0.2.3 framing correction, all 304 decoded WebP images were checked against
+the original Model Y Gemini reference. Dominant car widths are 835–837 pixels on
+the 1000-pixel canvas; left edges are 83–84 and top edges 67–68. The preparation
+step ignores isolated opaque pixels rather than fitting the source canvas.
+Image scale and offsets also determine each cable anchor. Regression fixtures
+cover compositor noise, source padding/scale and Gemini/Induction registration.
+Browser screenshots compare the reported white/black-interior Model Y with
+19-inch Gemini and 20-inch Induction wheels at the same viewport.

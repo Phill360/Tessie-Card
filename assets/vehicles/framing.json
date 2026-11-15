@@ -1,0 +1,68 @@
+{
+  "schema": 2,
+  "description": "Vehicle width and top position match the v0.2.2 original Model Y Gemini reference; proportions are retained.",
+  "layout": {
+    "left": 83,
+    "top": 67,
+    "width": 836,
+    "height": 370
+  },
+  "groups": {
+    "my/legacy2020": {
+      "reference": "my:legacy2020:MTY09:PPSW:INPB0:WY19B",
+      "portFraction": [
+        0.6830143540669856,
+        0.3054054054054054
+      ],
+      "referenceBounds": {
+        "left": 83,
+        "top": 67,
+        "width": 836,
+        "height": 370,
+        "pixels": 221659
+      }
+    },
+    "my/modern": {
+      "reference": "my:modern:MTY48:PPSW:IPB12:WY19P",
+      "portFraction": [
+        0.7325581395348837,
+        0.33153638814016173
+      ],
+      "referenceBounds": {
+        "left": 71,
+        "top": 67,
+        "width": 860,
+        "height": 371,
+        "pixels": 224857
+      }
+    },
+    "m3/modern": {
+      "reference": "m3:modern:MT370:PPSW:IPB3:W39G",
+      "portFraction": [
+        0.6782006920415224,
+        0.34844192634560905
+      ],
+      "referenceBounds": {
+        "left": 67,
+        "top": 67,
+        "width": 867,
+        "height": 353,
+        "pixels": 220336
+      }
+    },
+    "m3/legacy2021": {
+      "reference": "m3:legacy2021:MT322:PPSW:IBB1:W40B",
+      "portFraction": [
+        0.6839677047289504,
+        0.3455056179775281
+      ],
+      "referenceBounds": {
+        "left": 67,
+        "top": 67,
+        "width": 867,
+        "height": 356,
+        "pixels": 225850
+      }
+    }
+  }
+}
