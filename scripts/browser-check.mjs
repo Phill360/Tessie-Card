@@ -148,6 +148,21 @@ try {
   await automatic.locator('#vehicle').evaluate(img=>img.decode());
   assert.equal(await automatic.locator('#flow').isVisible(),false);
   assert.match(await automatic.locator('#artwork-note').innerText(),/Front view/);
+  await editor.locator('#artwork-generation').selectOption('modern');
+  await editor.locator('#artwork-trim').selectOption('LR_RWD');
+  await editor.locator('#artwork-interior').selectOption('IPW2');
+  await editor.locator('#artwork-wheel').selectOption('W39G');
+  await automatic.locator('#vehicle').evaluate(img=>img.decode());
+  const longRangeRwdImage=await automatic.locator('#vehicle').getAttribute('src');
+  const longRangeRwdPort=await automatic.locator('#charge-connector').getAttribute('transform');
+  assert.match(await automatic.locator('#vehicle').getAttribute('alt'),/Long Range RWD.*White.*Nova/);
+  await editor.locator('#artwork-trim').selectOption('MT369');
+  await automatic.locator('#vehicle').evaluate(img=>img.decode());
+  assert.equal(await automatic.locator('#vehicle').getAttribute('src'),longRangeRwdImage);
+  assert.equal(await automatic.locator('#charge-connector').getAttribute('transform'),longRangeRwdPort);
+  await editor.locator('#artwork-trim').selectOption('LR_RWD');
+  assert.equal(await page.evaluate(()=>window.savedCardConfig.artwork.trim),'LR_RWD');
+  if(process.argv.includes('--capture-preview'))await editor.locator('.artwork-section').screenshot({path:'docs/model-3-long-range-rwd-preview.png'});
   // Selecting a different physical vehicle clears the previous appearance.
   await editor.locator('#vehicle-picker').selectOption('demo-vehicle-two');
   await page.waitForFunction(() => document.getElementById('automatic-card').shadowRoot.getElementById('battery').textContent === '45%');

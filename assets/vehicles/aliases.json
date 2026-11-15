@@ -6,5 +6,13 @@
     "trimLabel": "Rear-Wheel Drive",
     "sourceTrim": "MTY09",
     "note": "Original Model Y RWD uses the matching Long Range AWD appearance; this is a local artwork alias, not a Tesla option code."
+  },
+  {
+    "model": "m3",
+    "generation": "modern",
+    "trim": "LR_RWD",
+    "trimLabel": "Long Range RWD",
+    "sourceTrim": "MT369",
+    "note": "Model 3 Highland Long Range RWD (including 2025) uses matching RWD Premium artwork. This is a local artwork alias, not a Tesla API option code."
   }
 ]

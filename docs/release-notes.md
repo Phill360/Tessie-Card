@@ -1,14 +1,13 @@
-# Tessie Card 0.2.5 — preserve original paint colours
+# Tessie Card 0.2.6 — Model 3 Long Range RWD
 
-Removes the idle-state saturation filter that made red vehicles appear dark and
-muted in the card while their editor preview retained the original paint colour.
+Adds Long Range RWD to the Model 3 Highland (2024–2026) vehicle variants,
+including the 2025 model. It uses the matching Rear-Wheel Drive (Premium)
+artwork, paint colours, Black/White trim options, wheels and charge-port anchors.
 
-- Vehicle colours now stay faithful to the prepared Tesla render when charging,
-  idle or disconnected. Red Multi-Coat and Ultra Red are covered by browser checks.
-- The same image is retained across connection states; only charging indicators
-  and the cable change appearance.
-- Vehicle sizing, cable registration, trim colour and RWD options are unchanged.
+This is a local artwork alias; it does not change the physical Tessie vehicle or
+invent a Tesla API option code. Existing saved configurations remain valid.
+The catalog now has 412 selectable configurations and the same 304 images.
 
-Validation: 20 automated tests plus browser checks, including red paint colour
-and image consistency across charging, idle and disconnected states.
-Install the v0.2.5 test prerelease in HACS and fully reload the dashboard.
+Validation: 21 automated tests and browser checks, including matching every RWD
+Premium configuration and confirming identical image/cable placement in the UI.
+Install the v0.2.6 test prerelease in HACS and fully reload the dashboard.

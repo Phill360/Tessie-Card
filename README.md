@@ -1,6 +1,6 @@
 # Tessie Card
 
-Version **0.2.5** (test prerelease) of a custom Home Assistant charging card for the
+Version **0.2.6** (test prerelease) of a custom Home Assistant charging card for the
 [Tessie integration](https://www.home-assistant.io/integrations/tessie/).
 Inspired by the rendered scenes and flow presentation in
 [Sigenergy Flow Card](https://github.com/jyavenard/sigenergy-flow-card).
@@ -66,7 +66,7 @@ Your card configuration and entity mappings can stay the same.
 1. Download `tessie-card.js` from the latest GitHub release (or the repository
    root) and copy it to `/config/www/tessie-card/tessie-card.js`.
 2. Add a dashboard resource (Settings > Dashboards > Resources):
-   URL `/local/tessie-card/tessie-card.js?v=0.2.5`, type **JavaScript module**.
+   URL `/local/tessie-card/tessie-card.js?v=0.2.6`, type **JavaScript module**.
 3. Add a manual card using [examples/card.yaml](examples/card.yaml), replacing
    every example entity ID with the real ID from Developer Tools > States.
 4. Reload the dashboard. Increase the resource version query after updating files.
