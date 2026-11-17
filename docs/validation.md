@@ -67,7 +67,7 @@ source files passed checksum, PNG chunk CRC and pixel-data integrity checks, wit
 no suspicious identical renders across different paint, wheel or cabin colours.
 Twelve Model S cabin requests and one Cybertruck cabin request are unavailable;
 all new exterior combinations are prepared. The original Model 3/Y image data
-is reused without re-encoding. Publication to GitHub/HACS is pending.
+is reused without re-encoding. Version v0.2.8 is designated as a HACS test prerelease.
 
 The complete 0.2.8 decoded-image audit covers 590 WebPs: body widths 835–838
 pixels, left edges 83–84 and top edges 66–68 on the 1000-pixel canvas. White,

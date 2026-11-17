@@ -24,4 +24,5 @@ Generation labels identify source groups, not a guarantee of every historical
 model-year detail. The library now has 732 configurations and 590 unique renders.
 
 The new assets are embedded in the single-file card for testing; the original PNG
-archive is retained locally and is not shipped. Publication is a separate step.
+archive is retained locally and is not shipped. In HACS, enable prerelease
+versions, select v0.2.8, download the update and fully reload the dashboard.

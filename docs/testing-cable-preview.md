@@ -47,7 +47,7 @@ The card type and existing entity configuration are unchanged.
 
 To roll back, restore the previous resource URL and fully reload the dashboard.
 Version 0.2.8 is a test prerelease. It corrects vehicle sizing and cable alignment
-across appearance options. This prepared build has not yet been published to HACS.
+across appearance options. In HACS, enable prerelease versions and select v0.2.8.
 
 ## Local simulation
 
