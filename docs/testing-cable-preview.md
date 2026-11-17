@@ -1,6 +1,6 @@
-# Vehicle appearance test build (0.2.7)
+# Vehicle appearance test build (0.2.8)
 
-This test build embeds 412 Model 3 and Model Y appearance configurations and draws
+This test build embeds 732 Model 3, Y, S, X and Cybertruck appearance configurations and draws
 the charging cable separately. It runs without the original archive or Tesla URLs.
 The card type and existing entity configuration are unchanged.
 
@@ -12,7 +12,7 @@ The card type and existing entity configuration are unchanged.
    Tessie Card resource URL to:
 
    ```text
-   /local/tessie-card-test/tessie-card.js?v=0.2.7
+   /local/tessie-card-test/tessie-card.js?v=0.2.8
    ```
 
    Keep the resource type **JavaScript module**. Save the previous resource URL
@@ -40,11 +40,14 @@ The card type and existing entity configuration are unchanged.
 5. Compare Model Y 2020–2024 / Long Range AWD / Pearl White / All Black with
    both 19-inch Gemini and 20-inch Induction wheels. The car should keep the
    same size and the connector should remain on the left-rear charge port.
-6. Check the scene on your usual dashboard widths and in light and dark themes.
+6. Try Model S/X with Cream trim and both wheel sizes. Check Cybertruck with
+   Core and Mantle wheels and Tactical Grey/White trim; its cable should meet
+   the port above the rear wheel.
+7. Check the scene on your usual dashboard widths and in light and dark themes.
 
 To roll back, restore the previous resource URL and fully reload the dashboard.
-Version 0.2.7 is a test prerelease. It corrects vehicle sizing and cable alignment
-across appearance options. Select it in HACS with prerelease versions enabled.
+Version 0.2.8 is a test prerelease. It corrects vehicle sizing and cable alignment
+across appearance options. This prepared build has not yet been published to HACS.
 
 ## Local simulation
 
@@ -53,3 +56,8 @@ From the project directory run `node scripts/serve.mjs`, then open
 selectors. The simulated state selector can exercise the visual
 states without contacting Home Assistant or a vehicle. Demo buttons only change
 simulated data; buttons in Home Assistant retain their normal real controls.
+
+Historical Model S (2012–2016 original nose and 2016–2020 facelift) and Model X
+(2015–2020) add 55 checked Black-interior paint/wheel choices. Model S uses front
+views with the cable hidden; Model X uses calibrated rear views. Historical
+variants are labelled Original exterior and do not claim trim/battery badges.

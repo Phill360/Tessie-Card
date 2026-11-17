@@ -1,6 +1,6 @@
 {
   "name": "tessie-card",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "private": true,
   "type": "module",
   "scripts": { "build": "node scripts/build.mjs", "test": "node --test", "demo": "node scripts/serve.mjs" }

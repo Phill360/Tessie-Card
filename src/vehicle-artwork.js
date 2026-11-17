@@ -2,7 +2,12 @@ import { ARTWORK, ARTWORK_IMAGES } from './vehicle-artwork-data.js';
 export { ARTWORK, ARTWORK_IMAGES };
 export const ARTWORK_FIELDS = ['model','generation','trim','paint','interior','wheel'];
 export const DEFAULT_ARTWORK = {model:'m3',generation:'modern',trim:'MT370',paint:'PPSW',interior:'IPB3',wheel:'W39G'};
-export function interiorColour(label) { return /white/i.test(label)?'White':'Black'; }
+export function interiorColour(label) {
+  if(/cream/i.test(label))return 'Cream';
+  if(/white/i.test(label))return 'White';
+  if(/tactical gr[ae]y/i.test(label))return 'Tactical Grey';
+  return 'Black';
+}
 export function selectArtwork(selection = DEFAULT_ARTWORK) {
   return ARTWORK.find(a => ARTWORK_FIELDS.every(key => a[key] === selection[key])) || null;
 }

@@ -15,7 +15,7 @@ for(const [id,image] of Object.entries(catalog.images)){
 }
 const summary={images:results.length,widthRange:[Math.min(...results.map(r=>r.width)),Math.max(...results.map(r=>r.width))],leftRange:[Math.min(...results.map(r=>r.left)),Math.max(...results.map(r=>r.left))],topRange:[Math.min(...results.map(r=>r.top)),Math.max(...results.map(r=>r.top))],results};
 await writeFile(resolve(root,'test-results/vehicle-framing-audit.json'),JSON.stringify(summary,null,2)+'\n');
-for(const paint of ['PPSW','PBSB']){
+for(const paint of ['PPSW','PBSB','']){
   const selected=[...new Map(catalog.entries.filter(a=>a.paint===paint||(paint==='PBSB'&&a.paint==='PX02')).map(a=>[[a.model,a.generation,a.wheel].join('/'),a])).values()];
   const tiles=[];
   for(let i=0;i<selected.length;i++){
@@ -26,6 +26,6 @@ for(const paint of ['PPSW','PBSB']){
     const tile=await sharp(composed).resize(400,276).png().toBuffer();
     tiles.push({input:tile,left:(i%4)*400,top:Math.floor(i/4)*276});
   }
-  await sharp({create:{width:1600,height:Math.ceil(selected.length/4)*276,channels:4,background:'#23272c'}}).composite(tiles).png().toFile(resolve(root,`test-results/framing-${paint.toLowerCase()}.png`));
+  if(selected.length)await sharp({create:{width:1600,height:Math.ceil(selected.length/4)*276,channels:4,background:'#23272c'}}).composite(tiles).png().toFile(resolve(root,`test-results/framing-${paint.toLowerCase()||'stainless'}.png`));
 }
 console.log(JSON.stringify({...summary,results:undefined}));

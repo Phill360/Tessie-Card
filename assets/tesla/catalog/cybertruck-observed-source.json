@@ -1,0 +1,28 @@
+{
+  "source": "https://www.tesla.com/cybertruck/design#overview",
+  "observed": "2026-11-17",
+  "method": "Public configurator DOM image hrefs and radio option values",
+  "variants": {
+    "MTC08": "Dual Motor AWD (disabled for ordering when observed)",
+    "MTC07": "Premium AWD (disabled for ordering when observed)",
+    "MTC04": "Cyberbeast"
+  },
+  "wheels": {
+    "WH0A": "20-inch Core",
+    "WH0B": "20-inch Mantle"
+  },
+  "interiors": {
+    "IG04": "Tactical Grey",
+    "IW04": "White"
+  },
+  "views": {
+    "rear": "STUD_REAR34",
+    "wheel": "STUD_RIMCLOSEUP",
+    "interior": "INTERIOR_ROW1"
+  },
+  "notes": [
+    "Public Tesla image endpoint; no personal data or order submitted.",
+    "Only stainless-steel exterior is exposed by this source; no synthetic paint colours.",
+    "Downloads must be visually checked; accepting an option is not proof of render fidelity."
+  ]
+}

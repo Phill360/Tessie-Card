@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { resolve, sep } from 'node:path';
 import { inflateSync } from 'node:zlib';
 
-const archive=resolve(import.meta.dirname,'../assets/tesla/library');
+const archive=process.argv[2]?resolve(process.argv[2]):resolve(import.meta.dirname,'../assets/tesla/library');
 const manifest=JSON.parse(await readFile(resolve(archive,'manifest.json'),'utf8'));
 const failures=[], hashes=new Map(); let totalBytes=0, checked=0;
 const crcTable=Array.from({length:256},(_,n)=>{for(let i=0;i<8;i++)n=n&1?0xedb88320^(n>>>1):n>>>1;return n>>>0});

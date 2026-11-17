@@ -1,0 +1,171 @@
+{
+  "ms": {
+    "label": "Model S",
+    "profiles": {
+      "original2012": {
+        "label": "2012-2016 (original nose)",
+        "base": "https://static-assets.tesla.com/v1/compositor/",
+        "fixed": {
+          "model": "ms",
+          "modelOption": "$MDLS"
+        },
+        "trims": {
+          "": "Historical exterior appearance"
+        },
+        "paints": {
+          "$PBSB": "Solid Black",
+          "$PPSW": "Pearl White Multi-Coat",
+          "$PPSB": "Deep Blue Metallic",
+          "$PMNG": "Midnight Silver Metallic",
+          "$PPMR": "Red Multi-Coat"
+        },
+        "views": {
+          "STUD_3QTR": "Front 3/4",
+          "STUD_INTERIOR": "Interior cabin",
+          "RIMCLOSEUP": "Wheel close-up"
+        },
+        "wheelsByTrim": {
+          "": {
+            "$WT19": "19-inch original",
+            "$WTSS": "21-inch silver Turbine",
+            "$WTSP": "21-inch grey Turbine"
+          }
+        },
+        "interiorsByTrim": {
+          "": {
+            "$INBPP": "Black",
+            "$INBPW": "White",
+            "$INLPC": "Cream"
+          }
+        },
+        "layouts": {
+          "": "Default"
+        },
+        "defaults": {
+          "paint": "$PPSW",
+          "layout": "",
+          "steering": ""
+        },
+        "optionSequence": [
+          "MODEL_OPTION",
+          "PAINT",
+          "WHEEL",
+          "INTERIOR",
+          "LAYOUT"
+        ]
+      },
+      "facelift2016": {
+        "label": "2016-2020 (facelift)",
+        "base": "https://static-assets.tesla.com/v1/compositor/",
+        "fixed": {
+          "model": "ms",
+          "modelOption": "$MDLS"
+        },
+        "trims": {
+          "": "Historical exterior appearance"
+        },
+        "paints": {
+          "$PBSB": "Solid Black",
+          "$PPSW": "Pearl White Multi-Coat",
+          "$PPSB": "Deep Blue Metallic",
+          "$PMNG": "Midnight Silver Metallic",
+          "$PPMR": "Red Multi-Coat"
+        },
+        "views": {
+          "STUD_3QTR_V2": "Front 3/4",
+          "STUD_INTERIOR": "Interior cabin",
+          "RIMCLOSEUP": "Wheel close-up"
+        },
+        "wheelsByTrim": {
+          "": {
+            "$WTAS": "19-inch silver Slipstream",
+            "$WTDS": "19-inch grey Slipstream",
+            "$WTTC": "21-inch Sonic Carbon Twin Turbine",
+            "$WTAB": "21-inch black Arachnid"
+          }
+        },
+        "interiorsByTrim": {
+          "": {
+            "$INBPP": "Black",
+            "$INBPW": "White",
+            "$INLPC": "Cream"
+          }
+        },
+        "layouts": {
+          "": "Default"
+        },
+        "defaults": {
+          "paint": "$PPSW",
+          "layout": "",
+          "steering": ""
+        },
+        "optionSequence": [
+          "MODEL_OPTION",
+          "PAINT",
+          "WHEEL",
+          "INTERIOR",
+          "LAYOUT"
+        ]
+      }
+    }
+  },
+  "mx": {
+    "label": "Model X",
+    "profiles": {
+      "original2015": {
+        "label": "2015-2020 (original)",
+        "base": "https://static-assets.tesla.com/v1/compositor/",
+        "fixed": {
+          "model": "mx",
+          "modelOption": "$MDLX"
+        },
+        "trims": {
+          "": "Historical exterior appearance"
+        },
+        "paints": {
+          "$PBSB": "Solid Black",
+          "$PPSW": "Pearl White Multi-Coat",
+          "$PPSB": "Deep Blue Metallic",
+          "$PMNG": "Midnight Silver Metallic",
+          "$PPMR": "Red Multi-Coat"
+        },
+        "views": {
+          "STUD_3QTR": "Front 3/4",
+          "STUD_REAR": "Rear 3/4",
+          "STUD_INTERIOR": "Interior cabin",
+          "RIMCLOSEUP": "Wheel close-up"
+        },
+        "wheelsByTrim": {
+          "": {
+            "$WT20": "20-inch silver Slipstream",
+            "$WTSC": "20-inch Sonic Carbon Slipstream",
+            "$WT22": "22-inch silver Turbine",
+            "$WTUT": "22-inch Onyx Black"
+          }
+        },
+        "interiorsByTrim": {
+          "": {
+            "$INBPP": "Black",
+            "$INBPW": "White",
+            "$INLPC": "Cream"
+          }
+        },
+        "layouts": {
+          "$CC02": "Six seats"
+        },
+        "defaults": {
+          "paint": "$PPSW",
+          "layout": "$CC02",
+          "steering": ""
+        },
+        "optionSequence": [
+          "MODEL_OPTION",
+          "PAINT",
+          "WHEEL",
+          "INTERIOR",
+          "LAYOUT"
+        ]
+      }
+    }
+  }
+}

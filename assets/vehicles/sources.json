@@ -1,5 +1,59 @@
 [
   {
+    "configuration": "ct:modern:MTC04::IG04:WH0A",
+    "image": "d1ea2cfa7bf080a0e93d",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTC04,$WH0A,$IG04&view=STUD_REAR34&model=ct&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "d1ea2cfa7bf080a0e93dbb6e4699c4f3d1515316c77612de9eeb19352b968c39"
+  },
+  {
+    "configuration": "ct:modern:MTC04::IG04:WH0B",
+    "image": "a4b5f6f570e3a4101ca7",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTC04,$WH0B,$IG04&view=STUD_REAR34&model=ct&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "a4b5f6f570e3a4101ca734577a9b67e146efdcca3ffc29022fa9456d1c67e3de"
+  },
+  {
+    "configuration": "ct:modern:MTC04::IW04:WH0A",
+    "image": "d1ea2cfa7bf080a0e93d",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTC04,$WH0A,$IW04&view=STUD_REAR34&model=ct&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "d1ea2cfa7bf080a0e93dbb6e4699c4f3d1515316c77612de9eeb19352b968c39"
+  },
+  {
+    "configuration": "ct:modern:MTC04::IW04:WH0B",
+    "image": "a4b5f6f570e3a4101ca7",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTC04,$WH0B,$IW04&view=STUD_REAR34&model=ct&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "a4b5f6f570e3a4101ca734577a9b67e146efdcca3ffc29022fa9456d1c67e3de"
+  },
+  {
+    "configuration": "ct:modern:MTC07::IG04:WH0A",
+    "image": "fc62397d2d2a7873ff6e",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTC07,$WH0A,$IG04&view=STUD_REAR34&model=ct&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "fc62397d2d2a7873ff6efb8da2d90896682db943e17a5e204cbba06dd9ff2621"
+  },
+  {
+    "configuration": "ct:modern:MTC07::IG04:WH0B",
+    "image": "2ba34699cc7611c70131",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTC07,$WH0B,$IG04&view=STUD_REAR34&model=ct&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "2ba34699cc7611c701310b3cc7ba77969b49f259503718ddfca0827364c4ea46"
+  },
+  {
+    "configuration": "ct:modern:MTC07::IW04:WH0A",
+    "image": "fc62397d2d2a7873ff6e",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTC07,$WH0A,$IW04&view=STUD_REAR34&model=ct&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "fc62397d2d2a7873ff6efb8da2d90896682db943e17a5e204cbba06dd9ff2621"
+  },
+  {
+    "configuration": "ct:modern:MTC07::IW04:WH0B",
+    "image": "2ba34699cc7611c70131",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTC07,$WH0B,$IW04&view=STUD_REAR34&model=ct&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "2ba34699cc7611c701310b3cc7ba77969b49f259503718ddfca0827364c4ea46"
+  },
+  {
+    "configuration": "ct:modern:MTC08::IG04:WH0A",
+    "image": "39b8ee733024d34d98df",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTC08,$WH0A,$IG04&view=STUD_REAR34&model=ct&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "39b8ee733024d34d98dfbad0a7150a4f0a26f1a7d8696810e8fb731190e76afe"
+  },
+  {
     "configuration": "m3:legacy2018:MT301:PBSB:IN3PB:W38B",
     "image": "7a5b5130a2c00107294b",
     "source": "https://static-assets.tesla.com/configurator/compositor?options=$MT301,$PBSB,$W38B,$IN3PB&view=STUD_3QTR&model=m3&size=1440&bkba_opt=1&version=0.0.25",
@@ -1630,6 +1684,1872 @@
     "image": "c9a90b83637d7c2d7cdf",
     "source": "https://static-assets.tesla.com/configurator/compositor?options=$MT371,$PX02,$W30A,$IPW4&view=STUD_REAR34&model=m3&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
     "sourceSha256": "c9a90b83637d7c2d7cdfec22e0c6fac7ea14e1c66451f1da5f4feedf54078bcd"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PBSB:INBPP:WTAB",
+    "image": "1bc51b7c5a126540f43f",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PBSB,$WTAB,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "1bc51b7c5a126540f43f3923307c6021dee9a3e9b19070e4591696cb0a4f3a5b"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PBSB:INBPP:WTAS",
+    "image": "d622886a451c1755557d",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PBSB,$WTAS,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "d622886a451c1755557da7b64eea3fc3d48ba3b59ea11228252466a3d599e976"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PBSB:INBPP:WTDS",
+    "image": "a7cc26ae7f1e4d03f27b",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PBSB,$WTDS,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "a7cc26ae7f1e4d03f27bd878650853d577eeb6b6ea24804518a48365cdf588d8"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PBSB:INBPP:WTTC",
+    "image": "c9ff4474947beb740db2",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PBSB,$WTTC,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "c9ff4474947beb740db23a51a34305720fdf69af552d427b229963978cf55e87"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PMNG:INBPP:WTAB",
+    "image": "243d6b041616f5b4768f",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PMNG,$WTAB,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "243d6b041616f5b4768f1124ff1e9f9ba50fe66fc0d9f17a16ba6c63cede58dc"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PMNG:INBPP:WTAS",
+    "image": "7e94152200af9169a3d5",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PMNG,$WTAS,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "7e94152200af9169a3d5b5769f84dc4a17a7f5230bb94d7970f0412e49830f66"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PMNG:INBPP:WTDS",
+    "image": "febc06f892b2d1f5d9ea",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PMNG,$WTDS,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "febc06f892b2d1f5d9ea3794696ec3cc2e6f71afa6eb3999db473afef67dc7f8"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PMNG:INBPP:WTTC",
+    "image": "d2a90f1ff8b389cf8cc0",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PMNG,$WTTC,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "d2a90f1ff8b389cf8cc08039c91ba8ae2eb44b8c9e5e9214171ae6046f3fc2b5"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PPMR:INBPP:WTAB",
+    "image": "77797a6ff12d16e353c2",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPMR,$WTAB,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "77797a6ff12d16e353c2fa349df8534f3575d29a111d3afa392b821a619ed527"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PPMR:INBPP:WTAS",
+    "image": "899fce9a7726785e768e",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPMR,$WTAS,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "899fce9a7726785e768ea59ff34fea8b935b8c254282c63a7793f0e40ffd83a0"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PPMR:INBPP:WTDS",
+    "image": "77911f867be879fdcdb2",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPMR,$WTDS,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "77911f867be879fdcdb2444fef6c10f5d8904db3503f69125780a20e4f993a73"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PPMR:INBPP:WTTC",
+    "image": "1dea320117d41b5fb07b",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPMR,$WTTC,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "1dea320117d41b5fb07b0761a2ca152ce3a6c5726ecfdec016a2f9a3b4081f54"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PPSB:INBPP:WTAB",
+    "image": "02340c346d3be4790956",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPSB,$WTAB,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "02340c346d3be47909564c9e0038562ce0f223389027075989e58a408f7f9b17"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PPSB:INBPP:WTAS",
+    "image": "ba8e2c9e865b9b2829eb",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPSB,$WTAS,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "ba8e2c9e865b9b2829eba29be77fdfa11b021cbfeaa40bd3bf33a6a553a22a1f"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PPSB:INBPP:WTDS",
+    "image": "a8371ba4c88a993e2302",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPSB,$WTDS,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "a8371ba4c88a993e23021dd72e66bebdbd20c579824fa0eccfa44d2928d22d4e"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PPSB:INBPP:WTTC",
+    "image": "81eab9d587d5654d0f8a",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPSB,$WTTC,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "81eab9d587d5654d0f8a105c32ee82d00d84c952c9ac63c53561104e6b072597"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PPSW:INBPP:WTAB",
+    "image": "124723afd6ba72a7740f",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPSW,$WTAB,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "124723afd6ba72a7740feab283aa2fcb08284a2fba5f363d467329940740372a"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PPSW:INBPP:WTAS",
+    "image": "5ac7cd465cb3eecc565f",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPSW,$WTAS,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "5ac7cd465cb3eecc565fa802d04cef2635c579af187f63f986195f112b1c476c"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PPSW:INBPP:WTDS",
+    "image": "9da9245b20502cce95d4",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPSW,$WTDS,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "9da9245b20502cce95d4c4538a3c58c17f861cfc927597a52cb3638dc953c9ea"
+  },
+  {
+    "configuration": "ms:facelift2016:LEGACY:PPSW:INBPP:WTTC",
+    "image": "3c5ac0f177a7f86ba3b9",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPSW,$WTTC,$INBPP&view=STUD_3QTR_V2&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "3c5ac0f177a7f86ba3b9659eff8f8fdd769a2b20e68e78b28b1c460c887d00f7"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PBSB:IBE00:WS11",
+    "image": "6719a05687bc03bc9549",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PBSB,$WS11,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "6719a05687bc03bc954975264778e8a8c2d7cd61fd648e6ab9fdd67362ba11cb"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PBSB:IBE00:WS90",
+    "image": "c32da7f4d02531ec5f40",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PBSB,$WS90,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "c32da7f4d02531ec5f40603846cd44098cba4abcf113475b1b2b61457f01d503"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PBSB:ICW00:WS11",
+    "image": "8c54deeb4165f73d70b6",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PBSB,$WS11,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "8c54deeb4165f73d70b679c9251d052d977f7589f62b6f2f0be05c90c6a7e485"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PBSB:ICW00:WS90",
+    "image": "14fb953b5d9c0a784a7c",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PBSB,$WS90,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "14fb953b5d9c0a784a7c1e8e83641dd855e1f146e527bcbcd988086ceaa808a1"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PBSB:IWW00:WS11",
+    "image": "627262c1a68742ea85b8",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PBSB,$WS11,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "627262c1a68742ea85b849c9d048e393cdd49a99a6b6ab964212c7bdd96d55d5"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PBSB:IWW00:WS90",
+    "image": "bbfcb078303c26db442e",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PBSB,$WS90,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "bbfcb078303c26db442e093bb1305a8b76f8c2cb091f2c0fd7c2c66c02b1514b"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PMNG:IBE00:WS11",
+    "image": "ea50ed7464f8587f824b",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PMNG,$WS11,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "ea50ed7464f8587f824b931cd296d908dedb75d4a676b0273e2ae647152d15d3"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PMNG:IBE00:WS90",
+    "image": "561a6eab79289b399edd",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PMNG,$WS90,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "561a6eab79289b399edd19dc749288988bad4b4afb1050febf8f12e0fe0a247b"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PMNG:ICW00:WS11",
+    "image": "550a9a6a11973d8c64c4",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PMNG,$WS11,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "550a9a6a11973d8c64c49d4a6cb1e0d59c70959995c4ae5c549fc37c6d662fea"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PMNG:ICW00:WS90",
+    "image": "b564718b31417fd4b851",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PMNG,$WS90,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "b564718b31417fd4b8518eded3ee3faae3ec85d9448e5e260529ff34f6f6d8d1"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PMNG:IWW00:WS11",
+    "image": "d822082859d1d0332913",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PMNG,$WS11,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "d822082859d1d03329132eef65626509535af585cc3641a3190005c3ea73ce12"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PMNG:IWW00:WS90",
+    "image": "ea08850bcb57fbbfa582",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PMNG,$WS90,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "ea08850bcb57fbbfa582a1ff748c3e1de38c211b35fd86cd4be4a45936d7d046"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPMR:IBE00:WS11",
+    "image": "15317cc81bc814058a20",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPMR,$WS11,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "15317cc81bc814058a204ea805d53ee031380ebb2e5999d106edad9019eace70"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPMR:IBE00:WS90",
+    "image": "eb4a92aa8ad7e6874f15",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPMR,$WS90,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "eb4a92aa8ad7e6874f156fd3855042f7339752897c87f82d241fe2fd405c0a3f"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPMR:ICW00:WS11",
+    "image": "9fc7bb0259d77a924a15",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPMR,$WS11,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "9fc7bb0259d77a924a15ff662b13afc2bc3908f73f66dc89fe00bfbbb718f0b9"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPMR:ICW00:WS90",
+    "image": "740b70e0dfbe0b8f68bd",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPMR,$WS90,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "740b70e0dfbe0b8f68bd834149778c5ec66da1d89cf7cf2bc559d1fef2e91d7e"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPMR:IWW00:WS11",
+    "image": "a29d9dc8669831d8e5f0",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPMR,$WS11,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "a29d9dc8669831d8e5f0eef7fdbed4d73ca82d5c4b478d11dde57610588999bb"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPMR:IWW00:WS90",
+    "image": "edf81195ed5ade87bf0b",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPMR,$WS90,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "edf81195ed5ade87bf0b753cfce5f8ebed87667b8e88cf8cb096db78952a1a0e"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPSB:IBE00:WS11",
+    "image": "6b149e82180473299113",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPSB,$WS11,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "6b149e8218047329911317ac3e93f531a03c08baa8ab99cbfd3eaa14f2db283b"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPSB:IBE00:WS90",
+    "image": "086a85a79bb2e498a8d8",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPSB,$WS90,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "086a85a79bb2e498a8d894512ff27fabc6bf8a4ff06713c9a7bca898203295c2"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPSB:ICW00:WS11",
+    "image": "694d3d25f5a65e83e61a",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPSB,$WS11,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "694d3d25f5a65e83e61a031b8dac69b9f8acd101139bbc4067a6a3dccbfa25d1"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPSB:ICW00:WS90",
+    "image": "52a5d26af988e7a1800c",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPSB,$WS90,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "52a5d26af988e7a1800c270096fc13c0fb779a01e9d674685dde1d8a8227db0a"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPSB:IWW00:WS11",
+    "image": "76420b90073a4e14ddca",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPSB,$WS11,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "76420b90073a4e14ddcacabf73df71e4d6394192c7a6bf27905d4fa061f19aa9"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPSB:IWW00:WS90",
+    "image": "c27d8513d89464dff8a8",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPSB,$WS90,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "c27d8513d89464dff8a839266ebfdaf9ce17992aedee7a97e9a03323f70b6ee7"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPSW:IBE00:WS11",
+    "image": "3530b8e822431bb74c4d",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPSW,$WS11,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "3530b8e822431bb74c4d358f02994c60fb0318d3013e12d4c18f0e5bcbfec2ae"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPSW:IBE00:WS90",
+    "image": "1c904a1f0b647304c28f",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPSW,$WS90,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "1c904a1f0b647304c28ff36d035517946c647e06a4a6a51b8ab3172c38f4800c"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPSW:ICW00:WS11",
+    "image": "1d7efb6d9731b575bd17",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPSW,$WS11,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "1d7efb6d9731b575bd1717c5e2c457a3fdf149fe510a1278c6b6e3b3b6590e31"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPSW:ICW00:WS90",
+    "image": "d2b7c6e22954bc1fb7b4",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPSW,$WS90,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "d2b7c6e22954bc1fb7b48d676ca3f16e156135e58f966331e192b47201b0f768"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPSW:IWW00:WS11",
+    "image": "40b4d44bce57044cedcc",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPSW,$WS11,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "40b4d44bce57044cedcc98b9b45c3b276348b99a42e0f8a86a8466ff3d3d814f"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS13:PPSW:IWW00:WS90",
+    "image": "ade93fc858884ca1d611",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS13,$PPSW,$WS90,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "ade93fc858884ca1d6117b93b8e60cbd1682eccae53080c9590b3fc141d1d6e3"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PBSB:IBC00:WS11",
+    "image": "2471cf3d913176b10286",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PBSB,$WS11,$IBC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "2471cf3d913176b10286960614b094e211ba5574d66e67f0ede4c40b2d774a41"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PBSB:IBC00:WS90",
+    "image": "0abaa4ac0943c4af994d",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PBSB,$WS90,$IBC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "0abaa4ac0943c4af994d66fe0e6c0f4749fd1ba8f542637b13befc3cda084a9b"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PBSB:IBE00:WS11",
+    "image": "2471cf3d913176b10286",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PBSB,$WS11,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "2471cf3d913176b10286960614b094e211ba5574d66e67f0ede4c40b2d774a41"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PBSB:IBE00:WS90",
+    "image": "0abaa4ac0943c4af994d",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PBSB,$WS90,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "0abaa4ac0943c4af994d66fe0e6c0f4749fd1ba8f542637b13befc3cda084a9b"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PBSB:ICC00:WS11",
+    "image": "7a82c4dbb40467c7f673",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PBSB,$WS11,$ICC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "7a82c4dbb40467c7f673524c6a5851fa3bfa289a00c97d870c5b1075c44dcd42"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PBSB:ICC00:WS90",
+    "image": "b6895af274deeed49ed5",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PBSB,$WS90,$ICC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "b6895af274deeed49ed53ea1f8c9bfb83d44c39b2de72ee0ac606ff3ad72ce71"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PBSB:ICW00:WS11",
+    "image": "7a82c4dbb40467c7f673",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PBSB,$WS11,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "7a82c4dbb40467c7f673524c6a5851fa3bfa289a00c97d870c5b1075c44dcd42"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PBSB:ICW00:WS90",
+    "image": "b6895af274deeed49ed5",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PBSB,$WS90,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "b6895af274deeed49ed53ea1f8c9bfb83d44c39b2de72ee0ac606ff3ad72ce71"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PBSB:IWC00:WS11",
+    "image": "6d0778f646a39d9d1bc2",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PBSB,$WS11,$IWC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "6d0778f646a39d9d1bc299289a2e3421dae5357b878d300d57f3f03474e00b84"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PBSB:IWC00:WS90",
+    "image": "43e5888a2be2cd0486ed",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PBSB,$WS90,$IWC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "43e5888a2be2cd0486ed8ca42d888bba9141a715d499724926d5b725a22bf04f"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PBSB:IWW00:WS11",
+    "image": "6d0778f646a39d9d1bc2",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PBSB,$WS11,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "6d0778f646a39d9d1bc299289a2e3421dae5357b878d300d57f3f03474e00b84"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PBSB:IWW00:WS90",
+    "image": "43e5888a2be2cd0486ed",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PBSB,$WS90,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "43e5888a2be2cd0486ed8ca42d888bba9141a715d499724926d5b725a22bf04f"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PMNG:IBC00:WS11",
+    "image": "7cd9d74170d4771b170c",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PMNG,$WS11,$IBC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "7cd9d74170d4771b170c4fea713a312b6441b60e4a14f8eef349edb6e1d34f57"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PMNG:IBC00:WS90",
+    "image": "ce8db335b8fc2bfb8a46",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PMNG,$WS90,$IBC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "ce8db335b8fc2bfb8a46be0f27d43aef165171fdb0634fbbe7b4d3366e63f4c8"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PMNG:IBE00:WS11",
+    "image": "7cd9d74170d4771b170c",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PMNG,$WS11,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "7cd9d74170d4771b170c4fea713a312b6441b60e4a14f8eef349edb6e1d34f57"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PMNG:IBE00:WS90",
+    "image": "ce8db335b8fc2bfb8a46",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PMNG,$WS90,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "ce8db335b8fc2bfb8a46be0f27d43aef165171fdb0634fbbe7b4d3366e63f4c8"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PMNG:ICC00:WS11",
+    "image": "33822cacc32db9f09b7c",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PMNG,$WS11,$ICC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "33822cacc32db9f09b7cd7638c83fe72f1f628fed1b08f7d10d595a535faa84a"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PMNG:ICC00:WS90",
+    "image": "e3faf7d89732b2482f7d",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PMNG,$WS90,$ICC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "e3faf7d89732b2482f7deebb594a028384896ea2409d1517fb4c9c073d526266"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PMNG:ICW00:WS11",
+    "image": "33822cacc32db9f09b7c",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PMNG,$WS11,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "33822cacc32db9f09b7cd7638c83fe72f1f628fed1b08f7d10d595a535faa84a"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PMNG:ICW00:WS90",
+    "image": "e3faf7d89732b2482f7d",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PMNG,$WS90,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "e3faf7d89732b2482f7deebb594a028384896ea2409d1517fb4c9c073d526266"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PMNG:IWC00:WS11",
+    "image": "2069dd6d3cf99bb3bf0b",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PMNG,$WS11,$IWC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "2069dd6d3cf99bb3bf0b40f6e9e6d4a2cf4ffba2b60ec90858dfc03448f1c1fa"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PMNG:IWC00:WS90",
+    "image": "13b060e6f55e3e5c9813",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PMNG,$WS90,$IWC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "13b060e6f55e3e5c98137c9a8cae70cd1d64a14fbdbbde556af177fb0727b1d8"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PMNG:IWW00:WS11",
+    "image": "2069dd6d3cf99bb3bf0b",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PMNG,$WS11,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "2069dd6d3cf99bb3bf0b40f6e9e6d4a2cf4ffba2b60ec90858dfc03448f1c1fa"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PMNG:IWW00:WS90",
+    "image": "13b060e6f55e3e5c9813",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PMNG,$WS90,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "13b060e6f55e3e5c98137c9a8cae70cd1d64a14fbdbbde556af177fb0727b1d8"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPMR:IBC00:WS11",
+    "image": "491ee54e2e4256d1a8f1",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPMR,$WS11,$IBC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "491ee54e2e4256d1a8f1a68c07d5135f87d9a3bc49b1cbae9f092715dd347e6b"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPMR:IBC00:WS90",
+    "image": "6171f42a66b89d49a508",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPMR,$WS90,$IBC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "6171f42a66b89d49a50805cc8b7c0f3697c6ab77cc28400cd6632ed0e529aef2"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPMR:IBE00:WS11",
+    "image": "491ee54e2e4256d1a8f1",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPMR,$WS11,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "491ee54e2e4256d1a8f1a68c07d5135f87d9a3bc49b1cbae9f092715dd347e6b"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPMR:IBE00:WS90",
+    "image": "6171f42a66b89d49a508",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPMR,$WS90,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "6171f42a66b89d49a50805cc8b7c0f3697c6ab77cc28400cd6632ed0e529aef2"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPMR:ICC00:WS11",
+    "image": "ce749193c4791fc6ec6f",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPMR,$WS11,$ICC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "ce749193c4791fc6ec6fa6b19810e5eea8dbcbf03c20f84d870ffb7ceac7d616"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPMR:ICC00:WS90",
+    "image": "cf305b9b181fbc162442",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPMR,$WS90,$ICC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "cf305b9b181fbc162442b1a6a0d069b94b16869d9c2463b4fa3e11ae9217ca87"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPMR:ICW00:WS11",
+    "image": "ce749193c4791fc6ec6f",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPMR,$WS11,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "ce749193c4791fc6ec6fa6b19810e5eea8dbcbf03c20f84d870ffb7ceac7d616"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPMR:ICW00:WS90",
+    "image": "cf305b9b181fbc162442",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPMR,$WS90,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "cf305b9b181fbc162442b1a6a0d069b94b16869d9c2463b4fa3e11ae9217ca87"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPMR:IWC00:WS11",
+    "image": "f648480322318dc2b1ea",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPMR,$WS11,$IWC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "f648480322318dc2b1eac1ecfc57220021d6f3947d3312d95bc6dcf9bde937e1"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPMR:IWC00:WS90",
+    "image": "d1625dd3858fd309af5e",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPMR,$WS90,$IWC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "d1625dd3858fd309af5e2c9e3c3690ca66a1b4f812ab6b3c305ca6eb782f859c"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPMR:IWW00:WS11",
+    "image": "f648480322318dc2b1ea",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPMR,$WS11,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "f648480322318dc2b1eac1ecfc57220021d6f3947d3312d95bc6dcf9bde937e1"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPMR:IWW00:WS90",
+    "image": "d1625dd3858fd309af5e",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPMR,$WS90,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "d1625dd3858fd309af5e2c9e3c3690ca66a1b4f812ab6b3c305ca6eb782f859c"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSB:IBC00:WS11",
+    "image": "f99f93d308d15ac8d660",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSB,$WS11,$IBC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "f99f93d308d15ac8d66074a8a5d037d7d740168c299fff5dc9656a8a3fe2a5f3"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSB:IBC00:WS90",
+    "image": "fb8f338d7114ebdbb4d4",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSB,$WS90,$IBC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "fb8f338d7114ebdbb4d46d008d1de056fb9799f838de01dac47516425ad2d3e2"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSB:IBE00:WS11",
+    "image": "f99f93d308d15ac8d660",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSB,$WS11,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "f99f93d308d15ac8d66074a8a5d037d7d740168c299fff5dc9656a8a3fe2a5f3"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSB:IBE00:WS90",
+    "image": "fb8f338d7114ebdbb4d4",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSB,$WS90,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "fb8f338d7114ebdbb4d46d008d1de056fb9799f838de01dac47516425ad2d3e2"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSB:ICC00:WS11",
+    "image": "d44a9e4aa80875324443",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSB,$WS11,$ICC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "d44a9e4aa80875324443e5ab44be0a6e8d95fb299111f6bed62c5ce3e1a2bc66"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSB:ICC00:WS90",
+    "image": "4c532f9c0f2806d86bfa",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSB,$WS90,$ICC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "4c532f9c0f2806d86bfa668fcf94caf8393ed9980ccf19635bde9d4f045b07c6"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSB:ICW00:WS11",
+    "image": "d44a9e4aa80875324443",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSB,$WS11,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "d44a9e4aa80875324443e5ab44be0a6e8d95fb299111f6bed62c5ce3e1a2bc66"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSB:ICW00:WS90",
+    "image": "4c532f9c0f2806d86bfa",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSB,$WS90,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "4c532f9c0f2806d86bfa668fcf94caf8393ed9980ccf19635bde9d4f045b07c6"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSB:IWC00:WS11",
+    "image": "be99540cc33840af9abc",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSB,$WS11,$IWC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "be99540cc33840af9abc56764b60e57b96c612b1534f27514e44645e8b636d1d"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSB:IWC00:WS90",
+    "image": "76d93486ee662ff66458",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSB,$WS90,$IWC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "76d93486ee662ff66458b81844b0319bd63be1b12788512dacce9794105a0d7b"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSB:IWW00:WS11",
+    "image": "be99540cc33840af9abc",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSB,$WS11,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "be99540cc33840af9abc56764b60e57b96c612b1534f27514e44645e8b636d1d"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSB:IWW00:WS90",
+    "image": "76d93486ee662ff66458",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSB,$WS90,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "76d93486ee662ff66458b81844b0319bd63be1b12788512dacce9794105a0d7b"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSW:IBC00:WS11",
+    "image": "0bb11967e439f227dd1d",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSW,$WS11,$IBC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "0bb11967e439f227dd1d951fc868da4e7d66bc6b5c6588db20ca26b1be67340c"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSW:IBC00:WS90",
+    "image": "9c2488796fcd0976276b",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSW,$WS90,$IBC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "9c2488796fcd0976276b6f0def74cd93e4db466482bc4d57cb8e28a28d647348"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSW:IBE00:WS11",
+    "image": "0bb11967e439f227dd1d",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSW,$WS11,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "0bb11967e439f227dd1d951fc868da4e7d66bc6b5c6588db20ca26b1be67340c"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSW:IBE00:WS90",
+    "image": "9c2488796fcd0976276b",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSW,$WS90,$IBE00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "9c2488796fcd0976276b6f0def74cd93e4db466482bc4d57cb8e28a28d647348"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSW:ICC00:WS11",
+    "image": "084f72e6169d1f883dec",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSW,$WS11,$ICC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "084f72e6169d1f883decd03279a2ed795a8552a5a0c7c2b92b209d005def5bfd"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSW:ICC00:WS90",
+    "image": "769385040feb0d1925f1",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSW,$WS90,$ICC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "769385040feb0d1925f1ae1a60a6f7ff0dded866112d1eed1c682423fb82d070"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSW:ICW00:WS11",
+    "image": "084f72e6169d1f883dec",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSW,$WS11,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "084f72e6169d1f883decd03279a2ed795a8552a5a0c7c2b92b209d005def5bfd"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSW:ICW00:WS90",
+    "image": "769385040feb0d1925f1",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSW,$WS90,$ICW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "769385040feb0d1925f1ae1a60a6f7ff0dded866112d1eed1c682423fb82d070"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSW:IWC00:WS11",
+    "image": "6953ba28159dfbac41bd",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSW,$WS11,$IWC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "6953ba28159dfbac41bd2a2cf6a7ca395a0dfe7a76cc4f8c4f8ca2979845407b"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSW:IWC00:WS90",
+    "image": "c87ee6b533d8aabc2a34",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSW,$WS90,$IWC00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "c87ee6b533d8aabc2a349808cc92d8fb539472f54aa10b1a681e67b8fb2bb7ca"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSW:IWW00:WS11",
+    "image": "6953ba28159dfbac41bd",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSW,$WS11,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "6953ba28159dfbac41bd2a2cf6a7ca395a0dfe7a76cc4f8c4f8ca2979845407b"
+  },
+  {
+    "configuration": "ms:legacy2021:MTS14:PPSW:IWW00:WS90",
+    "image": "c87ee6b533d8aabc2a34",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$MTS14,$PPSW,$WS90,$IWW00,$ST0Y&view=REAR34&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "c87ee6b533d8aabc2a349808cc92d8fb539472f54aa10b1a681e67b8fb2bb7ca"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PB00:IBE01:WS13",
+    "image": "ad8e0b4384a993e43583",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PB00,$WS13,$IBE01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "ad8e0b4384a993e435834886ed81b8d00909733459ee2c6a9f62c4240a747523"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PB00:IBE01:WS93",
+    "image": "1fa2da3bf2879c518c20",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PB00,$WS93,$IBE01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "1fa2da3bf2879c518c20853fd1c7b345545f5540254e8288b5afac65d9ee38fb"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PB00:ICW01:WS13",
+    "image": "55af7bbae7b4fdaa62b3",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PB00,$WS13,$ICW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "55af7bbae7b4fdaa62b3cc83c3b63c73af3ef826bc70d5a93121881940f74279"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PB00:ICW01:WS93",
+    "image": "462a903582c3d416051b",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PB00,$WS93,$ICW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "462a903582c3d416051b160103c5eadfefb384ecd60322cd9133ecacc8a35bdf"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PB00:IWW01:WS13",
+    "image": "20ef3d08d48df1889a82",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PB00,$WS13,$IWW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "20ef3d08d48df1889a82c3b7506d040cee58e44c7565cbfe8cf6a60f704ff6e9"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PB00:IWW01:WS93",
+    "image": "cdcf615e568607d00ce4",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PB00,$WS93,$IWW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "cdcf615e568607d00ce4509ebb559fe05de46958ddc48a4d64f84704ca01e3c8"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PN01:IBE01:WS13",
+    "image": "0245800b584f6dc8cce8",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PN01,$WS13,$IBE01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "0245800b584f6dc8cce8d09afd2e358ab1085a088a7f3922ca36bb0dd856959e"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PN01:IBE01:WS93",
+    "image": "6dc883346cdf558695c7",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PN01,$WS93,$IBE01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "6dc883346cdf558695c720effdde9b6bed68dcd9aeb83c5bd115e6c4f2bba442"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PN01:ICW01:WS13",
+    "image": "9f98ad32fd5b31aa9bbc",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PN01,$WS13,$ICW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "9f98ad32fd5b31aa9bbc8cc0249626c29321c3fd7360fdd8a29053008e660ecc"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PN01:ICW01:WS93",
+    "image": "96d58b19ec79660e263f",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PN01,$WS93,$ICW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "96d58b19ec79660e263feabf5b2ce36cb6d3f11897c88cef158f7c057f824314"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PN01:IWW01:WS13",
+    "image": "58b30d6837c75253f5da",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PN01,$WS13,$IWW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "58b30d6837c75253f5dafbe1544c8a2218d26dd8908fd372378cdbe54a3b91c5"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PN01:IWW01:WS93",
+    "image": "bfaa9ee8d76ab2ccd54e",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PN01,$WS93,$IWW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "bfaa9ee8d76ab2ccd54eb781570ca45ae22dbccee68226174550a60cc2377401"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PN02:IBE01:WS13",
+    "image": "d4c537ea582941b212e4",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PN02,$WS13,$IBE01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "d4c537ea582941b212e44953d6c17d6e00cf945fd7cff8cc6121465905f3a3a2"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PN02:IBE01:WS93",
+    "image": "294641713273c063d404",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PN02,$WS93,$IBE01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "294641713273c063d404e3441fcfd203d876b72cda4b066f320545091a69c314"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PN02:ICW01:WS13",
+    "image": "2f56c7058266af855288",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PN02,$WS13,$ICW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "2f56c7058266af8552884d4c46447c86ef46e765963b857baeb98592b2b351b1"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PN02:ICW01:WS93",
+    "image": "e548504fa60933e22cb3",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PN02,$WS93,$ICW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "e548504fa60933e22cb371d9b7f7ae4cbdcd3d33d6425c00da72a26859026dbc"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PN02:IWW01:WS13",
+    "image": "09f1dd69956ec8caf346",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PN02,$WS13,$IWW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "09f1dd69956ec8caf346515d10b7a589a2b7f9dc673c451aaa2492038d565fa9"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PN02:IWW01:WS93",
+    "image": "bf7e18bc65dc1fe5c471",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PN02,$WS93,$IWW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "bf7e18bc65dc1fe5c47180c650c6454fbc05cc15657602f6a62b46c96912ca81"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PPSW:IBE01:WS13",
+    "image": "0b96dff8b91030b7ed18",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PPSW,$WS13,$IBE01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "0b96dff8b91030b7ed1832b3670e7cacd08626d5d538dd71b7f8bc97e3781e34"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PPSW:IBE01:WS93",
+    "image": "87465d6eb6cc0748ac3d",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PPSW,$WS93,$IBE01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "87465d6eb6cc0748ac3dba7748421003f343957ffbc95781940b0e14bc6975af"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PPSW:ICW01:WS13",
+    "image": "3be5d0e3c99f7d85cf56",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PPSW,$WS13,$ICW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "3be5d0e3c99f7d85cf5689ce3b7d77aa4b090fd775f96f84a9d1dc05f56df6c5"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PPSW:ICW01:WS93",
+    "image": "591dea8ccffb2e947993",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PPSW,$WS93,$ICW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "591dea8ccffb2e94799354ed82fb55094c8baab45c148d4563ea67201bb90c88"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PPSW:IWW01:WS13",
+    "image": "5a4026782cc88d14b156",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PPSW,$WS13,$IWW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "5a4026782cc88d14b1568288c1cfd92f2763056708fb4b73e1baa4a8c1c374b4"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PPSW:IWW01:WS93",
+    "image": "688521cc1dd6ec4ae975",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PPSW,$WS93,$IWW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "688521cc1dd6ec4ae975f7f60be22d0c79388512ffd0919977377e013838c336"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PR01:IBE01:WS13",
+    "image": "57cf33c6a9a717860add",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PR01,$WS13,$IBE01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "57cf33c6a9a717860add45af592b1ecfec828900a32851c7c243aa28708b5922"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PR01:IBE01:WS93",
+    "image": "ef901d84185e4b590e93",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PR01,$WS93,$IBE01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "ef901d84185e4b590e93ae7f9805dc4f92a8b5a08f78f3ef2549d5891a0898b9"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PR01:ICW01:WS13",
+    "image": "b9e1b255ab23c8577f9b",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PR01,$WS13,$ICW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "b9e1b255ab23c8577f9be492ca8d74fffd3b62ea3cea53ca5994dc0f7b7cf53e"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PR01:ICW01:WS93",
+    "image": "a391f4dc8e3e64def2d0",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PR01,$WS93,$ICW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "a391f4dc8e3e64def2d0326f783f086b6015d4cf185b995ae04d7f4ed03871ed"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PR01:IWW01:WS13",
+    "image": "34d3c8cbbe896429ba42",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PR01,$WS13,$IWW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "34d3c8cbbe896429ba427a282b7331a4df80c4eea1ef19d51277f50d0a910327"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PR01:IWW01:WS93",
+    "image": "b23dd582a38b8edb050d",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PR01,$WS93,$IWW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "b23dd582a38b8edb050d284aa243818b35f9d695e988bed0a0f5325f8b111529"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PX02:IBE01:WS13",
+    "image": "8b7ce161e986984a8f21",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PX02,$WS13,$IBE01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "8b7ce161e986984a8f214d4de64c9e7de3a5929d0ba4862d5f2c6f65eb5f39e6"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PX02:IBE01:WS93",
+    "image": "45e5141b459f472c1b91",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PX02,$WS93,$IBE01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "45e5141b459f472c1b915fa59da20ccfe57658fcc77f3f3f9e27380e897d7eb4"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PX02:ICW01:WS13",
+    "image": "716ea1932097dcf9ddea",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PX02,$WS13,$ICW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "716ea1932097dcf9ddea191456a235bf87665563e244ebe44aad89324d0068e8"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PX02:ICW01:WS93",
+    "image": "e9c653493b7bcbe25547",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PX02,$WS93,$ICW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "e9c653493b7bcbe25547e9823fe0d3c43899a33f7d45cb84fa5673aecd70ffe5"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PX02:IWW01:WS13",
+    "image": "30e4111ebba581b26a51",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PX02,$WS13,$IWW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "30e4111ebba581b26a516407b4a4c249cea511cd2c33b8b572128f3831e2abb3"
+  },
+  {
+    "configuration": "ms:modern:MTS22:PX02:IWW01:WS93",
+    "image": "abd894efb78c0266cf54",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS22,$PX02,$WS93,$IWW01&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "abd894efb78c0266cf54eede2f510abf41d752167a617e8b770421de41ce08a1"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PB00:IBC02:WS14",
+    "image": "ccbbdda667221a5d01a6",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PB00,$WS14,$IBC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "ccbbdda667221a5d01a6d4a93638aa0a14fe9f8ba296eb18db302efa83b61ce2"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PB00:IBC02:WS94",
+    "image": "4da0dad17673f433521b",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PB00,$WS94,$IBC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "4da0dad17673f433521b5a22cb1fd41e67824a0034f68646a9bc6b03a1a614ac"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PB00:ICC02:WS14",
+    "image": "6840f6f306ec150ed713",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PB00,$WS14,$ICC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "6840f6f306ec150ed7131a0393a89dd827bfdad61183bd372664061e221db197"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PB00:ICC02:WS94",
+    "image": "14217a4b0096b045467c",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PB00,$WS94,$ICC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "14217a4b0096b045467c38bb4afc224ac064ddcafd032383213b2b4611b798e6"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PB00:IWC02:WS14",
+    "image": "6975fbc3eb7701bedb78",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PB00,$WS14,$IWC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "6975fbc3eb7701bedb7833ba6cc9e7db64bd6110ba27c8fecdc2058db4ad5854"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PB00:IWC02:WS94",
+    "image": "00a60044ec1711dc14fa",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PB00,$WS94,$IWC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "00a60044ec1711dc14fa76f63d756cfe5d427e915d225ea06d167f6659e293a2"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PN01:IBC02:WS14",
+    "image": "097199d24c2f35cbe1d3",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PN01,$WS14,$IBC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "097199d24c2f35cbe1d37f6810207c048fcb079e4dbd24b2344622e6c7f05e13"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PN01:IBC02:WS94",
+    "image": "9aec907944341f0a03a6",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PN01,$WS94,$IBC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "9aec907944341f0a03a6d37ffc7fff0c3679192f59762e4dbe6d960fcf8cab9d"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PN01:ICC02:WS14",
+    "image": "96cebc328c39ec4fbeb2",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PN01,$WS14,$ICC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "96cebc328c39ec4fbeb26614eb55b8956e04ddd8f4227d0cb8555e0f245fa592"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PN01:ICC02:WS94",
+    "image": "cdae7c7a62aa4ec019d6",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PN01,$WS94,$ICC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "cdae7c7a62aa4ec019d67ba7ecf9011561c7271e4e22c2f56b7ec30850fd83a3"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PN01:IWC02:WS14",
+    "image": "b7d7c6169c9fe9b749f8",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PN01,$WS14,$IWC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "b7d7c6169c9fe9b749f81dc01b7a90ffd5d1f9fb75737ee90abdd743c9e5b98b"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PN01:IWC02:WS94",
+    "image": "ff921d4bf16bc338e05c",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PN01,$WS94,$IWC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "ff921d4bf16bc338e05cf83cf64d1604e911ab52c212eabbcf349813c51a43d9"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PN02:IBC02:WS14",
+    "image": "d73eaa92c388298ee8b1",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PN02,$WS14,$IBC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "d73eaa92c388298ee8b17e3177f9eab9a9f05d7c4a974fba5d727f41d2cbc9b7"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PN02:IBC02:WS94",
+    "image": "86599b02fcc574c1e371",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PN02,$WS94,$IBC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "86599b02fcc574c1e371b5ab2c940a0426666ef5b289f893793d23c9a99f514e"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PN02:ICC02:WS14",
+    "image": "9920bc9f3830f1fdeec2",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PN02,$WS14,$ICC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "9920bc9f3830f1fdeec2bd16828250b566b3c2e67050cefd5b43eb048a892f84"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PN02:ICC02:WS94",
+    "image": "d1618fc0f4b02751c8e3",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PN02,$WS94,$ICC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "d1618fc0f4b02751c8e327199a1aa0a0dd59c36717c1c1d379124500e92deae5"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PN02:IWC02:WS14",
+    "image": "93e53168168dd97bd6b2",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PN02,$WS14,$IWC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "93e53168168dd97bd6b2682d7ba6342aaf6bc801b83c8373dd2ce2f510b4bb5c"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PN02:IWC02:WS94",
+    "image": "9df17d45829898bce1b2",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PN02,$WS94,$IWC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "9df17d45829898bce1b29688cceea57347f585bf4ab17780e9d5bb6b2c92e9aa"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PPSW:IBC02:WS14",
+    "image": "bbd46dfe3f5bb8338bc6",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PPSW,$WS14,$IBC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "bbd46dfe3f5bb8338bc680190f97fe91a380d50dee0f7035e1d615e773b8f81a"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PPSW:IBC02:WS94",
+    "image": "d8bdd9e65c60c11c75e5",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PPSW,$WS94,$IBC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "d8bdd9e65c60c11c75e55a0c5d2ee327c7d0722f0f5d12efaaf0b0431fba92d0"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PPSW:ICC02:WS14",
+    "image": "3f64e759e8251a73ccc2",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PPSW,$WS14,$ICC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "3f64e759e8251a73ccc2a3d4e97daaea4de06f6a4d3b5e1275560a541e17162d"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PPSW:ICC02:WS94",
+    "image": "390602ea03b2c545f0db",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PPSW,$WS94,$ICC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "390602ea03b2c545f0dbf366b292cf4dbb32db3bb4d1b6e2a9e53a929fdfe4e8"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PPSW:IWC02:WS14",
+    "image": "dbc5ffe7c6c3befd2aae",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PPSW,$WS14,$IWC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "dbc5ffe7c6c3befd2aaef12c00ad2b4627986c8579d52930387accac0ccb036a"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PPSW:IWC02:WS94",
+    "image": "d020dbcf9af8f69f4031",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PPSW,$WS94,$IWC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "d020dbcf9af8f69f4031fe54bbc90e5a2f6c036c895c3cc1f4e8054f6f536360"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PR01:IBC02:WS14",
+    "image": "565fac912032a036d10c",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PR01,$WS14,$IBC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "565fac912032a036d10ce7cce3de5743fe1a88453cdb6b87fc38571098e0165b"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PR01:IBC02:WS94",
+    "image": "b293396b76295a1532f3",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PR01,$WS94,$IBC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "b293396b76295a1532f3000b1112f38af6ac61aeaa2b9b06284dfc6e624f0fa5"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PR01:ICC02:WS14",
+    "image": "e175bb977c7aebdaf99d",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PR01,$WS14,$ICC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "e175bb977c7aebdaf99d4d500022ec068920b72a93ce7ef7217a21c6a048a140"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PR01:ICC02:WS94",
+    "image": "9ebafecb616f9c4f750f",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PR01,$WS94,$ICC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "9ebafecb616f9c4f750f5dd4322bf33e66d907e00f4e778e2e05dc77bf17363f"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PR01:IWC02:WS14",
+    "image": "fae77a05304500ccca04",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PR01,$WS14,$IWC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "fae77a05304500ccca04a9536a909e04fc60d99362a4c8d49f2bf3e936ef7df0"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PR01:IWC02:WS94",
+    "image": "d1ce232a6e2a72a4611d",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PR01,$WS94,$IWC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "d1ce232a6e2a72a4611d3219e431ec4e6d80d303a06f933c54580cb5e6131b6e"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PX02:IBC02:WS14",
+    "image": "3c82534ef3d95bde4734",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PX02,$WS14,$IBC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "3c82534ef3d95bde4734bba65038161c488afd25e8fc0f612e8998382f2f1adf"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PX02:IBC02:WS94",
+    "image": "1498ca5e7b007c3f259c",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PX02,$WS94,$IBC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "1498ca5e7b007c3f259cc6924317dc3667300952e940c639986a344affa0cd4c"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PX02:ICC02:WS14",
+    "image": "7a96f89c79a5d620c5c7",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PX02,$WS14,$ICC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "7a96f89c79a5d620c5c766d0041ade1337b57dc92bd3ba88ce201f31dcedbfb7"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PX02:ICC02:WS94",
+    "image": "5f997268ab7ce2ede76c",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PX02,$WS94,$ICC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "5f997268ab7ce2ede76ce060d0b7d1889bf4d9a7007bb98b41fd22f6fda93012"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PX02:IWC02:WS14",
+    "image": "97b85d9d560d417f0407",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PX02,$WS14,$IWC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "97b85d9d560d417f04071e4e0a8bb334413547369093b89425b6b6cb226eb726"
+  },
+  {
+    "configuration": "ms:modern:MTS23:PX02:IWC02:WS94",
+    "image": "3dbeb2a93a33e8476ec4",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MTS23,$PX02,$WS94,$IWC02&view=REAR34&model=ms&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "3dbeb2a93a33e8476ec4a71c50c3bd3c87d329430c92d07b6b0da845b53cbf32"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PBSB:INBPP:WT19",
+    "image": "d5a22e939f5613773744",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PBSB,$WT19,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "d5a22e939f56137737440dab1192b6970c9ab46cce2f8b3494d958cb60d1f491"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PBSB:INBPP:WTSP",
+    "image": "a22692975fb01445aa70",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PBSB,$WTSP,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "a22692975fb01445aa70faab1fd1098f2bcb0f0cc3604f7bbc463a7994949ce8"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PBSB:INBPP:WTSS",
+    "image": "df3603d64dfc0f42956c",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PBSB,$WTSS,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "df3603d64dfc0f42956cfdd233a8269af73b4a0ed7483a499f43c50b1a6394a9"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PMNG:INBPP:WT19",
+    "image": "038cb6cfd22b960dbcbb",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PMNG,$WT19,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "038cb6cfd22b960dbcbb3aa4bfa7dd5119849be94875454502e7b582e629e3fa"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PMNG:INBPP:WTSP",
+    "image": "7a93e1e1f5b6b4476b27",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PMNG,$WTSP,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "7a93e1e1f5b6b4476b275994142c6ee77b90790cd4fd87e5bc72c22f30bb3cef"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PMNG:INBPP:WTSS",
+    "image": "0a84acb88a923fbb3be9",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PMNG,$WTSS,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "0a84acb88a923fbb3be9673e4273b087dbc22015538d5d63cc98e1194312d3db"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PPMR:INBPP:WT19",
+    "image": "7439f809a13b51c5cc06",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPMR,$WT19,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "7439f809a13b51c5cc0692d9152eb6af77118819f0ab63136e82648b1fba458a"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PPMR:INBPP:WTSP",
+    "image": "452c9107b9e0d892afdd",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPMR,$WTSP,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "452c9107b9e0d892afddf36ba3170c849ef3470008ebbfb694d8831f186ed7d8"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PPMR:INBPP:WTSS",
+    "image": "ef8b881dd9ad13869c45",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPMR,$WTSS,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "ef8b881dd9ad13869c45a87e07bf283ab0cd3d71dd4eaa6c2f63e3eef2a256b7"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PPSB:INBPP:WT19",
+    "image": "17d9969b3e05af1580c4",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPSB,$WT19,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "17d9969b3e05af1580c45ae21c6280fdfb7aac9b8159d39947c01b82cfd4797a"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PPSB:INBPP:WTSP",
+    "image": "1cbb12e67981ee8a2f50",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPSB,$WTSP,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "1cbb12e67981ee8a2f505fd69d1134748cf961d39c9d6c3a524b6498398b9af9"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PPSB:INBPP:WTSS",
+    "image": "d2026619e46b08c7bb66",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPSB,$WTSS,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "d2026619e46b08c7bb668981bc74b446c8fb8333783f6173f7b87e0bec443092"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PPSW:INBPP:WT19",
+    "image": "6f800473b4f54457c5a7",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPSW,$WT19,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "6f800473b4f54457c5a7ad0ba069e6ad36faab96cf0c626d7bcea444c00f7bda"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PPSW:INBPP:WTSP",
+    "image": "4f3379b9d5f0e94cb2f6",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPSW,$WTSP,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "4f3379b9d5f0e94cb2f6ddd499e1756492e9a34d48d88324f06c1936bdbcb8ff"
+  },
+  {
+    "configuration": "ms:original2012:LEGACY:PPSW:INBPP:WTSS",
+    "image": "c26f51e5e856302f234c",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLS,$PPSW,$WTSS,$INBPP&view=STUD_3QTR&model=ms&size=1440&bkba_opt=1",
+    "sourceSha256": "c26f51e5e856302f234cfecf3abebb64c38069d37a643421d1b21bb215bbeb58"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PBSB:IBE00:WX00",
+    "image": "d1e11c1ea4ac31e09782",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PBSB,$WX00,$STY5S,$IBE00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "d1e11c1ea4ac31e09782e9b79d942db5bf2bedb84e441bdb48774a601b17679a"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PBSB:IBE00:WX20",
+    "image": "3664c2dca58d93bf3f5b",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PBSB,$WX20,$STY5S,$IBE00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "3664c2dca58d93bf3f5b88ea7db43773fc8ffc419cd515865748847397725aac"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PBSB:IWW00:WX00",
+    "image": "e8a1064e2c3d312c340e",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PBSB,$WX00,$STY5S,$IWW00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "e8a1064e2c3d312c340eb756f1c4c9ae5290d3c07efdf63c5da5bd8260c7e56a"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PBSB:IWW00:WX20",
+    "image": "10c1576d318cdc52cdac",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PBSB,$WX20,$STY5S,$IWW00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "10c1576d318cdc52cdacc13637de7e58e277257f077eb92b7395841580d6990f"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PMNG:IBE00:WX00",
+    "image": "a27154d6ac9e33fb8dd7",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PMNG,$WX00,$STY5S,$IBE00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "a27154d6ac9e33fb8dd794501919f7eeeb6cabaaccb30e4b899571d44a654cd4"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PMNG:IBE00:WX20",
+    "image": "254ead6da2b3dfd98626",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PMNG,$WX20,$STY5S,$IBE00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "254ead6da2b3dfd98626f2b50971619a7a1cd065f07d7cb1208d857cc95b93b7"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PMNG:IWW00:WX00",
+    "image": "a202fafa194cf9f2144a",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PMNG,$WX00,$STY5S,$IWW00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "a202fafa194cf9f2144a758e4794e03cc7b39bee94e3bd57fade8028decb0c50"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PMNG:IWW00:WX20",
+    "image": "910a85515ae758a7b6ea",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PMNG,$WX20,$STY5S,$IWW00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "910a85515ae758a7b6eae25659a44fb54f8215746c8c334aba196baf3218a371"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PPMR:IBE00:WX00",
+    "image": "310a2278cb77109093f5",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PPMR,$WX00,$STY5S,$IBE00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "310a2278cb77109093f5e2331c2e11e5e78bdc1aae8541831da40d4b4bec5c89"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PPMR:IBE00:WX20",
+    "image": "0daf0709a718b6cc5136",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PPMR,$WX20,$STY5S,$IBE00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "0daf0709a718b6cc5136a82d138384fb0f01e106946ae0fcf407c8e8305c8420"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PPMR:IWW00:WX00",
+    "image": "12a774f75e505072cf9a",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PPMR,$WX00,$STY5S,$IWW00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "12a774f75e505072cf9ad4b69c62590302059146782a35b81526266dfe24892b"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PPMR:IWW00:WX20",
+    "image": "e344968967a7101324ab",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PPMR,$WX20,$STY5S,$IWW00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "e344968967a7101324ab9370187e101c637bf19d5817e69ea32c6814508b9445"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PPSB:IBE00:WX00",
+    "image": "249cdc82085bd4768c67",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PPSB,$WX00,$STY5S,$IBE00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "249cdc82085bd4768c6715f33f0509a9ed7929a66aea53139ae48722931f2c33"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PPSB:IBE00:WX20",
+    "image": "111b283f1a42af61e12f",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PPSB,$WX20,$STY5S,$IBE00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "111b283f1a42af61e12f66639e0fc6101930d8ecb920c14fb64090fab6ba8633"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PPSB:IWW00:WX00",
+    "image": "6bb36e99610dab759788",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PPSB,$WX00,$STY5S,$IWW00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "6bb36e99610dab7597883c67610018eca530a07a5467780a459e17f1dfbcae3c"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PPSB:IWW00:WX20",
+    "image": "f66fc6fe07dd123c6c4f",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PPSB,$WX20,$STY5S,$IWW00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "f66fc6fe07dd123c6c4ffc8dd24f0756a7d19ed131365fbe750f5264b4d4857d"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PPSW:IBE00:WX00",
+    "image": "55705feb7a32822ef569",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PPSW,$WX00,$STY5S,$IBE00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "55705feb7a32822ef569282719980bc0c31f679a74819eae4c637dfb207caa6e"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PPSW:IBE00:WX20",
+    "image": "c180e88a73963c7c7d40",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PPSW,$WX20,$STY5S,$IBE00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "c180e88a73963c7c7d40fd6bfcaeb5413e047f3106559dbd99dfb8774945804b"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PPSW:IWW00:WX00",
+    "image": "f2daabdf070da1ac1ea9",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PPSW,$WX00,$STY5S,$IWW00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "f2daabdf070da1ac1ea92236e6fcf6186a6c527ea3d9dddc575b98f9469a6e45"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX10:PPSW:IWW00:WX20",
+    "image": "010205f853ce4d79f98a",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX10,$PPSW,$WX20,$STY5S,$IWW00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "010205f853ce4d79f98a3247d4110ca6179823c1066d0c60865f11615f01d86e"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PBSB:IBC00:WX00",
+    "image": "eb4244ad8b7c2943288a",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PBSB,$WX00,$STY5S,$IBC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "eb4244ad8b7c2943288a0f80a503f3505a79a74e4837a05d27aa9c242c3e5865"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PBSB:IBC00:WX20",
+    "image": "0089b5bfc71ef7282012",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PBSB,$WX20,$STY5S,$IBC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "0089b5bfc71ef7282012e83170c0c3cd895ddcebfded1338081d325a61d14422"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PBSB:IWC00:WX00",
+    "image": "2887262d9ac4e85b49a9",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PBSB,$WX00,$STY5S,$IWC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "2887262d9ac4e85b49a95c729ad07e619723ed353e6aeb4afa978b4c136ed3b3"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PBSB:IWC00:WX20",
+    "image": "e4a9d5902847e11e60df",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PBSB,$WX20,$STY5S,$IWC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "e4a9d5902847e11e60df4bc6bfbc545743a2bb678d824cb6f321f088b9d85b2f"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PMNG:IBC00:WX00",
+    "image": "3cade2b65c0f236f2baa",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PMNG,$WX00,$STY5S,$IBC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "3cade2b65c0f236f2baad02e88a9b3468d89b00decc5848796940f87b7b572b6"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PMNG:IBC00:WX20",
+    "image": "971fbea8dd314753cc35",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PMNG,$WX20,$STY5S,$IBC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "971fbea8dd314753cc35de007c6555aa5d06b05de32a56eb8401f1d785347b94"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PMNG:IWC00:WX00",
+    "image": "e9a284c8bdeaf1715b9d",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PMNG,$WX00,$STY5S,$IWC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "e9a284c8bdeaf1715b9dec17cd100b87d779d7bba3eadb8065dc6e94e7c24793"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PMNG:IWC00:WX20",
+    "image": "de3c7375669b2ae762c1",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PMNG,$WX20,$STY5S,$IWC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "de3c7375669b2ae762c1679bd7f9f41b857f371d37e087530d276d907646eb4b"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PPMR:IBC00:WX00",
+    "image": "bfba982074a91f92aad6",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PPMR,$WX00,$STY5S,$IBC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "bfba982074a91f92aad64859d256054b1c7f2c77fcaec5f3f5bffdf3704fc4ca"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PPMR:IBC00:WX20",
+    "image": "128f24fe49bb2b848e9d",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PPMR,$WX20,$STY5S,$IBC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "128f24fe49bb2b848e9d83901bfe7ba10d036dcf063a36aca072afdc2e9aab9a"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PPMR:IWC00:WX00",
+    "image": "1f628b7d807d9afe478a",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PPMR,$WX00,$STY5S,$IWC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "1f628b7d807d9afe478a62b115efd1e5fd054e81e90cadbcd560a927a57d8b19"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PPMR:IWC00:WX20",
+    "image": "2ca5242ff48adddb4dfa",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PPMR,$WX20,$STY5S,$IWC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "2ca5242ff48adddb4dfab26f7433c04c33fd6286fb0d18c5c81ab78d3e8a94d4"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PPSB:IBC00:WX00",
+    "image": "73dbe4939e2ef2ef3503",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PPSB,$WX00,$STY5S,$IBC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "73dbe4939e2ef2ef35037285c477e721b85ac7f4c3a4b131e7d4e7b5dad4c2df"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PPSB:IBC00:WX20",
+    "image": "529029e598a8341e2e89",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PPSB,$WX20,$STY5S,$IBC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "529029e598a8341e2e893e67bb2f1d9e00bd82a1be137c0936c3d8c2934bd5f7"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PPSB:IWC00:WX00",
+    "image": "8440c53cb4bbdd8e730e",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PPSB,$WX00,$STY5S,$IWC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "8440c53cb4bbdd8e730ee8475a13c32718755d6819b808736d7c69ec6d1b2d09"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PPSB:IWC00:WX20",
+    "image": "38d9395c38cab323afc8",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PPSB,$WX20,$STY5S,$IWC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "38d9395c38cab323afc8d39de2e8a07396166b0fb45f3549385d1dc2e3b0c9c1"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PPSW:IBC00:WX00",
+    "image": "7753a0eaa650b208c3c0",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PPSW,$WX00,$STY5S,$IBC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "7753a0eaa650b208c3c0337c630c3fe5712200f8927015d892ea98b52a22a975"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PPSW:IBC00:WX20",
+    "image": "a9d82a3e582f029f7fd7",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PPSW,$WX20,$STY5S,$IBC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "a9d82a3e582f029f7fd700edb4658befedb1e060951dd0a30008b75684ccef44"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PPSW:IWC00:WX00",
+    "image": "3bdc6eba60014f20e759",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PPSW,$WX00,$STY5S,$IWC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "3bdc6eba60014f20e75997796ea0670d471ae838d88b01516d3b28a76dc66327"
+  },
+  {
+    "configuration": "mx:legacy2021:MTX14:PPSW:IWC00:WX20",
+    "image": "d816be1dbaa52fe2f6eb",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$MTX14,$PPSW,$WX20,$STY5S,$IWC00&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2",
+    "sourceSha256": "d816be1dbaa52fe2f6ebe6f10ca946163c89513a8bbc8346015922f3fcb42916"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PB00:IBE01:WX02",
+    "image": "c632e5e063425732f2db",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PB00,$WX02,$STY5S,$IBE01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "c632e5e063425732f2db1699a04c637dfb769d7f8182575d0f524d559ee2927e"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PB00:ICW01:WX02",
+    "image": "6af1d28e0d8c2a881745",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PB00,$WX02,$STY5S,$ICW01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "6af1d28e0d8c2a88174507e3698927604a5a3b8bbb80fde1771be15b082c0678"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PB00:IWW01:WX02",
+    "image": "19ab74c67b4708c6c32c",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PB00,$WX02,$STY5S,$IWW01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "19ab74c67b4708c6c32c4474996393e98ce2a73e1059d0a3a17a3b816a54e586"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PN01:IBE01:WX02",
+    "image": "db6a1f4d6157aee27ee5",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PN01,$WX02,$STY5S,$IBE01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "db6a1f4d6157aee27ee5766a8e8c991ada47c3c1f24af1184e5ae933d3a649d5"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PN01:ICW01:WX02",
+    "image": "9ddccf5571b2e3ab2254",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PN01,$WX02,$STY5S,$ICW01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "9ddccf5571b2e3ab2254e2c9649f430af66f8b055fb3e19421cd608fbf7fa063"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PN01:IWW01:WX02",
+    "image": "969450c54ab75c533204",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PN01,$WX02,$STY5S,$IWW01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "969450c54ab75c533204fb0365406683a329598340bfa400a51386dac900f3b0"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PN02:IBE01:WX02",
+    "image": "8b263f8c50e4dc3aed8d",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PN02,$WX02,$STY5S,$IBE01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "8b263f8c50e4dc3aed8dc7e36913df56c9edb83147af29186ce50d510b3cc029"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PN02:ICW01:WX02",
+    "image": "a969594a7e48b87361f4",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PN02,$WX02,$STY5S,$ICW01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "a969594a7e48b87361f465332d0a6ac45fc2afb5cd0ddb113a8dca991b82421b"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PN02:IWW01:WX02",
+    "image": "48a9b109e89b94375890",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PN02,$WX02,$STY5S,$IWW01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "48a9b109e89b9437589061d9eadc47193e0c846ed273a1ce413841eaed3e0abd"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PPSW:IBE01:WX02",
+    "image": "047e8678474e09028647",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PPSW,$WX02,$STY5S,$IBE01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "047e8678474e090286478687713064eef6cb287c0eba963691e97058584973c8"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PPSW:ICW01:WX02",
+    "image": "6bc8807a551b70b2454d",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PPSW,$WX02,$STY5S,$ICW01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "6bc8807a551b70b2454dd9c3083b952e4d2f88b4ed7dc85a808e3a3d5c92c5ff"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PPSW:IWW01:WX02",
+    "image": "1941b561f4bc238ae6ce",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PPSW,$WX02,$STY5S,$IWW01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "1941b561f4bc238ae6ceb1ae536ca15b335634d817e024935c8c467fadac9f89"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PR01:IBE01:WX02",
+    "image": "75c6faa549aa7b13bfbb",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PR01,$WX02,$STY5S,$IBE01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "75c6faa549aa7b13bfbbb5bf329f65311193ae3dfaefcad800c4f240268d03c6"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PR01:ICW01:WX02",
+    "image": "2b08fe27f5368b3f2b1e",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PR01,$WX02,$STY5S,$ICW01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "2b08fe27f5368b3f2b1e4cb24820536617231e450f36f896e8ab7a95848a3365"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PR01:IWW01:WX02",
+    "image": "0209fee6f53c11842d5a",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PR01,$WX02,$STY5S,$IWW01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "0209fee6f53c11842d5ae5bd2bcef37b622cbfa999036f5ad5e5fceb07035ba5"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PX02:IBE01:WX02",
+    "image": "2d8a4970e89a9e8bebe0",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PX02,$WX02,$STY5S,$IBE01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "2d8a4970e89a9e8bebe0551599bf0618ebfe5b9c92d2f6b0e6f5125b04532906"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PX02:ICW01:WX02",
+    "image": "fa92005095a64268cff1",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PX02,$WX02,$STY5S,$ICW01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "fa92005095a64268cff1ed5ff5d28e9ce6f0ecd4fb75fc051054660a7f645345"
+  },
+  {
+    "configuration": "mx:modern:MTX22:PX02:IWW01:WX02",
+    "image": "cd401981d117d8b8ec97",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX22,$PX02,$WX02,$STY5S,$IWW01&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "cd401981d117d8b8ec97520b3522a6246c676d98add7f68b218ce5c525af9833"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PB00:IBC02:WX02",
+    "image": "d86cb7e803aba960acb2",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PB00,$WX02,$STY5S,$IBC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "d86cb7e803aba960acb221901d5b097b2c9cbd78b4f02703c38770ae2bca15e4"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PB00:IBC02:WX23",
+    "image": "7a84ddaae16be8255da7",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PB00,$WX23,$STY5S,$IBC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "7a84ddaae16be8255da78f129be4fe132a55dc4d8fd7ff8a4d1853f2c62ffca5"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PB00:ICC02:WX02",
+    "image": "1569ae7c1593454d2a2d",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PB00,$WX02,$STY5S,$ICC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "1569ae7c1593454d2a2de9764eafb66e9656a2da77f1ce853aa9a3310bb2f3c0"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PB00:ICC02:WX23",
+    "image": "09b97fea88e52c1a0e1b",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PB00,$WX23,$STY5S,$ICC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "09b97fea88e52c1a0e1bca8f35692964530825816b1088631f6ae55497a4756f"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PB00:IWC02:WX02",
+    "image": "a9577cbcf50f14799976",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PB00,$WX02,$STY5S,$IWC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "a9577cbcf50f14799976623269b5206bb415471fb9afd57a462fcad4363e7bb4"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PB00:IWC02:WX23",
+    "image": "9b0943a331ee4f1ee8b6",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PB00,$WX23,$STY5S,$IWC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "9b0943a331ee4f1ee8b6835bfd679d95ee2e2a72dc0a986191960a5f74866c53"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PN01:IBC02:WX02",
+    "image": "a323d17376f5c6228752",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PN01,$WX02,$STY5S,$IBC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "a323d17376f5c62287522cafeceab0684a249bd508c3ce13c856c5c7f05c7c56"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PN01:IBC02:WX23",
+    "image": "e4915c8b12aa2babb6f4",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PN01,$WX23,$STY5S,$IBC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "e4915c8b12aa2babb6f473624a22aedc12f43d8d42bc3fa3908700b21e5203e5"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PN01:ICC02:WX02",
+    "image": "ea5223d722c5d7b30ed0",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PN01,$WX02,$STY5S,$ICC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "ea5223d722c5d7b30ed05ffe88164e44a4bd35dceca65426ea0377e6904694cd"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PN01:ICC02:WX23",
+    "image": "78c00d3fce228ac59c9b",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PN01,$WX23,$STY5S,$ICC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "78c00d3fce228ac59c9b77652647afb2566b027d59e8932497d6fe962e0302bb"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PN01:IWC02:WX02",
+    "image": "8bccae8ef071d9a5792d",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PN01,$WX02,$STY5S,$IWC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "8bccae8ef071d9a5792d96da7fc3aaafbdcb3344285d2a9a0f3aacc08ec62876"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PN01:IWC02:WX23",
+    "image": "14962cb3cebb50b99c6a",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PN01,$WX23,$STY5S,$IWC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "14962cb3cebb50b99c6a1bd337a03135f146836c769e3597a72e85bc8c63a1a2"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PN02:IBC02:WX02",
+    "image": "40db5b7a84ae194ae4ee",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PN02,$WX02,$STY5S,$IBC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "40db5b7a84ae194ae4eec0d4637055feec0df94555b7287fe10d64d8adbff3eb"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PN02:IBC02:WX23",
+    "image": "07f6c1cb1cd38340e4be",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PN02,$WX23,$STY5S,$IBC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "07f6c1cb1cd38340e4bee9938d8059f7dff70efc98dad35752de1016bf425f2d"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PN02:ICC02:WX02",
+    "image": "5f965df3b02eadb0ccc0",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PN02,$WX02,$STY5S,$ICC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "5f965df3b02eadb0ccc075b82f2bc3625cbede8a189ee6b427790dc8208b98c2"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PN02:ICC02:WX23",
+    "image": "5dda9b77453575f1ed81",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PN02,$WX23,$STY5S,$ICC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "5dda9b77453575f1ed81d5274106eba96bc79fb0264c825f5f100f6a791a1078"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PN02:IWC02:WX02",
+    "image": "33f58f9ad3e98ba9cfa2",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PN02,$WX02,$STY5S,$IWC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "33f58f9ad3e98ba9cfa2ab4c937b7c67d75a9832e0268e64da736d06202d7aef"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PN02:IWC02:WX23",
+    "image": "ce702e34796742a0c2da",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PN02,$WX23,$STY5S,$IWC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "ce702e34796742a0c2da5aca04c4c6fbd3217cc4d2be73bc1e61f0ad887c64ce"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PPSW:IBC02:WX02",
+    "image": "73350e7255ce67ae05ae",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PPSW,$WX02,$STY5S,$IBC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "73350e7255ce67ae05aedcfc11eb8acb84c16e90d835f0b67d221540158e5e00"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PPSW:IBC02:WX23",
+    "image": "0a00367f00493f006adc",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PPSW,$WX23,$STY5S,$IBC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "0a00367f00493f006adc741fac2a0f7f45ff59b007734e61446b6644e9741e1e"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PPSW:ICC02:WX02",
+    "image": "298484fcc8c7c15a86f9",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PPSW,$WX02,$STY5S,$ICC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "298484fcc8c7c15a86f97e2916721cdbb2015f271d951451fdc1b7bdec4e6563"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PPSW:ICC02:WX23",
+    "image": "d004f1c29e9a6c1927f0",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PPSW,$WX23,$STY5S,$ICC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "d004f1c29e9a6c1927f0c772959a02329c58f53300ce8b32e5d8e2d35a917058"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PPSW:IWC02:WX02",
+    "image": "581bea9016a969e4cb12",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PPSW,$WX02,$STY5S,$IWC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "581bea9016a969e4cb12a06483250c66f247329162802a894966669fbbd378c6"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PPSW:IWC02:WX23",
+    "image": "da32d6ef82b35d7939ef",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PPSW,$WX23,$STY5S,$IWC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "da32d6ef82b35d7939efcf0e5ed849d08f7e04bb7f102db22b9522461b5ece02"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PR01:IBC02:WX02",
+    "image": "1a42577e6af792ad284c",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PR01,$WX02,$STY5S,$IBC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "1a42577e6af792ad284c15eb83ed095427513e7d96155dffd0f5d34a8207a0c7"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PR01:IBC02:WX23",
+    "image": "1de1ba15ba704128b98a",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PR01,$WX23,$STY5S,$IBC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "1de1ba15ba704128b98a289b0184cdd24e5f05e3cdf774b1d139aa060b1c1077"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PR01:ICC02:WX02",
+    "image": "283fdc73f2e50711a97d",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PR01,$WX02,$STY5S,$ICC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "283fdc73f2e50711a97d607236b318dae77f69a9b1ef5a3eafc447e139ccd023"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PR01:ICC02:WX23",
+    "image": "7a4d8640749e53640734",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PR01,$WX23,$STY5S,$ICC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "7a4d8640749e536407348b8a3b0d720fe8987bdb7d88f58e923029cf76716224"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PR01:IWC02:WX02",
+    "image": "2d3573e6d3f438e2cdba",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PR01,$WX02,$STY5S,$IWC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "2d3573e6d3f438e2cdba516beb742647a1b457871f410857d8fd7f5a4c36e347"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PR01:IWC02:WX23",
+    "image": "41f7c9d123ed97ae3d8f",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PR01,$WX23,$STY5S,$IWC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "41f7c9d123ed97ae3d8f8fa68b1e28443a4527299f2e2d40d017e4f59a899773"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PX02:IBC02:WX02",
+    "image": "1dceba5f691c54c0b836",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PX02,$WX02,$STY5S,$IBC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "1dceba5f691c54c0b8361a3c1ad66b31d4d48a67c877c146e16c499e056c95c4"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PX02:IBC02:WX23",
+    "image": "8f160fc84bdeabc4ae3d",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PX02,$WX23,$STY5S,$IBC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "8f160fc84bdeabc4ae3d863911d8817d8a07b9ccf1e722d9384c6f77713d348d"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PX02:ICC02:WX02",
+    "image": "3c1f2dc9ddc724f08e65",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PX02,$WX02,$STY5S,$ICC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "3c1f2dc9ddc724f08e65793f81defef9e28fc995206b7afa0771ab82f53bb01c"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PX02:ICC02:WX23",
+    "image": "668aa32d2ca59e3d454e",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PX02,$WX23,$STY5S,$ICC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "668aa32d2ca59e3d454e0f3cac0806b75df8a880382df66d578a78aa86adf3bf"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PX02:IWC02:WX02",
+    "image": "e9c39b47cd3f9c0cae44",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PX02,$WX02,$STY5S,$IWC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "e9c39b47cd3f9c0cae443aa96792425bcebbe403a2b9b295bd4b58c09ece55ab"
+  },
+  {
+    "configuration": "mx:modern:MTX23:PX02:IWC02:WX23",
+    "image": "f107304e49f7ac59acf6",
+    "source": "https://static-assets.tesla.com/configurator/compositor?options=$MDLX,$MTX23,$PX02,$WX23,$STY5S,$IWC02&view=REAR34&model=mx&size=1440&bkba_opt=1&context=design_studio_2&crop=0,0,0,0&overlay=0",
+    "sourceSha256": "f107304e49f7ac59acf67e74ff29dcb4da419ce81ca926a3f2581e583042686f"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PBSB:INBPP:WT20",
+    "image": "eff756ea8d74f253764c",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PBSB,$WT20,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "eff756ea8d74f253764c7ffc41bf8dd3a66349b66172729ec6c21525949bd8f3"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PBSB:INBPP:WT22",
+    "image": "b0ea89c7365240ff1ff7",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PBSB,$WT22,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "b0ea89c7365240ff1ff7c074bb3d65fbc6fddb07108b1da41d291708ad3e8d8f"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PBSB:INBPP:WTSC",
+    "image": "e33799ecf0b872eb98e2",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PBSB,$WTSC,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "e33799ecf0b872eb98e22371d4a9856674378465ca17df935f3ae90baed0fe34"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PBSB:INBPP:WTUT",
+    "image": "fd85490a1578d0eb2011",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PBSB,$WTUT,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "fd85490a1578d0eb20114512050ace3de97761f7235dc35a5fffe6ab522ed616"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PMNG:INBPP:WT20",
+    "image": "7561395b47ba85afb041",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PMNG,$WT20,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "7561395b47ba85afb041d3fbd82a6a94bb51cad7ca6d28cd445da100545623f1"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PMNG:INBPP:WT22",
+    "image": "efc378c29e791751ef4d",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PMNG,$WT22,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "efc378c29e791751ef4dc6ce5bfaf6e04a85bee1603cc28917f70644c8512b3e"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PMNG:INBPP:WTSC",
+    "image": "290e5ad2f465e00cd586",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PMNG,$WTSC,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "290e5ad2f465e00cd586661fc3dab8ead559f08370526479186994730539f8c6"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PMNG:INBPP:WTUT",
+    "image": "65880595fb35c5d04b6b",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PMNG,$WTUT,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "65880595fb35c5d04b6bcbc46a951c7490193aa6dc1870315a2f288d467e4656"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PPMR:INBPP:WT20",
+    "image": "7006461fdff03ef86668",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PPMR,$WT20,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "7006461fdff03ef8666850ed7b6a1c992c25972fd9aa10e08231defffc68bae3"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PPMR:INBPP:WT22",
+    "image": "f32296bf36305d36408c",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PPMR,$WT22,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "f32296bf36305d36408cdb49f178a4f377870d70bfe0ad6d0f253d8608c8ddab"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PPMR:INBPP:WTSC",
+    "image": "e4132584fce458609361",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PPMR,$WTSC,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "e4132584fce45860936187393f092c9ebf512f792b75f8051e7e4bdd8fecd1d1"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PPMR:INBPP:WTUT",
+    "image": "392c13374d3e529e9ccb",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PPMR,$WTUT,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "392c13374d3e529e9ccb5a38b5765f944f2e8c09cd96a2e5e1ff7eaf646b9123"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PPSB:INBPP:WT20",
+    "image": "54a035850cf1715df772",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PPSB,$WT20,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "54a035850cf1715df772c894457aa566ec887d450d245745b9b7dfef57fca852"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PPSB:INBPP:WT22",
+    "image": "131cf533f419f66b5ad2",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PPSB,$WT22,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "131cf533f419f66b5ad24a5169f5e98fc97370f2424c37d606cd5a5bd9f95c27"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PPSB:INBPP:WTSC",
+    "image": "33502c98b0de011c7f35",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PPSB,$WTSC,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "33502c98b0de011c7f353251065eea54c0a2f55d92e1518bcb150cd20febff10"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PPSB:INBPP:WTUT",
+    "image": "d34b72d5a77f4e438778",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PPSB,$WTUT,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "d34b72d5a77f4e4387786d9d45b5ab66b2ccffbaad6c9422a6797204e9c54dee"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PPSW:INBPP:WT20",
+    "image": "9e614bcaf7a5ec7c81ae",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PPSW,$WT20,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "9e614bcaf7a5ec7c81ae89dbf3cae88559f5604c45c15e9d02d303a1d16b2fbb"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PPSW:INBPP:WT22",
+    "image": "823cef04023e3a50e4e3",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PPSW,$WT22,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "823cef04023e3a50e4e320d31f494e06345e1f0ed5568b147724513b294ba08a"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PPSW:INBPP:WTSC",
+    "image": "fbbb683971e39154e790",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PPSW,$WTSC,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "fbbb683971e39154e790f986036d697e3942f67e8b85f023fba7032330284272"
+  },
+  {
+    "configuration": "mx:original2015:LEGACY:PPSW:INBPP:WTUT",
+    "image": "7f86aad305b0b42a3319",
+    "source": "https://static-assets.tesla.com/v1/compositor/?options=$MDLX,$PPSW,$WTUT,$INBPP,$CC02&view=STUD_REAR&model=mx&size=1440&bkba_opt=1",
+    "sourceSha256": "7f86aad305b0b42a33190aa899bb03122db7429a7dce9308fc210e22907135d2"
   },
   {
     "configuration": "my:legacy2020:MTY09:PBSB:INPB0:WY19B",

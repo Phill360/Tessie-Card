@@ -7,6 +7,11 @@ import { vehicleBounds, vehicleTransform, transformPort } from './lib/vehicle-ge
 const sharp=(await import(process.argv[2]?pathToFileURL(resolve(process.argv[2])).href:'sharp')).default;
 const root=resolve(import.meta.dirname,'..'), archive=resolve(root,'assets/tesla/library'), destination=resolve(root,'assets/vehicles');
 const manifest=JSON.parse(await readFile(resolve(archive,'manifest.json'),'utf8'));
+// Historical requests often ignore cabin-colour tokens. Only the visually
+// checked black-seat renders enter the picker; preserve the source archive.
+const historical=JSON.parse(await readFile(resolve(archive,'pre-2021/manifest.json'),'utf8'));
+manifest.assets.push(...historical.assets.filter(a=>a.status==='downloaded'&&a.kind==='exterior'&&a.quality!=='rejected'&&a.interior==='$INBPP')
+  .map(a=>({...a,file:'pre-2021/'+a.file,trim:'LEGACY',trimLabel:'Original exterior',labels:{...a.labels,interior:'Black'}})));
 const framing=JSON.parse(await readFile(resolve(destination,'framing.json'),'utf8'));
 const exterior=manifest.assets.filter(a=>a.status==='downloaded'&&a.kind==='exterior');
 const groups=Object.groupBy(exterior,a=>[a.model,a.profile,a.trim,a.paint,a.interior,a.wheel].join('/'));

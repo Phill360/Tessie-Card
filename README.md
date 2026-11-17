@@ -1,6 +1,6 @@
 # Tessie Card
 
-Version **0.2.7** (test prerelease) of a custom Home Assistant charging card for the
+Version **0.2.8** (test prerelease) of a custom Home Assistant charging card for the
 [Tessie integration](https://www.home-assistant.io/integrations/tessie/).
 Inspired by the rendered scenes and flow presentation in
 [Sigenergy Flow Card](https://github.com/jyavenard/sigenergy-flow-card).
@@ -10,7 +10,8 @@ Inspired by the rendered scenes and flow presentation in
 ## Included
 
 - Local Tesla renders for Model 3 (2018–2020, 2021–2023 and Highland) and Model Y
-  (original and Juniper), with model, generation, trim, paint, interior and wheel
+  (original and Juniper), Model S (2012 onward), Model X (2015 onward) and Cybertruck,
+  with model, generation, trim, paint, interior and wheel
   selectors in the visual editor. The default is a white Model 3 Highland.
 - A cable enters from outside the scene with no charger visible. Rear views show
   charging animation; front-view fallbacks are labelled and hide the cable.
@@ -25,10 +26,14 @@ Inspired by the rendered scenes and flow presentation in
 
 This build has automated local tests and a simulated browser demo. It has **not
 yet been validated against a live Home Assistant/Tessie installation**. Entity IDs
-can be detected from the selected vehicle or mapped manually. Only the selected
-Model 3 and Model Y artwork is bundled. Choose the appearance in the visual
+can be detected from the selected vehicle or mapped manually. The prepared
+Model 3, Model Y, Model S, Model X and Cybertruck artwork is bundled. Choose the appearance in the visual
 editor; paint and wheels are not inferred from vehicle telemetry.
 Use `vehicle_image` for another complete scene.
+
+Historical S/X appearance groups offer verified Black interior artwork, five
+paint colours and the available wheel options. Earlier Model S uses a front
+view with the cable hidden; earlier Model X includes a rear charging view.
 
 ## Install with HACS (recommended)
 
@@ -66,7 +71,7 @@ Your card configuration and entity mappings can stay the same.
 1. Download `tessie-card.js` from the latest GitHub release (or the repository
    root) and copy it to `/config/www/tessie-card/tessie-card.js`.
 2. Add a dashboard resource (Settings > Dashboards > Resources):
-   URL `/local/tessie-card/tessie-card.js?v=0.2.7`, type **JavaScript module**.
+   URL `/local/tessie-card/tessie-card.js?v=0.2.8`, type **JavaScript module**.
 3. Add a manual card using [examples/card.yaml](examples/card.yaml), replacing
    every example entity ID with the real ID from Developer Tools > States.
 4. Reload the dashboard. Increase the resource version query after updating files.

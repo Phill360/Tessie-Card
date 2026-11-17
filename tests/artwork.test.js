@@ -9,8 +9,8 @@ test('prepared catalog covers every downloaded exterior configuration with a ful
   const catalog=JSON.parse(await readFile(new URL('../assets/vehicles/catalog.json',import.meta.url),'utf8'));
   assert.equal(ARTWORK.length,catalog.entries.length);
   assert.ok(ARTWORK.length>300);
-  assert.deepEqual([...new Set(ARTWORK.map(a=>a.model))].sort(),['m3','my']);
-  assert.equal(new Set(ARTWORK.map(a=>`${a.model}/${a.generation}`)).size,5);
+  assert.deepEqual([...new Set(ARTWORK.map(a=>a.model))].sort(),['ct','m3','ms','mx','my']);
+  assert.equal(new Set(ARTWORK.map(a=>`${a.model}/${a.generation}`)).size,13);
   assert.equal(new Set(ARTWORK.map(a=>a.id)).size,ARTWORK.length);
   assert.equal(catalog.schema,2);
   for(const a of ARTWORK){assert.ok(ARTWORK_IMAGES[a.image]);assert.ok(a.port===null||a.port.every(Number.isFinite));if(a.generation==='legacy2018')assert.equal(a.view,'front');}
@@ -27,12 +27,41 @@ test('prepared catalog covers every downloaded exterior configuration with a ful
   }
 });
 
+test('S, X and Cybertruck preserve their distinct cabin colours and registered rear views',()=>{
+  for(const model of ['ms','mx','ct']){
+    const selection=changeArtwork(DEFAULT_ARTWORK,'model',model);
+    const labels=artworkOptions(selection,'interior').map(o=>o.label);
+    assert.deepEqual(labels,model==='ct'?['Tactical Grey','White']:['Black','Cream','White']);
+    const entries=ARTWORK.filter(a=>a.model===model);
+    assert.ok(entries.length>0);
+    assert.ok(entries.every(a=>a.view==='front'?a.port===null:a.port?.every(Number.isFinite)));
+    if(model==='ct'){
+      assert.deepEqual(artworkOptions(selection,'paint'),[{value:'',label:'Stainless steel'}]);
+      assert.equal(artworkOptions(selection,'wheel').length,2);
+      assert.ok(entries.every(a=>a.port[0]>400&&a.port[0]<600));
+    }
+  }
+});
+
 test('Model Y Gemini and Induction retain matching scale and charge-port registration',()=>{
   const base={model:'my',generation:'legacy2020',trim:'MTY09',paint:'PPSW',interior:'INPB0'};
   const gemini=selectArtwork({...base,wheel:'WY19B'}),induction=selectArtwork({...base,wheel:'WY20P'});
   assert.ok(gemini.port&&induction.port);
   assert.ok(Math.abs(gemini.port[0]-induction.port[0])<1);
   assert.ok(Math.abs(gemini.port[1]-induction.port[1])<3);
+});
+
+test('historical S/X expose checked black interiors and safe full-car views',()=>{
+  for(const [model,generation,wheels,view] of [['ms','original2012',3,'front'],['ms','facelift2016',4,'front'],['mx','original2015',4,'rear']]){
+    const selection=changeArtwork(changeArtwork(DEFAULT_ARTWORK,'model',model),'generation',generation);
+    assert.deepEqual(artworkOptions(selection,'interior').map(o=>o.label),['Black']);
+    assert.equal(artworkOptions(selection,'wheel').length,wheels);
+    assert.equal(artworkOptions(selection,'paint').length,5);
+    assert.deepEqual(artworkOptions(selection,'trim'),[{value:'LEGACY',label:'Original exterior'}]);
+    const entries=ARTWORK.filter(a=>a.model===model&&a.generation===generation);
+    assert.equal(entries.length,5*wheels);
+    for(const a of entries){assert.equal(a.view,view);assert.equal(a.port===null,view==='front');}
+  }
 });
 
 test('all cascading artwork choices resolve to an available configuration', () => {

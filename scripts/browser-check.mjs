@@ -164,6 +164,39 @@ try {
   await editor.locator('#artwork-trim').selectOption('LR_RWD');
   assert.equal(await page.evaluate(()=>window.savedCardConfig.artwork.trim),'LR_RWD');
   if(process.argv.includes('--capture-preview'))await editor.locator('.artwork-section').screenshot({path:'docs/model-3-long-range-rwd-preview.png'});
+  // New vehicle families must render locally with their own cabin colours and ports.
+  for(const model of ['ms','mx','ct']){
+    await editor.locator('#artwork-model').selectOption(model);
+    assert.deepEqual(await editor.locator('#artwork-interior option').allTextContents(),model==='ct'?['Tactical Grey','White']:['Black','Cream','White']);
+    await editor.locator('#artwork-interior').selectOption({label:model==='ct'?'White':'Cream'});
+    await automatic.locator('#vehicle').evaluate(img=>img.decode());
+    assert.match(await automatic.locator('#vehicle').getAttribute('src'),/^data:image\/webp;base64,/);
+    assert.equal(await automatic.locator('#flow').isVisible(),true);
+    assert.match(await automatic.locator('#vehicle').getAttribute('alt'),model==='ct'?/Cybertruck.*White/:/Cream/);
+    if(model==='ct'){
+      assert.deepEqual(await editor.locator('#artwork-paint option').allTextContents(),['Stainless steel']);
+      const before=await automatic.locator('#vehicle').getAttribute('src');
+      await editor.locator('#artwork-wheel').selectOption({index:1});
+      await automatic.locator('#vehicle').evaluate(img=>img.decode());
+      assert.notEqual(await automatic.locator('#vehicle').getAttribute('src'),before);
+    }
+    await automatic.locator('#scene').screenshot({path:`test-results/${model}-charging.png`});
+  }
+  for(const [model,generation,wheels] of [['ms','original2012',3],['ms','facelift2016',4],['mx','original2015',4]]){
+    await editor.locator('#artwork-model').selectOption(model);
+    await editor.locator('#artwork-generation').selectOption(generation);
+    assert.deepEqual(await editor.locator('#artwork-interior option').allTextContents(),['Black']);
+    assert.equal(await editor.locator('#artwork-wheel option').count(),wheels);
+    await editor.locator('#artwork-paint').selectOption('PPMR');
+    await automatic.locator('#vehicle').evaluate(img=>img.decode());
+    assert.equal(await automatic.locator('#flow').isVisible(),model==='mx');
+    if(model==='ms')assert.match(await automatic.locator('#artwork-note').innerText(),/Front view/);
+    const before=await automatic.locator('#vehicle').getAttribute('src');
+    await editor.locator('#artwork-wheel').selectOption({index:1});
+    await automatic.locator('#vehicle').evaluate(img=>img.decode());
+    assert.notEqual(await automatic.locator('#vehicle').getAttribute('src'),before);
+    await automatic.locator('#scene').screenshot({path:`test-results/${model}-${generation}-picker.png`});
+  }
   // Selecting a different physical vehicle clears the previous appearance.
   await editor.locator('#vehicle-picker').selectOption('demo-vehicle-two');
   await page.waitForFunction(() => document.getElementById('automatic-card').shadowRoot.getElementById('battery').textContent === '45%');

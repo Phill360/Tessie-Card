@@ -63,6 +63,114 @@
         "height": 356,
         "pixels": 225850
       }
+    },
+    "ms/legacy2021": {
+      "reference": "ms/legacy2021/mts13/exterior_pbsb_ws11_ibe00_default_st0y_rear34.png",
+      "portFraction": [
+        0.6833976833976834,
+        0.35333333333333333
+      ],
+      "sourcePort": [
+        866,
+        370
+      ],
+      "sourceBounds": {
+        "left": 335,
+        "top": 264,
+        "width": 777,
+        "height": 300,
+        "pixels": 165984
+      }
+    },
+    "ms/modern": {
+      "reference": "ms/modern/mts22/exterior_pb00_ws13_ibe01_default_st1y_rear34.png",
+      "portFraction": [
+        0.6833976833976834,
+        0.3521594684385382
+      ],
+      "sourcePort": [
+        866,
+        370
+      ],
+      "sourceBounds": {
+        "left": 335,
+        "top": 264,
+        "width": 777,
+        "height": 301,
+        "pixels": 167588
+      }
+    },
+    "mx/legacy2021": {
+      "reference": "mx/legacy2021/mtx10/exterior_pbsb_wx00_ibe00_sty5s_st0y_rear34.png",
+      "portFraction": [
+        0.6789808917197452,
+        0.3742690058479532
+      ],
+      "sourcePort": [
+        865,
+        349
+      ],
+      "sourceBounds": {
+        "left": 332,
+        "top": 221,
+        "width": 785,
+        "height": 342,
+        "pixels": 207360
+      }
+    },
+    "mx/modern": {
+      "reference": "mx/modern/mtx22/exterior_pb00_wx02_ibe01_sty5s_st06_rear34.png",
+      "portFraction": [
+        0.6789808917197452,
+        0.37317784256559766
+      ],
+      "sourcePort": [
+        865,
+        349
+      ],
+      "sourceBounds": {
+        "left": 332,
+        "top": 221,
+        "width": 785,
+        "height": 343,
+        "pixels": 200553
+      }
+    },
+    "ct/modern": {
+      "reference": "ct/modern/mtc04/exterior_default_wh0a_ig04_default_default_stud-rear34.png",
+      "portFraction": [
+        0.5302713987473904,
+        0.4052631578947368
+      ],
+      "sourcePort": [
+        748,
+        367
+      ],
+      "sourceBounds": {
+        "left": 240,
+        "top": 213,
+        "width": 958,
+        "height": 380,
+        "pixels": 260319
+      }
+    },
+    "mx/original2015": {
+      "reference": "pre-2021/mx/original2015/default/exterior_ppsw_wt20_inbpp_cc02_default_stud-rear.png",
+      "sourcePort": [
+        750,
+        345
+      ],
+      "sourceBounds": {
+        "left": 405,
+        "top": 219,
+        "width": 639,
+        "height": 327,
+        "pixels": 168880
+      },
+      "portFraction": [
+        0.539906103286385,
+        0.3853211009174312
+      ]
     }
   }
 }

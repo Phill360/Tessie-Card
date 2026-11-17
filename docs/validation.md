@@ -1,8 +1,8 @@
 # Test release validation
 
-Build: 0.2.7 (test prerelease).
+Build: 0.2.8 (test prerelease).
 
-- `node --test`: twenty-one tests pass. Covers missing/invalid measurements, power and
+- `node --test`: twenty-three tests pass. Covers missing/invalid measurements, power and
   energy units, tariff units and negative tariffs, session-cost precedence,
   remaining-cost assumptions, number-entity capabilities, configuration validation,
   and one-off times in the Home Assistant timezone, including DST gaps/overlaps.
@@ -32,9 +32,9 @@ browser tests simulate Home Assistant; they do not establish compatibility with
 the user's exact entities, permissions, or Tesla firmware. Vehicle and entity
 discovery use simulated registry fixtures and the official Tessie entity metadata.
 Automatic paint/wheel matching is not implemented. A visual artwork picker covers
-412 configurations with 304 unique prepared renders. A manual full-scene override
-remains available. The approximately 19.1 MB module embeds the prepared images;
-the original approximately 315 MB PNG archive is not shipped.
+732 configurations with 590 unique prepared renders. A manual full-scene override
+remains available. The approximately 37 MB module embeds the prepared images;
+the original PNG source archives are not shipped.
 
 For the 0.2.3 framing correction, all 304 decoded WebP images were checked against
 the original Model Y Gemini reference. Dominant car widths are 835–837 pixels on
@@ -61,3 +61,29 @@ same image and connector placement, along with saved selection and entity isolat
 
 The 0.2.7 update displays Long Range RWD (Premium) in the Model 3 variant
 selector while retaining the saved LR_RWD code and existing artwork mappings.
+
+The 0.2.8 artwork preparation adds Model S/X and Cybertruck. All 1,404 downloaded
+source files passed checksum, PNG chunk CRC and pixel-data integrity checks, with
+no suspicious identical renders across different paint, wheel or cabin colours.
+Twelve Model S cabin requests and one Cybertruck cabin request are unavailable;
+all new exterior combinations are prepared. The original Model 3/Y image data
+is reused without re-encoding. Publication to GitHub/HACS is pending.
+
+The complete 0.2.8 decoded-image audit covers 590 WebPs: body widths 835–838
+pixels, left edges 83–84 and top edges 66–68 on the 1000-pixel canvas. White,
+black and stainless-steel contact sheets were reviewed for framing and port
+placement. The bundled module embeds all prepared vehicle images. All 23 automated tests pass.
+Browser checks also passed for all three added vehicle families, including
+Cream trim, Cybertruck White trim, Core/Mantle switching and connected cables.
+
+Historical Model S (2012–2016 original nose and 2016–2020 facelift) and Model X
+(2015–2020) add 55 checked Black-interior paint/wheel choices. Model S uses front
+views with the cable hidden; Model X uses calibrated rear views. Historical
+variants are labelled Original exterior and do not claim trim/battery badges.
+
+Historical picker verification passed: all 23 automated tests and browser checks,
+including Black-only cabin choices, paint/wheel switching, front-view cable
+suppression for both earlier S styles and the calibrated rear cable for earlier X.
+All 590 decoded prepared images pass the framing audit (widths 835–838, left
+83–84, top 66–68). The reproducible bundle is 37,024,113 bytes. The three
+historical browser scene previews were visually reviewed.

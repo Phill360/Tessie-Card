@@ -5,9 +5,9 @@ import { createHash } from 'node:crypto';
 import { inflateSync } from 'node:zlib';
 
 const root = resolve(import.meta.dirname, '..');
-const archive = resolve(root, 'assets/tesla/library');
-const catalogPath = resolve(root, 'assets/tesla/catalog/models.json');
 const args = process.argv.slice(2);
+const archive = resolve(root,args.find(x=>x.startsWith('--archive='))?.slice(10)||'assets/tesla/library');
+const catalogPath = resolve(root,args.find(x=>x.startsWith('--catalog='))?.slice(10)||'assets/tesla/catalog/models.json');
 const only = args.find(x => x.startsWith('--model='))?.split('=')[1];
 const limit = Number(args.find(x => x.startsWith('--limit='))?.split('=')[1] || Infinity);
 const concurrency = Number(args.find(x => x.startsWith('--concurrency='))?.split('=')[1] || 3);
@@ -67,7 +67,7 @@ function makeUrl(cfg, selection) {
     INTERIOR: split(interior), STEERING: cfg.steeringPlacement === 'always' || interiorOnly ? split(steering) : [],
     FIXED_EXTRAS: split(cfg.fixed.extraOptions), EXTRAS: []
   };
-  const sequence = cfg.optionSequence || (cfg.steeringPlacement === 'always'
+  const sequence = (view === cfg.interiorViewKey && cfg.interiorOptionSequence) || cfg.optionSequence || (cfg.steeringPlacement === 'always'
     ? ['TRIM_PREFIX','MODEL_OPTION','TRIM','PAINT','WHEEL','LAYOUT','TRIM_MIDDLE','FIXED_EXTRAS','TRIM_SUFFIX','EXTRAS','INTERIOR','STEERING']
     : ['TRIM_PREFIX','MODEL_OPTION','TRIM','PAINT','WHEEL','LAYOUT','TRIM_MIDDLE','FIXED_EXTRAS','INTERIOR','STEERING','TRIM_SUFFIX','EXTRAS']);
   const options = sequence.flatMap(k => g[k] || [k]);
@@ -121,7 +121,7 @@ const records = new Map(previous.map(x => [x.file,x]));
 const sampled = new Set();
 const selectedJobs = jobs.filter(job => {
   if (!args.includes('--sample')) return true;
-  const key = `${job.model}/${job.profile}/${job.kind}`;
+  const key = `${job.model}/${job.profile}/${job.kind}/${job.kind === 'exterior' ? job.view : ''}`;
   if (sampled.has(key)) return false;
   sampled.add(key); return true;
 }).slice(0,limit);

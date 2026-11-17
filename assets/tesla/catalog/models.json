@@ -721,5 +721,72 @@
       }
     },
     "defaultProfile": "modern"
+  },
+  "ct": {
+    "label": "Cybertruck",
+    "profiles": {
+      "modern": {
+        "label": "2024-2026",
+        "base": "https://static-assets.tesla.com/configurator/compositor",
+        "fixed": {
+          "context": "design_studio_2",
+          "model": "ct",
+          "crop": "0,0,0,0",
+          "overlay": "0"
+        },
+        "trims": {
+          "$MTC08": "Dual Motor AWD",
+          "$MTC07": "Premium AWD",
+          "$MTC04": "Cyberbeast"
+        },
+        "paints": {
+          "": "Stainless steel"
+        },
+        "views": {
+          "STUD_REAR34": "Rear 3/4",
+          "INTERIOR_ROW1": "Interior Cabin",
+          "STUD_RIMCLOSEUP": "Wheel Close-Up"
+        },
+        "interiorViewKey": "INTERIOR_ROW1",
+        "hasSteering": false,
+        "wheelsByTrim": {
+          "$MTC08": {
+            "$WH0A": "20-inch Core"
+          },
+          "$MTC07": {
+            "$WH0A": "20-inch Core",
+            "$WH0B": "20-inch Mantle"
+          },
+          "$MTC04": {
+            "$WH0A": "20-inch Core",
+            "$WH0B": "20-inch Mantle"
+          }
+        },
+        "interiorsByTrim": {
+          "$MTC08": {
+            "$IG04": "Tactical Grey"
+          },
+          "$MTC07": {
+            "$IG04": "Tactical Grey",
+            "$IW04": "White"
+          },
+          "$MTC04": {
+            "$IG04": "Tactical Grey",
+            "$IW04": "White"
+          }
+        },
+        "defaults": {
+          "trim": "$MTC04",
+          "paint": "",
+          "view": "STUD_REAR34",
+          "size": "1440"
+        },
+        "interiorOptionSequence": [
+          "INTERIOR",
+          "TRIM"
+        ]
+      }
+    },
+    "defaultProfile": "modern"
   }
 }

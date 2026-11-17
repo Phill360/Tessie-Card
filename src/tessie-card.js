@@ -1,6 +1,6 @@
 /* Tessie Card 0.2.7 — dependency-free Home Assistant dashboard card. */
 import { ARTWORK_IMAGES, ARTWORK_FIELDS, DEFAULT_ARTWORK, selectArtwork, artworkOptions, changeArtwork, interiorColour } from './vehicle-artwork.js';
-export const VERSION = "0.2.7";
+export const VERSION = "0.2.8";
 const invalid = new Set(["unknown", "unavailable", "", "none"]);
 export function numeric(entity) {
   if (!entity || entity.state == null || typeof entity.state === "boolean" || invalid.has(String(entity.state).trim().toLowerCase())) return null;
@@ -458,6 +458,7 @@ export class TessieCardEditor extends (globalThis.HTMLElement || class {}) {
     preview.alt=this._config.vehicle_image ? "Custom vehicle artwork" : [artwork.modelLabel,artwork.paintLabel,interiorColour(artwork.interiorLabel),artwork.wheelLabel].join(" · ");
     get("artwork-caption").textContent=[artwork.modelLabel,artwork.years,artwork.trimLabel,artwork.paintLabel,interiorColour(artwork.interiorLabel),artwork.wheelLabel].join(" · ");
     get("artwork-status").textContent=this._config.vehicle_image ? "Your custom image is active. Choose an option or use the button below to show the selected artwork." : artwork.port ? "Rear view with charging cable animation. Only available downloaded combinations are offered." : "Full-car front view. A usable rear render was unavailable, so the charging cable is hidden for this configuration.";
+    if(!this._config.vehicle_image&&artwork.trim==='LEGACY')get("artwork-status").textContent+=" Historical exterior styling; only Black interior is available in these renders.";
     get("artwork-builtin").hidden=!this._config.vehicle_image;
     for (const [id, value] of [["card-name", this._config.name || ""], ["tariff-entity", this._config.entities?.tariff || ""], ["currency", this._config.currency || "AUD"], ["capacity", this._config.battery_capacity_kwh ?? ""]]) if (this.shadowRoot.activeElement !== get(id)) get(id).value = value;
     const tariffIds = Object.entries(this._hass.states).filter(([id, entity]) => id.startsWith("sensor.") && /\/kWh$/.test(entity.attributes?.unit_of_measurement || "")).map(([id]) => id).sort();
