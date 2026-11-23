@@ -12,6 +12,12 @@ const registry = demoRegistry();
 const registryListeners = new Map();
 const connection = { subscribeEvents: async (callback, type) => { const set = registryListeners.get(type) || new Set(); set.add(callback); registryListeners.set(type, set); return () => set.delete(callback); } };
 async function callWS({ type }) { if (type === 'config/device_registry/list') return structuredClone(registry.devices); if (type === 'config/entity_registry/list') return structuredClone(registry.entries); throw new Error('Unsupported demo request'); }
+async function callApi(method, path) {
+  if (method !== 'GET' || !path.startsWith('history/period/')) throw new Error('Unsupported demo API request');
+  const now = Date.now(), second = path.includes('sensor.second_battery');
+  const levels = second ? [72,72,70,65,59,52,45,45,45] : [78,78,76,70,54,36,36,48,62];
+  return [levels.map((state, i) => ({ state: String(state), last_changed: new Date(now - 86400000 + i * 10800000).toISOString() }))];
+}
 const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 function reset(mode = 'charging') {
   card.setConfig(currentConfig);
@@ -36,7 +42,7 @@ function reset(mode = 'charging') {
   if (mode === 'unavailable') for (const [key, value] of Object.entries(states)) if (!key.startsWith('input_') && !key.startsWith('script.')) value.state = 'unavailable';
   publish();
 }
-function publish() { const hass = { states: { ...states }, connection, callWS, config: { time_zone: zone }, locale: { language: 'en-AU' }, themes: { darkMode: dark }, callService }; document.querySelectorAll('tessie-card,tessie-card-editor').forEach(element => { element.hass = hass; }); }
+function publish() { const hass = { states: { ...states }, connection, callWS, callApi, config: { time_zone: zone }, locale: { language: 'en-AU' }, themes: { darkMode: dark }, callService }; document.querySelectorAll('tessie-card,tessie-card-editor').forEach(element => { element.hass = hass; }); }
 async function callService(domain, service, data) {
   document.getElementById('log').textContent = `Simulated: ${domain}.${service}\n${JSON.stringify(data)}`;
   if (document.getElementById('state').value === 'error') throw new Error('Demo: vehicle rejected the command.');

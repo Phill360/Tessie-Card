@@ -308,7 +308,18 @@ for all states. Prepared WebP renders are deduplicated and embedded in the card;
 only the selected image is decoded for display. The larger original PNG archive
 stays local. Artwork source details are recorded in [assets/README.md](assets/README.md).
 
+The battery state chart shows a rolling 24 hours of the mapped battery sensor's
+recorded percentage, with a teal line, current charge limit, and daily low/high.
+The visual editor has **Show battery graph** and **Show schedule control** toggles.
+Both default to shown. YAML equivalents are `show_battery_graph: false` and
+`show_schedule: false`. Hiding the graph stops history requests; hiding the
+schedule control does not cancel a start already saved in Home Assistant.
+Times use Home Assistant's configured timezone. History refreshes every five
+minutes while the card is connected. Home Assistant's history and recorder must
+be enabled and include the battery entity; missing history and unavailable states
+are displayed as empty data or gaps. No additional chart card is needed.
+
 The [design brief](docs/design-brief.md) records the agreed scope. Climate controls,
-recurring schedules, charging history and multi-vehicle switching are outside
+recurring schedules, charging session history and multi-vehicle switching are outside
 version one. Next validation is mapping real entities and checking behaviour on
 the user's Home Assistant installation.

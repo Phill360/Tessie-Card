@@ -635,8 +635,8 @@ export function artworkSelection(entry) {
   return Object.fromEntries(ARTWORK_FIELDS.map(key=>[key,entry[key]]));
 }
 
-/* Tessie Card 0.2.7 — dependency-free Home Assistant dashboard card. */
-export const VERSION = "0.2.8";
+/* Tessie Card 0.2.9 — dependency-free Home Assistant dashboard card. */
+export const VERSION = "0.2.9";
 const invalid = new Set(["unknown", "unavailable", "", "none"]);
 export function numeric(entity) {
   if (!entity || entity.state == null || typeof entity.state === "boolean" || invalid.has(String(entity.state).trim().toLowerCase())) return null;
@@ -692,6 +692,29 @@ export function numberLimits(entity) {
   const { min, max, step } = a;
   return [min, max, step].every(Number.isFinite) && max > min && step > 0 && numeric(entity) !== null
     ? { min, max, step } : null;
+}
+// Keep invalid states as gaps instead of implying a battery reading while offline.
+export function batteryHistory(states, start, end) {
+  return states.map(state => {
+    const time = Date.parse(state.last_changed || state.last_updated);
+    const value = numeric(state);
+    return { time, value: value !== null && value >= 0 && value <= 100 ? value : null };
+  }).filter(point => Number.isFinite(point.time) && point.time <= end)
+    .sort((a, b) => a.time - b.time)
+    .filter((point, index, all) => point.time >= start || index === all.length - 1 || all[index + 1].time > start)
+    .map(point => ({ ...point, time: Math.max(start, point.time) }));
+}
+export function batteryHistoryPath(points, start, end) {
+  const x = time => 40 + (time - start) / (end - start) * 340;
+  const y = value => 170 - value * 1.4;
+  let path = '', previous = null;
+  for (const point of points) {
+    if (previous?.value !== null && previous) path += ` H${x(point.time).toFixed(2)}`;
+    if (point.value !== null) path += ` ${previous?.value !== null && previous ? 'V' : `M${x(point.time).toFixed(2)},`}${y(point.value).toFixed(2)}`;
+    previous = point;
+  }
+  if (previous && previous.value !== null) path += ' H380';
+  return path.trim();
 }
 const domains = { battery: "sensor", charge_limit: "number", charge_current: "number", charge: "switch", charging: "binary_sensor", charging_status: "sensor", plugged_in: "binary_sensor", power: "sensor", completion: "sensor", time_remaining: "sensor", tariff: "sensor", session_energy: "sensor", session_cost: "sensor", remaining_energy: "sensor", location: "device_tracker" };
 const requiredMappings = ["battery", "charge", "charge_limit", "charge_current"];
@@ -755,6 +778,7 @@ export function chargingState(binary, status) {
 }
 export function validateConfig(config) {
   if (!config || typeof config !== "object") throw new Error("Invalid card configuration.");
+  for (const key of ["show_battery_graph", "show_schedule"]) if (config[key] !== undefined && typeof config[key] !== "boolean") throw new Error(`${key} must be true or false.`);
   if (config.entities !== undefined && (!config.entities || typeof config.entities !== "object" || Array.isArray(config.entities))) throw new Error("entities must be a mapping.");
   if (config.device_id !== undefined && (typeof config.device_id !== "string" || !/^[a-zA-Z0-9_-]+$/.test(config.device_id))) throw new Error("device_id must be a Home Assistant device ID.");
   for (const [key, id] of Object.entries(config.entities || {})) {
@@ -781,6 +805,7 @@ const css = `
 .head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 24px 0}.name{font-size:24px;font-weight:650;letter-spacing:-.6px}.sub,.note{color:var(--tc-muted);font-size:13px}.sub{margin-top:4px}.badge{border-radius:20px;padding:7px 12px;background:color-mix(in srgb,var(--tc-muted) 12%,transparent);font-size:13px;font-weight:600;white-space:nowrap}.active .badge{color:var(--tc-green);background:color-mix(in srgb,var(--tc-green) 13%,transparent)}
 .scene{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 90%,color-mix(in srgb,var(--tc-muted) 8%,transparent),transparent 65%)}.scene img{display:block}.scene .power{position:absolute;right:24px;top:16px;text-align:right;text-shadow:0 0 8px var(--tc-bg);font-size:13px;color:var(--tc-muted)}.power strong{display:block;font-size:21px;color:var(--tc-green);margin-top:3px}
 .content{padding:0 22px 22px}.battery{display:flex;gap:20px;align-items:center;margin:10px 0 18px}.percent{font-size:36px;font-weight:650;letter-spacing:-1px}.battery-text{min-width:76px}.battery-track{flex:1;position:relative;padding-top:25px}.track{height:13px;border-radius:9px;background:color-mix(in srgb,var(--tc-muted) 18%,transparent);overflow:hidden}.fill{height:100%;width:0;background:var(--tc-green);border-radius:9px;transition:width .4s}.marker{position:absolute;top:18px;height:27px;border-left:2px solid var(--tc-text)}.limit-text{position:absolute;right:0;top:0;font-size:12px;color:var(--tc-muted)}
+.history{--history-colour:#55c9c7;border:1px solid var(--tc-line);border-radius:18px;padding:16px;margin:0 0 18px;background:color-mix(in srgb,var(--tc-muted) 6%,var(--tc-bg))}.history-head,.history-footer{display:flex;justify-content:space-between;gap:10px;align-items:center}.feedback + .history{margin-top:18px}.history h3{font-size:16px;margin:0;font-weight:650}.history-head span{font-size:12px;color:var(--tc-muted)}.history-legend{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0 0;font-size:12px;color:var(--tc-muted)}.history-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--history-colour);margin-right:5px}.history-dash{display:inline-block;width:17px;border-top:2px dashed #9890ef;margin-right:5px;vertical-align:middle}.history svg{display:block;width:100%;height:auto;overflow:visible}.history svg text{fill:var(--tc-muted);font:11px system-ui,sans-serif}.history-grid{stroke:var(--tc-line);stroke-dasharray:3 6}.history-line{fill:none;stroke:var(--history-colour);stroke-width:2;stroke-linejoin:round;vector-effect:non-scaling-stroke}.history-limit{stroke:#9890ef;stroke-width:1.5;stroke-dasharray:4 4}.history-footer{border-radius:24px;padding:11px 14px;background:color-mix(in srgb,var(--tc-muted) 12%,transparent);font-size:12px;color:var(--tc-muted)}.history .note{margin:10px 0}
 .metrics,.costs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--tc-line);border-radius:13px;overflow:hidden;margin-bottom:12px}.metric{padding:13px 14px;min-width:0}.metric:nth-child(even){border-left:1px solid var(--tc-line)}.metric .label{font-size:12px;color:var(--tc-muted);display:block;margin-bottom:5px}.metric strong{font-size:20px;font-weight:600;display:block;font-variant-numeric:tabular-nums}.metric button{font:inherit;text-align:left;padding:0;border:0;background:none;color:inherit;cursor:pointer;width:100%}.costs strong{font-size:19px}.note{font-size:12px;margin:5px 0 0;line-height:1.4}.tariff{margin:-3px 0 17px}
 button,input{font:inherit}button{cursor:pointer;border:1px solid var(--tc-line);color:var(--tc-text);background:color-mix(in srgb,var(--tc-muted) 8%,var(--tc-bg));border-radius:9px;padding:10px 14px;min-height:42px}button:disabled{opacity:.5;cursor:default}.primary{width:100%;background:var(--tc-green);border:0;color:#fff;font-weight:600;margin:0 0 14px}.control{margin:0 0 15px}.control label{display:flex;justify-content:space-between;font-size:14px;font-weight:550;gap:12px}.control output{font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--tc-green);margin:12px 0 0;height:22px}input:disabled{opacity:.4}input[type=datetime-local]{width:100%;min-width:0;background:var(--tc-bg);color:var(--tc-text);border:1px solid var(--tc-line);border-radius:8px;padding:11px;margin:8px 0 10px;color-scheme:light}.dark input[type=datetime-local]{color-scheme:dark}.schedule{padding:14px;border:1px solid var(--tc-line);border-radius:13px}.schedule h3{font-size:16px;margin:0 0 5px;font-weight:600}.schedule label{font-size:12px;color:var(--tc-muted)}.schedule-actions{display:flex;gap:8px;flex-wrap:wrap}.schedule-actions button{flex:1}.feedback{font-size:13px;padding:10px 0 0;line-height:1.5}.error{color:var(--error-color,#c54242)}[hidden]{display:none!important}:focus-visible{outline:2px solid var(--tc-green);outline-offset:3px}.asset-error{padding:35px 24px;text-align:center;color:var(--tc-muted)}
 @media(max-width:360px){.head{padding:18px 16px 0}.content{padding:0 14px 16px}.name{font-size:21px}.metric{padding:12px 10px}.metric strong{font-size:17px}.scene .power{right:16px;font-size:12px}.power strong{font-size:18px}.battery{gap:12px}.percent{font-size:32px}}
@@ -842,6 +867,43 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
     finally { if (sequence === this._discoverySeq) { this._discoveryLoading = false; this._render(); } }
   }
   _entity(key) { return this._hass?.states[this._config?.entities[key]]; }
+  _ensureHistory() {
+    if (this._config.show_battery_graph === false) { this._historyRequest = null; return; }
+    const entity = this._config.entities.battery, connection = this._hass.connection || this._hass;
+    if (this._historyEntity !== entity || this._historyConnection !== connection) {
+      this._historyEntity = entity; this._historyConnection = connection;
+      this._historyStates = []; this._historyFetched = 0; this._historyRequest = null; this._historyError = '';
+    }
+    if (!entity || !this.isConnected) return;
+    if (this._historyRequest || Date.now() - this._historyFetched < 300000) return;
+    const now = Date.now(), token = {};
+    this._historyRequest = token; this._historyError = '';
+    const start = new Date(now - 86400000).toISOString(), end = new Date(now).toISOString();
+    Promise.resolve().then(() => this._hass.callApi('GET', `history/period/${start}?filter_entity_id=${entity}&end_time=${encodeURIComponent(end)}&minimal_response&no_attributes`))
+      .then(result => { if (this._historyRequest === token) this._historyStates = Array.isArray(result?.[0]) ? result[0] : []; })
+      .catch(() => { if (this._historyRequest === token) this._historyError = 'Battery history unavailable. Check Home Assistant history and recorder settings.'; })
+      .finally(() => { if (this._historyRequest === token) { this._historyRequest = null; this._historyFetched = Date.now(); if (this.isConnected) this._render(); } });
+  }
+  _renderHistory(limit, zone) {
+    const end = Date.now(), start = end - 86400000;
+    const points = batteryHistory(this._historyStates || [], start, end);
+    const values = points.filter(point => point.value !== null).map(point => point.value);
+    const low = values.reduce((a, b) => Math.min(a, b), Infinity), high = values.reduce((a, b) => Math.max(a, b), -Infinity);
+    const format = time => new Intl.DateTimeFormat(this._hass.locale?.language || 'en', { timeZone: zone, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(time);
+    this._el('history-line').setAttribute('d', batteryHistoryPath(points, start, end));
+    const validLimit = limit !== null && limit >= 0 && limit <= 100;
+    this._el('history-limit').hidden = !validLimit;
+    this._el('history-limit-line').setAttribute('visibility', validLimit ? 'visible' : 'hidden');
+    this._el('history-limit-line').setAttribute('y1', 170 - (limit ?? 0) * 1.4);
+    this._el('history-limit-line').setAttribute('y2', 170 - (limit ?? 0) * 1.4);
+    this._text('history-limit', `Charge limit ${limit ?? ''}%`);
+    for (let i = 0; i <= 4; i++) this._text(`history-time-${i}`, i === 4 ? 'Now' : format(start + i * 21600000));
+    const message = this._historyError || (this._historyRequest && !values.length ? 'Loading battery history…' : !values.length ? 'No battery history recorded in the past 24 hours.' : '');
+    this._text('history-note', message); this._el('history-note').hidden = !message;
+    this._text('history-low', values.length ? `Low ${low}%` : 'Low —');
+    this._text('history-high', values.length ? `High ${high}%` : 'High —');
+    this._text('history-title', `Battery state over the past 24 hours. ${values.length ? `Low ${low}%, high ${high}%.` : message}`);
+  }
   _el(id) { return this.shadowRoot.getElementById(id); }
   _text(id, text) { this._el(id).textContent = text; }
   _more(key) { const entityId = this._config.entities[key]; if (entityId) this.dispatchEvent(new CustomEvent("hass-more-info", { bubbles: true, composed: true, detail: { entityId } })); }
@@ -849,12 +911,13 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
     this.shadowRoot.innerHTML = `<style>${css}.setup{padding:16px 22px;background:color-mix(in srgb,var(--tc-muted) 8%,transparent)}.setup p{margin:0 0 10px;font-size:13px;line-height:1.5}</style><ha-card id="card"><div id="setup" class="setup" hidden><p id="discovery-note" role="status"></p><button id="discovery-retry">Refresh detection</button></div><header class="head"><div><div id="name" class="name"></div><div id="subtitle" class="sub"></div></div><span id="status" class="badge"></span></header>
       <div id="scene" class="scene"><div class="vehicle-art"><img id="vehicle" alt="White Model 3 Highland with Nova wheels, viewed from the left rear">${cableSvg}</div><div id="asset-error" class="asset-error" hidden>Vehicle image unavailable. Configure vehicle_image or check the bundled artwork.</div><div class="power">AC charging<strong id="hero-power"></strong></div></div>
       <div class="content"><p id="artwork-note" class="note" hidden></p><div class="battery"><div class="battery-text"><div id="battery" class="percent"></div><span class="sub">Battery</span></div><div class="battery-track"><span id="limit-label" class="limit-text"></span><div id="track" class="track" role="meter" aria-label="Battery charge" aria-valuemin="0" aria-valuemax="100"><div id="fill" class="fill"></div></div><div id="marker" class="marker" aria-hidden="true"></div></div></div>
-      <div class="metrics"><div class="metric"><button id="power-info"><span class="label">Charging power</span><strong id="power"></strong></button></div><div class="metric"><button id="time-info"><span class="label">Time remaining</span><strong id="remaining"></strong></button></div><div class="metric"><button id="finish-info"><span class="label">Estimated finish</span><strong id="finish"></strong></button></div><div class="metric"><span class="label">Charge limit</span><strong id="limit-metric"></strong></div></div>
-      <div class="costs"><div class="metric"><span id="session-label" class="label">Session so far</span><strong id="session-cost"></strong><p id="session-note" class="note"></p></div><div class="metric"><span class="label">To charge limit (est.)</span><strong id="remaining-cost"></strong><p id="estimate-note" class="note"></p></div></div><p id="tariff" class="note tariff"></p>
       <button id="charge" class="primary"></button>
       <div class="control"><label for="limit">Charge limit<output id="limit-value" for="limit"></output></label><input id="limit" type="range"><p id="limit-note" class="note"></p></div>
       <div class="control"><label for="current">Charging current<output id="current-value" for="current"></output></label><input id="current" type="range"><p id="current-note" class="note"></p></div>
-      <section class="schedule"><h3>One-off start</h3><p id="schedule-summary" class="note"></p><label for="schedule-time" id="schedule-label">Start date and time</label><input id="schedule-time" type="datetime-local"><div class="schedule-actions"><button id="schedule-save">Schedule start</button><button id="schedule-cancel">Cancel start</button></div><p class="note">Saving a start time does not stop charging now.</p></section><div id="feedback" class="feedback" role="status" aria-live="polite"></div></div></ha-card>`;
+      <div class="metrics"><div class="metric"><button id="power-info"><span class="label">Charging power</span><strong id="power"></strong></button></div><div class="metric"><button id="time-info"><span class="label">Time remaining</span><strong id="remaining"></strong></button></div><div class="metric"><button id="finish-info"><span class="label">Estimated finish</span><strong id="finish"></strong></button></div><div class="metric"><span class="label">Charge limit</span><strong id="limit-metric"></strong></div></div>
+      <div class="costs"><div class="metric"><span id="session-label" class="label">Session so far</span><strong id="session-cost"></strong><p id="session-note" class="note"></p></div><div class="metric"><span class="label">To charge limit (est.)</span><strong id="remaining-cost"></strong><p id="estimate-note" class="note"></p></div></div><p id="tariff" class="note tariff"></p>
+      <section id="schedule-section" class="schedule"><h3>One-off start</h3><p id="schedule-summary" class="note"></p><label for="schedule-time" id="schedule-label">Start date and time</label><input id="schedule-time" type="datetime-local"><div class="schedule-actions"><button id="schedule-save">Schedule start</button><button id="schedule-cancel">Cancel start</button></div><p class="note">Saving a start time does not stop charging now.</p></section><div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+      <section id="battery-history" class="history" aria-labelledby="history-heading"><div class="history-head"><h3 id="history-heading">Battery state</h3><span>Past 24 hours</span></div><div class="history-legend"><span><i class="history-dot"></i>Battery</span><span id="history-limit" class="history-limit-legend"></span></div><svg viewBox="0 0 400 204" role="img" aria-labelledby="history-title"><title id="history-title">Battery state over the past 24 hours</title>${[0, 50, 100].map(value => `<line class="history-grid" x1="40" x2="380" y1="${170 - value * 1.4}" y2="${170 - value * 1.4}"/><text x="30" y="${174 - value * 1.4}" text-anchor="end">${value}%</text>`).join('')}<line id="history-limit-line" class="history-limit" x1="40" x2="380"/><path id="history-line" class="history-line"/>${[0, 1, 2, 3, 4].map(i => `<text id="history-time-${i}" x="${40 + i * 85}" y="194" text-anchor="${i === 0 ? 'start' : i === 4 ? 'end' : 'middle'}"></text>`).join('')}</svg><p id="history-note" class="note" role="status"></p><div class="history-footer"><span id="history-low"></span><span id="history-high"></span></div></section></div></ha-card>`;
     this._el("vehicle").addEventListener("error", () => { this._vehicleAssetFailed = true; this._el("vehicle").hidden = true; this._el("flow").toggleAttribute("hidden", true); this._el("asset-error").hidden = false; });
     this._el("discovery-retry").onclick = () => this._refreshVehicles(true);
     this._el("power-info").onclick = () => this._more("power");
@@ -884,6 +947,10 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
     const battery = batteryValue !== null && batteryValue >= 0 && batteryValue <= 100 ? batteryValue : null;
     const limit = numeric(e("charge_limit"));
     const zone = h.config?.time_zone || "UTC";
+    this._el('battery-history').hidden = c.show_battery_graph === false;
+    this._el('schedule-section').hidden = c.show_schedule === false;
+    this._ensureHistory();
+    if (c.show_battery_graph !== false) this._renderHistory(limit, zone);
     const dark = h.themes?.darkMode ?? globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
     this._el("card").className = `${charging ? "active" : ""} ${dark ? "dark" : ""}`;
     this._el("scene").classList.toggle("idle", !charging);
@@ -1028,6 +1095,9 @@ export class TessieCardEditor extends (globalThis.HTMLElement || class {}) {
       this.shadowRoot.innerHTML = `<style>:host{display:block;color:var(--primary-text-color,#20252b);font:14px system-ui,sans-serif}*{box-sizing:border-box}label{display:block;margin:16px 0 6px}select,input,button{font:inherit;color:inherit;background:var(--ha-card-background,var(--card-background-color,#fff));min-width:0;border:1px solid var(--divider-color,#cbd1d8);border-radius:8px;padding:11px;width:100%}button{cursor:pointer;width:auto;margin:12px 0}p{font-size:13px;line-height:1.5;color:var(--secondary-text-color,#67717b)}.grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:12px}ul{padding-left:20px;overflow-wrap:anywhere}li{margin:7px 0}summary{cursor:pointer;margin-top:18px}#editor-status{margin:10px 0}input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--primary-color,#20b940);outline-offset:2px}</style>
         <label for="vehicle-picker">Tessie vehicle</label><select id="vehicle-picker"></select><p id="editor-status" role="status"></p><button id="refresh">Refresh vehicles</button>
         <label for="card-name">Card name (optional)</label><input id="card-name" placeholder="Use the vehicle name">
+        <style>.display-option{display:flex;align-items:center;gap:10px}.display-option input{width:18px;height:18px;margin:0;accent-color:var(--primary-color,#20b940)}</style>
+        <label class="display-option"><input id="show-battery-graph" type="checkbox">Show battery graph</label>
+        <label class="display-option"><input id="show-schedule" type="checkbox">Show schedule control</label><p>Hiding the schedule control does not cancel a saved charging start.</p>
         <div class="grid"><div><label for="tariff-entity">Electricity tariff entity</label><input id="tariff-entity" list="tariff-options" placeholder="sensor.electricity_rate"><datalist id="tariff-options"></datalist></div><div><label for="currency">Currency</label><input id="currency" maxlength="3" placeholder="AUD"></div></div>
         <label for="capacity">Usable battery capacity in kWh (optional)</label><input id="capacity" type="number" min="0.1" step="any" placeholder="Needed for estimated remaining cost without an energy sensor">
         <style>.artwork-section{border:1px solid var(--divider-color,#dce0e5);border-radius:12px;padding:16px;margin-top:20px}.artwork-section h3{margin:0;font-size:17px}.artwork-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}.artwork-preview{margin:16px 0 0}.artwork-preview img{width:100%;aspect-ratio:1.6;object-fit:contain;display:block;border-radius:9px;background:color-mix(in srgb,var(--secondary-text-color,#67717b) 9%,transparent)}.artwork-preview figcaption{font-size:12px;line-height:1.5;margin-top:8px;overflow-wrap:anywhere}[hidden]{display:none!important}@media(max-width:360px){.artwork-grid{grid-template-columns:minmax(0,1fr)}}</style>
@@ -1039,6 +1109,7 @@ export class TessieCardEditor extends (globalThis.HTMLElement || class {}) {
         <p>Vehicle charging entities are detected automatically. Tariff and battery capacity are configured separately.</p>
         <details><summary>Detected entity mappings</summary><ul id="mapping-list"></ul></details><p>Use YAML for individual entity overrides, a custom scene or scheduling helpers. Selecting a different vehicle clears vehicle-specific mappings, capacity, artwork and scheduling, keeping your tariff and card name.</p>`;
       const get = id => this.shadowRoot.getElementById(id);
+      for (const [id, key] of [["show-battery-graph", "show_battery_graph"], ["show-schedule", "show_schedule"]]) get(id).onchange = event => this._emit({ ...this._config, [key]: event.target.checked });
       get("vehicle-picker").onchange = event => {
         const config = { ...this._config, entities: { ...this._config.entities } };
         for (const key of [...Object.keys(tessieKeys), "time_remaining", "session_cost", "remaining_energy"]) delete config.entities[key];
@@ -1075,6 +1146,8 @@ export class TessieCardEditor extends (globalThis.HTMLElement || class {}) {
       this._mounted = true;
     }
     const get = id => this.shadowRoot.getElementById(id), picker = get("vehicle-picker");
+    get('show-battery-graph').checked = this._config.show_battery_graph !== false;
+    get('show-schedule').checked = this._config.show_schedule !== false;
     this.style.colorScheme = this._hass.themes?.darkMode ? "dark" : "light";
     const selected = this._config.device_id || "";
     const options = [new Option("Automatic (only when one vehicle is found)", ""), ...this._vehicles.map(vehicle => new Option(`${vehicle.name}${vehicle.model ? ` · ${vehicle.model}` : ""}`, vehicle.id))];
