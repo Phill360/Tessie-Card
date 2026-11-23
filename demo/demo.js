@@ -4,7 +4,7 @@ const card = document.querySelector('tessie-card');
 const entity = (state, attributes = {}) => ({ state: String(state), attributes });
 const config = {
   type: 'custom:tessie-card', name: 'Model 3', subtitle: '2025 · White · Nova wheels', currency: 'AUD', battery_capacity_kwh: 60,
-  entities: { battery: 'sensor.demo_battery', charge: 'switch.demo_charge', charging: 'binary_sensor.demo_charging', plugged_in: 'binary_sensor.demo_plugged', charge_limit: 'number.demo_limit', charge_current: 'number.demo_current', power: 'sensor.demo_power', completion: 'sensor.demo_completion', session_energy: 'sensor.demo_energy', tariff: 'sensor.demo_tariff' },
+  entities: { battery: 'sensor.demo_battery', odometer: 'sensor.demo_odometer', charge: 'switch.demo_charge', charging: 'binary_sensor.demo_charging', plugged_in: 'binary_sensor.demo_plugged', charge_limit: 'number.demo_limit', charge_current: 'number.demo_current', power: 'sensor.demo_power', completion: 'sensor.demo_completion', session_energy: 'sensor.demo_energy', tariff: 'sensor.demo_tariff' },
   schedule: { control_script: 'script.demo_schedule', datetime_entity: 'input_datetime.demo_start', armed_entity: 'input_boolean.demo_armed', status_entity: 'input_select.demo_status' }
 };
 let states, dark = false, currentConfig = config;
@@ -15,6 +15,10 @@ async function callWS({ type }) { if (type === 'config/device_registry/list') re
 async function callApi(method, path) {
   if (method !== 'GET' || !path.startsWith('history/period/')) throw new Error('Unsupported demo API request');
   const now = Date.now(), second = path.includes('sensor.second_battery');
+  if (path.includes('odometer')) {
+    const distance = path.includes('second_odometer') ? [0,0,0,4,15,28,28,28,28] : [0,0,0,0,26,64.2,64.2,64.2,64.2];
+    return [distance.map((km, i) => ({ state: String(42000 + km), attributes: { unit_of_measurement: 'km' }, last_changed: new Date(now - 86400000 + i * 10800000).toISOString() }))];
+  }
   const levels = second ? [72,72,70,65,59,52,45,45,45] : [78,78,76,70,54,36,36,48,62];
   return [levels.map((state, i) => ({ state: String(state), last_changed: new Date(now - 86400000 + i * 10800000).toISOString() }))];
 }
@@ -23,6 +27,7 @@ function reset(mode = 'charging') {
   card.setConfig(currentConfig);
   states = {
     'sensor.demo_battery': entity(mode === 'complete' ? 80 : 62, { unit_of_measurement: '%' }),
+    'sensor.demo_odometer': entity(42064.2, { unit_of_measurement: 'km' }),
     'switch.demo_charge': entity(mode === 'charging' || mode === 'error' ? 'on' : 'off'),
     'binary_sensor.demo_charging': entity(mode === 'charging' || mode === 'error' ? 'on' : 'off'),
     'binary_sensor.demo_plugged': entity(mode === 'disconnected' ? 'off' : 'on'),

@@ -20,6 +20,10 @@ try {
   assert.equal(await card.locator('#history-high').innerText(), 'High 78%');
   assert.equal(await card.locator('#history-note').isVisible(), false);
   assert.equal(await card.locator('#history-limit-line').getAttribute('y1'), '58');
+  await page.waitForFunction(() => document.querySelector('tessie-card').shadowRoot.getElementById('distance-total').textContent === '64.2 km driven');
+  assert.match(await card.locator('#distance-line').getAttribute('d'), /H380$/);
+  assert.equal(await card.locator('#distance-axis-2').textContent(), '80 km');
+  assert.equal(await card.locator('#distance-note').isVisible(), false);
   assert.equal(await card.locator('#charge').evaluate(el => el.previousElementSibling.className), 'battery');
   assert.equal(await card.locator('#current').evaluate(el => Boolean(el.closest('.control').nextElementSibling.classList.contains('metrics'))), true);
   await card.locator('#vehicle').evaluate(img => img.decode());

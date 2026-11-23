@@ -1,6 +1,6 @@
-/* Tessie Card 0.2.9 — dependency-free Home Assistant dashboard card. */
+/* Tessie Card 0.2.10 — dependency-free Home Assistant dashboard card. */
 import { ARTWORK_IMAGES, ARTWORK_FIELDS, DEFAULT_ARTWORK, selectArtwork, artworkOptions, changeArtwork, interiorColour } from './vehicle-artwork.js';
-export const VERSION = "0.2.9";
+export const VERSION = "0.2.10";
 const invalid = new Set(["unknown", "unavailable", "", "none"]);
 export function numeric(entity) {
   if (!entity || entity.state == null || typeof entity.state === "boolean" || invalid.has(String(entity.state).trim().toLowerCase())) return null;
@@ -68,9 +68,9 @@ export function batteryHistory(states, start, end) {
     .filter((point, index, all) => point.time >= start || index === all.length - 1 || all[index + 1].time > start)
     .map(point => ({ ...point, time: Math.max(start, point.time) }));
 }
-export function batteryHistoryPath(points, start, end) {
+export function batteryHistoryPath(points, start, end, maximum = 100) {
   const x = time => 40 + (time - start) / (end - start) * 340;
-  const y = value => 170 - value * 1.4;
+  const y = value => 170 - value / maximum * 140;
   let path = '', previous = null;
   for (const point of points) {
     if (previous?.value !== null && previous) path += ` H${x(point.time).toFixed(2)}`;
@@ -80,9 +80,29 @@ export function batteryHistoryPath(points, start, end) {
   if (previous && previous.value !== null) path += ' H380';
   return path.trim();
 }
-const domains = { battery: "sensor", charge_limit: "number", charge_current: "number", charge: "switch", charging: "binary_sensor", charging_status: "sensor", plugged_in: "binary_sensor", power: "sensor", completion: "sensor", time_remaining: "sensor", tariff: "sensor", session_energy: "sensor", session_cost: "sensor", remaining_energy: "sensor", location: "device_tracker" };
+const domains = { odometer: "sensor", battery: "sensor", charge_limit: "number", charge_current: "number", charge: "switch", charging: "binary_sensor", charging_status: "sensor", plugged_in: "binary_sensor", power: "sensor", completion: "sensor", time_remaining: "sensor", tariff: "sensor", session_energy: "sensor", session_cost: "sensor", remaining_energy: "sensor", location: "device_tracker" };
+export function distanceHistory(states, start, end) {
+  let unit, baseline = null, previous = null, reset = false;
+  const readings = states.map(state => {
+    unit = state.attributes?.unit_of_measurement ?? unit;
+    const value = numeric(state), factor = { km: 1, mi: 1.609344, m: .001 }[unit];
+    return { time: Date.parse(state.last_changed || state.last_updated), value: value !== null && value >= 0 && factor ? value * factor : null };
+  }).filter(p => Number.isFinite(p.time) && p.time <= end).sort((a, b) => a.time - b.time)
+    .filter((p, i, all) => p.time >= start || i === all.length - 1 || all[i + 1].time > start)
+    .map(p => ({ ...p, time: Math.max(start, p.time) }));
+  const points = readings.map(p => {
+    if (p.value === null) return p;
+    if (previous !== null && p.value < previous - .001) reset = true;
+    baseline ??= p.value; previous = p.value;
+    return { time: p.time, value: Math.max(0, p.value - baseline) };
+  });
+  const first = readings[0], last = readings.at(-1);
+  return { points: reset ? [] : points, total: reset || baseline === null ? null : Math.max(0, previous - baseline),
+    partial: !first || first.time > start || first.value === null || last?.value === null, reset };
+}
 const requiredMappings = ["battery", "charge", "charge_limit", "charge_current"];
 const tessieKeys = {
+  odometer: ["vehicle_state_odometer"],
   battery: ["charge_state_usable_battery_level", "charge_state_battery_level"],
   charge: ["charge_state_charge_enable_request", "charge_state_charging_state"],
   charge_limit: ["charge_state_charge_limit_soc"],
@@ -169,7 +189,7 @@ const css = `
 .head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 24px 0}.name{font-size:24px;font-weight:650;letter-spacing:-.6px}.sub,.note{color:var(--tc-muted);font-size:13px}.sub{margin-top:4px}.badge{border-radius:20px;padding:7px 12px;background:color-mix(in srgb,var(--tc-muted) 12%,transparent);font-size:13px;font-weight:600;white-space:nowrap}.active .badge{color:var(--tc-green);background:color-mix(in srgb,var(--tc-green) 13%,transparent)}
 .scene{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 90%,color-mix(in srgb,var(--tc-muted) 8%,transparent),transparent 65%)}.scene img{display:block}.scene .power{position:absolute;right:24px;top:16px;text-align:right;text-shadow:0 0 8px var(--tc-bg);font-size:13px;color:var(--tc-muted)}.power strong{display:block;font-size:21px;color:var(--tc-green);margin-top:3px}
 .content{padding:0 22px 22px}.battery{display:flex;gap:20px;align-items:center;margin:10px 0 18px}.percent{font-size:36px;font-weight:650;letter-spacing:-1px}.battery-text{min-width:76px}.battery-track{flex:1;position:relative;padding-top:25px}.track{height:13px;border-radius:9px;background:color-mix(in srgb,var(--tc-muted) 18%,transparent);overflow:hidden}.fill{height:100%;width:0;background:var(--tc-green);border-radius:9px;transition:width .4s}.marker{position:absolute;top:18px;height:27px;border-left:2px solid var(--tc-text)}.limit-text{position:absolute;right:0;top:0;font-size:12px;color:var(--tc-muted)}
-.history{--history-colour:#55c9c7;border:1px solid var(--tc-line);border-radius:18px;padding:16px;margin:0 0 18px;background:color-mix(in srgb,var(--tc-muted) 6%,var(--tc-bg))}.history-head,.history-footer{display:flex;justify-content:space-between;gap:10px;align-items:center}.feedback + .history{margin-top:18px}.history h3{font-size:16px;margin:0;font-weight:650}.history-head span{font-size:12px;color:var(--tc-muted)}.history-legend{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0 0;font-size:12px;color:var(--tc-muted)}.history-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--history-colour);margin-right:5px}.history-dash{display:inline-block;width:17px;border-top:2px dashed #9890ef;margin-right:5px;vertical-align:middle}.history svg{display:block;width:100%;height:auto;overflow:visible}.history svg text{fill:var(--tc-muted);font:11px system-ui,sans-serif}.history-grid{stroke:var(--tc-line);stroke-dasharray:3 6}.history-line{fill:none;stroke:var(--history-colour);stroke-width:2;stroke-linejoin:round;vector-effect:non-scaling-stroke}.history-limit{stroke:#9890ef;stroke-width:1.5;stroke-dasharray:4 4}.history-footer{border-radius:24px;padding:11px 14px;background:color-mix(in srgb,var(--tc-muted) 12%,transparent);font-size:12px;color:var(--tc-muted)}.history .note{margin:10px 0}
+.history{--history-colour:#55c9c7;border:1px solid var(--tc-line);border-radius:18px;padding:16px;margin:0 0 18px;background:color-mix(in srgb,var(--tc-muted) 6%,var(--tc-bg))}.history-head,.history-footer{display:flex;justify-content:space-between;gap:10px;align-items:center}.feedback + .history{margin-top:18px}.history h3{font-size:16px;margin:0;font-weight:650}.history-head span{font-size:12px;color:var(--tc-muted)}.history-legend{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0 0;font-size:12px;color:var(--tc-muted)}.history-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--history-colour);margin-right:5px}.history-dash{display:inline-block;width:17px;border-top:2px dashed #9890ef;margin-right:5px;vertical-align:middle}.history svg{display:block;width:100%;height:auto;overflow:visible}.history svg text{fill:var(--tc-muted);font:11px system-ui,sans-serif}.history-grid{stroke:var(--tc-line);stroke-dasharray:3 6}.history-line{fill:none;stroke:var(--history-colour);stroke-width:2;stroke-linejoin:round;vector-effect:non-scaling-stroke}.history-limit{stroke:#9890ef;stroke-width:1.5;stroke-dasharray:4 4}.history-footer{border-radius:24px;padding:11px 14px;background:color-mix(in srgb,var(--tc-muted) 12%,transparent);font-size:12px;color:var(--tc-muted)}.history .note{margin:10px 0}.history-head{flex-wrap:wrap}.history-head>div>span{display:block;margin-top:4px}.distance-total{font-size:13px;white-space:nowrap;color:#ffbf4d;background:color-mix(in srgb,#ffbf4d 12%,transparent);border:1px solid color-mix(in srgb,#ffbf4d 35%,transparent);border-radius:12px;padding:9px 10px}.distance-dot{background:#ffbf4d}.distance-line{stroke:#ffbf4d}.history svg .distance-axis{fill:#ffbf4d}
 .metrics,.costs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--tc-line);border-radius:13px;overflow:hidden;margin-bottom:12px}.metric{padding:13px 14px;min-width:0}.metric:nth-child(even){border-left:1px solid var(--tc-line)}.metric .label{font-size:12px;color:var(--tc-muted);display:block;margin-bottom:5px}.metric strong{font-size:20px;font-weight:600;display:block;font-variant-numeric:tabular-nums}.metric button{font:inherit;text-align:left;padding:0;border:0;background:none;color:inherit;cursor:pointer;width:100%}.costs strong{font-size:19px}.note{font-size:12px;margin:5px 0 0;line-height:1.4}.tariff{margin:-3px 0 17px}
 button,input{font:inherit}button{cursor:pointer;border:1px solid var(--tc-line);color:var(--tc-text);background:color-mix(in srgb,var(--tc-muted) 8%,var(--tc-bg));border-radius:9px;padding:10px 14px;min-height:42px}button:disabled{opacity:.5;cursor:default}.primary{width:100%;background:var(--tc-green);border:0;color:#fff;font-weight:600;margin:0 0 14px}.control{margin:0 0 15px}.control label{display:flex;justify-content:space-between;font-size:14px;font-weight:550;gap:12px}.control output{font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--tc-green);margin:12px 0 0;height:22px}input:disabled{opacity:.4}input[type=datetime-local]{width:100%;min-width:0;background:var(--tc-bg);color:var(--tc-text);border:1px solid var(--tc-line);border-radius:8px;padding:11px;margin:8px 0 10px;color-scheme:light}.dark input[type=datetime-local]{color-scheme:dark}.schedule{padding:14px;border:1px solid var(--tc-line);border-radius:13px}.schedule h3{font-size:16px;margin:0 0 5px;font-weight:600}.schedule label{font-size:12px;color:var(--tc-muted)}.schedule-actions{display:flex;gap:8px;flex-wrap:wrap}.schedule-actions button{flex:1}.feedback{font-size:13px;padding:10px 0 0;line-height:1.5}.error{color:var(--error-color,#c54242)}[hidden]{display:none!important}:focus-visible{outline:2px solid var(--tc-green);outline-offset:3px}.asset-error{padding:35px 24px;text-align:center;color:var(--tc-muted)}
 @media(max-width:360px){.head{padding:18px 16px 0}.content{padding:0 14px 16px}.name{font-size:21px}.metric{padding:12px 10px}.metric strong{font-size:17px}.scene .power{right:16px;font-size:12px}.power strong{font-size:18px}.battery{gap:12px}.percent{font-size:32px}}
@@ -233,9 +253,10 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
   _entity(key) { return this._hass?.states[this._config?.entities[key]]; }
   _ensureHistory() {
     if (this._config.show_battery_graph === false) { this._historyRequest = null; return; }
-    const entity = this._config.entities.battery, connection = this._hass.connection || this._hass;
-    if (this._historyEntity !== entity || this._historyConnection !== connection) {
+    const entity = this._config.entities.battery, odometer = this._config.entities.odometer, connection = this._hass.connection || this._hass;
+    if (this._historyEntity !== entity || this._historyOdometer !== odometer || this._historyConnection !== connection) {
       this._historyEntity = entity; this._historyConnection = connection;
+      this._historyOdometer = odometer; this._distanceStates = []; this._distanceError = '';
       this._historyStates = []; this._historyFetched = 0; this._historyRequest = null; this._historyError = '';
     }
     if (!entity || !this.isConnected) return;
@@ -243,9 +264,14 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
     const now = Date.now(), token = {};
     this._historyRequest = token; this._historyError = '';
     const start = new Date(now - 86400000).toISOString(), end = new Date(now).toISOString();
-    Promise.resolve().then(() => this._hass.callApi('GET', `history/period/${start}?filter_entity_id=${entity}&end_time=${encodeURIComponent(end)}&minimal_response&no_attributes`))
-      .then(result => { if (this._historyRequest === token) this._historyStates = Array.isArray(result?.[0]) ? result[0] : []; })
-      .catch(() => { if (this._historyRequest === token) this._historyError = 'Battery history unavailable. Check Home Assistant history and recorder settings.'; })
+    const load = (id, distance = false) => Promise.resolve().then(() => this._hass.callApi('GET', `history/period/${start}?filter_entity_id=${id}&end_time=${encodeURIComponent(end)}&minimal_response${distance ? '' : '&no_attributes'}`))
+      .then(result => { if (this._historyRequest === token) this[distance ? '_distanceStates' : '_historyStates'] = Array.isArray(result?.[0]) ? result[0] : []; })
+      .catch(() => { if (this._historyRequest === token) {
+        this[distance ? '_distanceError' : '_historyError'] = distance ? 'Odometer history unavailable.' : 'Battery history unavailable. Check Home Assistant history and recorder settings.';
+        if (distance) this._distanceStates = [];
+      } });
+    this._distanceError = '';
+    Promise.all([load(entity), ...(odometer ? [load(odometer, true)] : [])])
       .finally(() => { if (this._historyRequest === token) { this._historyRequest = null; this._historyFetched = Date.now(); if (this.isConnected) this._render(); } });
   }
   _renderHistory(limit, zone) {
@@ -267,6 +293,15 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
     this._text('history-low', values.length ? `Low ${low}%` : 'Low —');
     this._text('history-high', values.length ? `High ${high}%` : 'High —');
     this._text('history-title', `Battery state over the past 24 hours. ${values.length ? `Low ${low}%, high ${high}%.` : message}`);
+    const distance = distanceHistory(this._distanceStates || [], start, end);
+    const km = value => new Intl.NumberFormat(this._hass.locale?.language || 'en', { maximumFractionDigits: 1 }).format(value);
+    const maximum = Math.max(10, Math.ceil((distance.total || 0) / 20) * 20);
+    this._el('distance-line').setAttribute('d', batteryHistoryPath(distance.points, start, end, maximum));
+    this._text('distance-total', distance.total === null ? 'Distance —' : `${km(distance.total)} km ${distance.partial ? 'recorded' : 'driven'}`);
+    for (let i = 0; i <= 2; i++) { this._text(`distance-axis-${i}`, `${km(i * maximum / 2)} km`); this._el(`distance-axis-${i}`).setAttribute('visibility', distance.total === null ? 'hidden' : 'visible'); }
+    const distanceNote = !this._config.entities.odometer ? 'Map an odometer sensor to show distance driven.' : this._distanceError || (distance.reset ? 'Odometer reset detected; distance unavailable.' : distance.total === null ? (this._historyRequest ? 'Loading distance history…' : 'No odometer history with supported distance units recorded.') : distance.partial ? 'Partial odometer history: distance covers recorded readings only.' : '');
+    this._text('distance-note', distanceNote); this._el('distance-note').hidden = !distanceNote;
+    this._el('history-title').textContent += ` ${this._el('distance-total').textContent}. ${distanceNote}`;
   }
   _el(id) { return this.shadowRoot.getElementById(id); }
   _text(id, text) { this._el(id).textContent = text; }
@@ -281,7 +316,7 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
       <div class="metrics"><div class="metric"><button id="power-info"><span class="label">Charging power</span><strong id="power"></strong></button></div><div class="metric"><button id="time-info"><span class="label">Time remaining</span><strong id="remaining"></strong></button></div><div class="metric"><button id="finish-info"><span class="label">Estimated finish</span><strong id="finish"></strong></button></div><div class="metric"><span class="label">Charge limit</span><strong id="limit-metric"></strong></div></div>
       <div class="costs"><div class="metric"><span id="session-label" class="label">Session so far</span><strong id="session-cost"></strong><p id="session-note" class="note"></p></div><div class="metric"><span class="label">To charge limit (est.)</span><strong id="remaining-cost"></strong><p id="estimate-note" class="note"></p></div></div><p id="tariff" class="note tariff"></p>
       <section id="schedule-section" class="schedule"><h3>One-off start</h3><p id="schedule-summary" class="note"></p><label for="schedule-time" id="schedule-label">Start date and time</label><input id="schedule-time" type="datetime-local"><div class="schedule-actions"><button id="schedule-save">Schedule start</button><button id="schedule-cancel">Cancel start</button></div><p class="note">Saving a start time does not stop charging now.</p></section><div id="feedback" class="feedback" role="status" aria-live="polite"></div>
-      <section id="battery-history" class="history" aria-labelledby="history-heading"><div class="history-head"><h3 id="history-heading">Battery state</h3><span>Past 24 hours</span></div><div class="history-legend"><span><i class="history-dot"></i>Battery</span><span id="history-limit" class="history-limit-legend"></span></div><svg viewBox="0 0 400 204" role="img" aria-labelledby="history-title"><title id="history-title">Battery state over the past 24 hours</title>${[0, 50, 100].map(value => `<line class="history-grid" x1="40" x2="380" y1="${170 - value * 1.4}" y2="${170 - value * 1.4}"/><text x="30" y="${174 - value * 1.4}" text-anchor="end">${value}%</text>`).join('')}<line id="history-limit-line" class="history-limit" x1="40" x2="380"/><path id="history-line" class="history-line"/>${[0, 1, 2, 3, 4].map(i => `<text id="history-time-${i}" x="${40 + i * 85}" y="194" text-anchor="${i === 0 ? 'start' : i === 4 ? 'end' : 'middle'}"></text>`).join('')}</svg><p id="history-note" class="note" role="status"></p><div class="history-footer"><span id="history-low"></span><span id="history-high"></span></div></section></div></ha-card>`;
+      <section id="battery-history" class="history" aria-labelledby="history-heading"><div class="history-head"><div><h3 id="history-heading">Battery state</h3><span>Past 24 hours</span></div><strong id="distance-total" class="distance-total">Distance —</strong></div><div class="history-legend"><span><i class="history-dot"></i>Battery</span><span><i class="history-dot distance-dot"></i>Distance driven</span><span id="history-limit" class="history-limit-legend"></span></div><svg viewBox="0 0 440 204" role="img" aria-labelledby="history-title"><title id="history-title">Battery state over the past 24 hours</title>${[0, 50, 100].map(value => `<line class="history-grid" x1="40" x2="380" y1="${170 - value * 1.4}" y2="${170 - value * 1.4}"/><text x="30" y="${174 - value * 1.4}" text-anchor="end">${value}%</text>`).join('')}<line id="history-limit-line" class="history-limit" x1="40" x2="380"/><path id="history-line" class="history-line"/><path id="distance-line" class="history-line distance-line"/><text id="distance-axis-0" class="distance-axis" x="390" y="174"></text><text id="distance-axis-1" class="distance-axis" x="390" y="104"></text><text id="distance-axis-2" class="distance-axis" x="390" y="34"></text>${[0, 1, 2, 3, 4].map(i => `<text id="history-time-${i}" x="${40 + i * 85}" y="194" text-anchor="${i === 0 ? 'start' : i === 4 ? 'end' : 'middle'}"></text>`).join('')}</svg><p id="history-note" class="note" role="status"></p><p id="distance-note" class="note" role="status" hidden></p><div class="history-footer"><span id="history-low"></span><span id="history-high"></span></div></section></div></ha-card>`;
     this._el("vehicle").addEventListener("error", () => { this._vehicleAssetFailed = true; this._el("vehicle").hidden = true; this._el("flow").toggleAttribute("hidden", true); this._el("asset-error").hidden = false; });
     this._el("discovery-retry").onclick = () => this._refreshVehicles(true);
     this._el("power-info").onclick = () => this._more("power");

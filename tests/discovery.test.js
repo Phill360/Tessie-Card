@@ -10,6 +10,8 @@ test('discovery isolates Tessie vehicles and maps exact metadata even after enti
   assert.equal(vehicles[0].entities.battery, 'sensor.renamed_battery');
   assert.equal(vehicles[1].entities.battery, 'sensor.second_battery');
   assert.equal(vehicles[0].entities.charge, 'switch.demo_charge');
+  assert.equal(vehicles[0].entities.odometer, 'sensor.demo_odometer');
+  assert.equal(vehicles[1].entities.odometer, 'sensor.second_odometer');
   assert.equal(vehicles[0].entities.charging, undefined); // Disabled binary sensor is not enabled.
   assert.equal(vehicles[0].entities.charging_status, 'sensor.demo_charging_status');
   assert.ok(vehicles[0].disabled.includes('charging'));

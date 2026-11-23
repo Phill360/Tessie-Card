@@ -11,6 +11,7 @@ export function demoRegistry() {
     ['sensor.demo_power', 'charge_state_charger_power'],
     ['sensor.demo_completion', 'charge_state_minutes_to_full_charge'],
     ['sensor.demo_energy', 'charge_state_charge_energy_added'],
+    ['sensor.demo_odometer', 'vehicle_state_odometer'],
   ];
   const devices = [{ id: 'demo-vehicle-one', name: 'Model 3', model: 'Model 3' }, { id: 'demo-vehicle-two', name: 'Second vehicle', model: 'Model Y' }, { id: 'demo-energy', name: 'Powerwall', model: 'Powerwall' }];
   const entries = devices.slice(0, 2).flatMap((device, index) => keys.map(([id, key]) => ({

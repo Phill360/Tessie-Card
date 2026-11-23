@@ -173,6 +173,7 @@ than guessing. IDs are not derived from the vehicle name.
 | Key | Domain | Purpose |
 | --- | --- | --- |
 | `battery` | sensor | Required; battery percentage |
+| `odometer` | sensor | Optional distance overlay; cumulative odometer in km, mi or m |
 | `charge` | switch | Required; charging enable/disable switch |
 | `charge_limit` | number | Required; charge-limit control, using entity min/max/step |
 | `charge_current` | number | Required; current control, using entity min/max/step |
@@ -310,6 +311,12 @@ stays local. Artwork source details are recorded in [assets/README.md](assets/RE
 
 The battery state chart shows a rolling 24 hours of the mapped battery sensor's
 recorded percentage, with a teal line, current charge limit, and daily low/high.
+An amber overlay and right-hand kilometre axis show distance driven, calculated
+from the same vehicle's odometer history, with a total distance badge. The Tessie
+odometer is detected automatically; manual mappings use `entities.odometer`.
+Miles and metres are converted to kilometres. Recorder must include the odometer
+as well as the battery sensor. Incomplete history is labelled as recorded distance;
+an odometer reset leaves the distance unavailable rather than inventing a total.
 The visual editor has **Show battery graph** and **Show schedule control** toggles.
 Both default to shown. YAML equivalents are `show_battery_graph: false` and
 `show_schedule: false`. Hiding the graph stops history requests; hiding the
