@@ -1,6 +1,8 @@
 # Tessie Card
 
-Version **0.2.8** (test prerelease) of a custom Home Assistant charging card for the
+[![Latest release](https://img.shields.io/github/v/release/Phill360/Tessie-Card)](https://github.com/Phill360/Tessie-Card/releases/latest)
+
+A custom Home Assistant charging card for the
 [Tessie integration](https://www.home-assistant.io/integrations/tessie/).
 Inspired by the rendered scenes and flow presentation in
 [Sigenergy Flow Card](https://github.com/jyavenard/sigenergy-flow-card).
@@ -16,9 +18,12 @@ Inspired by the rendered scenes and flow presentation in
 - A cable enters from outside the scene with no charger visible. Rear views show
   charging animation; front-view fallbacks are labelled and hide the cable.
 - Battery percentage, target marker, charging power, remaining time and finish time.
+- A rolling 24-hour battery graph with an amber distance-driven overlay,
+  kilometre axis and total distance badge from odometer history.
 - Session cost and estimated additional cost to reach the limit, using a tariff entity.
 - Always-visible start/stop, charge-limit and charging-current controls.
 - One-off start date/time through an optional persistent Home Assistant package.
+- Settings to show or hide the battery graph and schedule control.
 - Home Assistant theme colours, responsive layout, reduced-motion support,
   unavailable states, command-pending feedback and errors.
 - A visual vehicle picker with automatic Tessie entity discovery.
@@ -71,7 +76,8 @@ Your card configuration and entity mappings can stay the same.
 1. Download `tessie-card.js` from the latest GitHub release (or the repository
    root) and copy it to `/config/www/tessie-card/tessie-card.js`.
 2. Add a dashboard resource (Settings > Dashboards > Resources):
-   URL `/local/tessie-card/tessie-card.js?v=0.2.8`, type **JavaScript module**.
+   URL `/local/tessie-card/tessie-card.js?v=VERSION`, type **JavaScript module**.
+   Replace `VERSION` with the version you downloaded to refresh the browser cache.
 3. Add a manual card using [examples/card.yaml](examples/card.yaml), replacing
    every example entity ID with the real ID from Developer Tools > States.
 4. Reload the dashboard. Increase the resource version query after updating files.
