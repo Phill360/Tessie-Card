@@ -1,6 +1,61 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { batteryHistory, batteryHistoryPath, distanceHistory, TessieCard, validateConfig } from '../src/tessie-card.js';
+import { batteryHistory, batteryHistoryPath, distanceHistory, graphWindow, TessieCard, validateConfig } from '../src/tessie-card.js';
+
+test('graph windows default to rolling 24 hours and Today starts at midnight in the HA timezone', () => {
+  const now = Date.parse('2026-11-26T01:00:00Z');
+  assert.equal(graphWindow(undefined, 'Australia/Sydney', now).start, now - 86400000);
+  assert.equal(graphWindow('today', 'Australia/Sydney', now).start, Date.parse('2026-11-25T13:00:00Z'));
+  assert.equal(graphWindow('today', 'Australia/Adelaide', now).start, Date.parse('2026-11-25T13:30:00Z'));
+  assert.equal(graphWindow('today', 'America/Los_Angeles', now).start, Date.parse('2026-11-25T08:00:00Z'));
+  assert.equal(graphWindow('today', 'UTC', now).start, Date.parse('2026-11-26T00:00:00Z'));
+  assert.equal(validateConfig({ graph_period: 'today' }).graph_period, 'today');
+  assert.equal(validateConfig({ graph_period: '24h' }).graph_period, '24h');
+  for (const period of ['week', '', false, null]) assert.throws(() => validateConfig({ graph_period: period }), /graph_period/);
+});
+
+test('Today follows 23 and 25 hour local days and handles the exact midnight boundary', () => {
+  const spring = graphWindow('today', 'Australia/Sydney', Date.parse('2026-10-04T12:59:59Z'));
+  assert.equal(spring.start, Date.parse('2026-10-03T14:00:00Z'));
+  assert.equal(spring.end - spring.start, 23 * 3600000 - 1000);
+  const autumn = graphWindow('today', 'Australia/Sydney', Date.parse('2026-04-05T13:59:59Z'));
+  assert.equal(autumn.start, Date.parse('2026-04-04T13:00:00Z'));
+  assert.equal(autumn.end - autumn.start, 25 * 3600000 - 1000);
+  const midnight = Date.parse('2026-11-25T13:00:00Z');
+  const window = graphWindow('today', 'Australia/Sydney', midnight);
+  assert.equal(window.start, midnight); assert.equal(window.end, midnight);
+  assert.doesNotMatch(batteryHistoryPath([{ time: midnight, value: 50 }], midnight, midnight), /NaN|Infinity/);
+});
+
+test('changing period, local date or timezone refreshes both histories and discards stale responses', async () => {
+  const originalNow = Date.now;
+  let now = Date.parse('2026-11-26T01:00:00Z'); Date.now = () => now;
+  try {
+    const card = new TessieCard(), requests = [], pending = [];
+    Object.defineProperty(card, 'isConnected', { value: true }); card._render = () => {};
+    card._config = { entities: { battery: 'sensor.battery', odometer: 'sensor.odometer' } };
+    card._hass = { connection: {}, config: { time_zone: 'Australia/Sydney' }, callApi: async (method, path) => { requests.push(path); return new Promise(resolve => pending.push(resolve)); } };
+    card._ensureHistory(); await Promise.resolve();
+    card._config.graph_period = 'today'; card._ensureHistory(); await Promise.resolve();
+    assert.equal(requests.length, 4);
+    assert.match(requests[2], /history\/period\/2026-11-25T13:00:00.000Z/);
+    pending[2]([[{ last_changed: new Date(now).toISOString(), state: '70' }]]); pending[3]([]);
+    await new Promise(resolve => setImmediate(resolve));
+    pending[0]([[{ last_changed: new Date(now).toISOString(), state: '90' }]]); pending[1]([]);
+    await new Promise(resolve => setImmediate(resolve));
+    assert.equal(card._historyStates[0].state, '70');
+    // Cross midnight within the five-minute cache lifetime.
+    now = Date.parse('2026-11-26T12:59:00Z'); card._historyFetched = now;
+    now = Date.parse('2026-11-26T13:01:00Z'); card._ensureHistory(); await Promise.resolve();
+    assert.equal(requests.length, 6);
+    assert.match(requests[4], /history\/period\/2026-11-26T13:00:00.000Z/);
+    card._hass.config.time_zone = 'UTC'; card._ensureHistory(); await Promise.resolve();
+    assert.equal(requests.length, 8);
+    assert.match(requests[6], /history\/period\/2026-11-26T00:00:00.000Z/);
+    for (const resolve of pending.slice(4)) resolve([]);
+    await new Promise(resolve => setImmediate(resolve));
+  } finally { Date.now = originalNow; }
+});
 
 test('optional sections require boolean settings and a hidden graph does not request history', () => {
   assert.equal(validateConfig({ show_battery_graph: false, show_schedule: false }).show_schedule, false);

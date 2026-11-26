@@ -129,6 +129,15 @@ try {
   await page.waitForFunction(() => document.getElementById('automatic-card').shadowRoot.getElementById('discovery-note').textContent.includes('Multiple'));
   assert.equal(await automatic.locator('#charge').isDisabled(), true);
   await editor.locator('#vehicle-picker').selectOption('demo-vehicle-one');
+  assert.equal(await editor.locator('#graph-period').inputValue(), '24h');
+  await editor.locator('#graph-period').selectOption('today');
+  assert.equal(await page.evaluate(() => window.savedCardConfig.graph_period), 'today');
+  assert.equal(await automatic.locator('#history-period').innerText(), 'Today · midnight → now');
+  assert.equal(await automatic.locator('#history-time-0').textContent(), '00:00');
+  await page.waitForFunction(() => document.querySelector('#automatic-card')._historyRequest === null);
+  await automatic.locator('#battery-history').screenshot({ path: 'test-results/graph-today.png' });
+  await editor.locator('#graph-period').selectOption('24h');
+  assert.equal(await automatic.locator('#history-period').innerText(), 'Past 24 hours');
   await page.waitForFunction(() => document.getElementById('automatic-card').shadowRoot.getElementById('battery').textContent === '62%');
   assert.equal(await automatic.locator('#status').innerText(), 'Charging'); // Disabled binary sensor: enum fallback.
   // Artwork selectors must update the actual card, retain entity targeting and

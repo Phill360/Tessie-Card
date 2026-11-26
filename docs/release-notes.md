@@ -1,20 +1,18 @@
-# Tessie Card 0.2.10 — Distance driven overlay
+# Tessie Card 0.2.11 — Choose the graph period
 
-The battery graph now overlays cumulative kilometres driven during the same
-rolling 24-hour window, using the selected vehicle's recorded odometer readings.
+The visual editor now offers a **Graph period** setting:
 
-- Amber distance line, kilometre axis on the right, and total distance badge.
-- Automatic Tessie odometer detection, including renamed entities; manual
-  mappings can set `entities.odometer` to a distance sensor.
-- Converts odometers in miles or metres to kilometres.
-- Missing history, unsupported units and odometer resets show an explanation
-  instead of a misleading zero. Incomplete coverage is labelled as recorded
-  distance rather than a full 24-hour total.
-- Distance history follows the existing Show battery graph setting. Hiding the
-  graph stops both battery and odometer history requests.
+- **Past 24 hours**: the existing rolling window, still the default.
+- **Today (midnight → now)**: starts at midnight in Home Assistant's configured
+  timezone and resets automatically at the start of each local day.
 
-Home Assistant Recorder must include the battery and odometer sensors. The
-battery graph remains available when odometer history cannot be loaded.
+The battery line, distance overlay, total kilometres, low/high values and time
+labels all follow the selected period. Today handles daylight-saving changes,
+including 23-hour and 25-hour days. Changing periods reloads both histories
+immediately and discards responses from the previous period.
 
-Update to v0.2.10 in HACS, then fully reload the dashboard. The standalone
-`tessie-card.js` asset includes all required artwork and graph code.
+YAML options: `graph_period: today` or `graph_period: 24h`.
+Existing configurations keep the past-24-hours view without changes.
+
+Update to v0.2.11 in HACS, fully reload the dashboard, then choose the period in
+the card's visual editor.

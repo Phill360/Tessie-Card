@@ -635,8 +635,8 @@ export function artworkSelection(entry) {
   return Object.fromEntries(ARTWORK_FIELDS.map(key=>[key,entry[key]]));
 }
 
-/* Tessie Card 0.2.10 — dependency-free Home Assistant dashboard card. */
-export const VERSION = "0.2.10";
+/* Tessie Card 0.2.11 — dependency-free Home Assistant dashboard card. */
+export const VERSION = "0.2.11";
 const invalid = new Set(["unknown", "unavailable", "", "none"]);
 export function numeric(entity) {
   if (!entity || entity.state == null || typeof entity.state === "boolean" || invalid.has(String(entity.state).trim().toLowerCase())) return null;
@@ -673,6 +673,18 @@ export function localDateTime(epoch, timeZone) {
   const p = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
   return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}`;
 }
+export function graphWindow(period = '24h', timeZone = 'UTC', now = Date.now()) {
+  if (period !== 'today') return { start: now - 86400000, end: now, key: '24h', label: 'Past 24 hours' };
+  // Find the first instant of the local calendar day, including DST transitions.
+  const formatter = new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' });
+  const day = formatter.format(now);
+  let before = now - 36 * 3600000, start = now;
+  while (start - before > 1) {
+    const middle = Math.floor((start + before) / 2);
+    if (formatter.format(middle) === day) start = middle; else before = middle;
+  }
+  return { start, end: now, key: `today:${timeZone}:${day}`, label: 'Today · midnight → now' };
+}
 // Round-trip against HA's timezone, independent of the browser timezone. Reject DST gaps and overlaps.
 export function scheduleTimestamp(value, timeZone, now = Date.now()) {
   if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value)) throw new Error("Choose a start date and time.");
@@ -705,7 +717,7 @@ export function batteryHistory(states, start, end) {
     .map(point => ({ ...point, time: Math.max(start, point.time) }));
 }
 export function batteryHistoryPath(points, start, end, maximum = 100) {
-  const x = time => 40 + (time - start) / (end - start) * 340;
+  const x = time => 40 + (time - start) / Math.max(1, end - start) * 340;
   const y = value => 170 - value / maximum * 140;
   let path = '', previous = null;
   for (const point of points) {
@@ -798,6 +810,7 @@ export function chargingState(binary, status) {
 }
 export function validateConfig(config) {
   if (!config || typeof config !== "object") throw new Error("Invalid card configuration.");
+  if (config.graph_period !== undefined && !['24h', 'today'].includes(config.graph_period)) throw new Error('graph_period must be 24h or today.');
   for (const key of ["show_battery_graph", "show_schedule"]) if (config[key] !== undefined && typeof config[key] !== "boolean") throw new Error(`${key} must be true or false.`);
   if (config.entities !== undefined && (!config.entities || typeof config.entities !== "object" || Array.isArray(config.entities))) throw new Error("entities must be a mapping.");
   if (config.device_id !== undefined && (typeof config.device_id !== "string" || !/^[a-zA-Z0-9_-]+$/.test(config.device_id))) throw new Error("device_id must be a Home Assistant device ID.");
@@ -889,17 +902,19 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
   _entity(key) { return this._hass?.states[this._config?.entities[key]]; }
   _ensureHistory() {
     if (this._config.show_battery_graph === false) { this._historyRequest = null; return; }
+    const window = graphWindow(this._config.graph_period, this._hass.config?.time_zone || 'UTC');
     const entity = this._config.entities.battery, odometer = this._config.entities.odometer, connection = this._hass.connection || this._hass;
-    if (this._historyEntity !== entity || this._historyOdometer !== odometer || this._historyConnection !== connection) {
+    if (this._historyEntity !== entity || this._historyOdometer !== odometer || this._historyConnection !== connection || this._historyWindowKey !== window.key) {
+      this._historyWindowKey = window.key;
       this._historyEntity = entity; this._historyConnection = connection;
       this._historyOdometer = odometer; this._distanceStates = []; this._distanceError = '';
       this._historyStates = []; this._historyFetched = 0; this._historyRequest = null; this._historyError = '';
     }
     if (!entity || !this.isConnected) return;
     if (this._historyRequest || Date.now() - this._historyFetched < 300000) return;
-    const now = Date.now(), token = {};
+    const token = {};
     this._historyRequest = token; this._historyError = '';
-    const start = new Date(now - 86400000).toISOString(), end = new Date(now).toISOString();
+    const start = new Date(window.start).toISOString(), end = new Date(window.end).toISOString();
     const load = (id, distance = false) => Promise.resolve().then(() => this._hass.callApi('GET', `history/period/${start}?filter_entity_id=${id}&end_time=${encodeURIComponent(end)}&minimal_response${distance ? '' : '&no_attributes'}`))
       .then(result => { if (this._historyRequest === token) this[distance ? '_distanceStates' : '_historyStates'] = Array.isArray(result?.[0]) ? result[0] : []; })
       .catch(() => { if (this._historyRequest === token) {
@@ -911,7 +926,8 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
       .finally(() => { if (this._historyRequest === token) { this._historyRequest = null; this._historyFetched = Date.now(); if (this.isConnected) this._render(); } });
   }
   _renderHistory(limit, zone) {
-    const end = Date.now(), start = end - 86400000;
+    const { start, end, label } = graphWindow(this._config.graph_period, zone);
+    this._text('history-period', label);
     const points = batteryHistory(this._historyStates || [], start, end);
     const values = points.filter(point => point.value !== null).map(point => point.value);
     const low = values.reduce((a, b) => Math.min(a, b), Infinity), high = values.reduce((a, b) => Math.max(a, b), -Infinity);
@@ -923,12 +939,13 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
     this._el('history-limit-line').setAttribute('y1', 170 - (limit ?? 0) * 1.4);
     this._el('history-limit-line').setAttribute('y2', 170 - (limit ?? 0) * 1.4);
     this._text('history-limit', `Charge limit ${limit ?? ''}%`);
-    for (let i = 0; i <= 4; i++) this._text(`history-time-${i}`, i === 4 ? 'Now' : format(start + i * 21600000));
-    const message = this._historyError || (this._historyRequest && !values.length ? 'Loading battery history…' : !values.length ? 'No battery history recorded in the past 24 hours.' : '');
+    for (let i = 0; i <= 4; i++) this._text(`history-time-${i}`, i === 4 ? 'Now' : format(start + i * (end - start) / 4));
+    const periodText = this._config.graph_period === 'today' ? 'today' : 'over the past 24 hours';
+    const message = this._historyError || (this._historyRequest && !values.length ? 'Loading battery history…' : !values.length ? `No battery history recorded ${periodText}.` : '');
     this._text('history-note', message); this._el('history-note').hidden = !message;
     this._text('history-low', values.length ? `Low ${low}%` : 'Low —');
     this._text('history-high', values.length ? `High ${high}%` : 'High —');
-    this._text('history-title', `Battery state over the past 24 hours. ${values.length ? `Low ${low}%, high ${high}%.` : message}`);
+    this._text('history-title', `Battery state ${periodText}. ${values.length ? `Low ${low}%, high ${high}%.` : message}`);
     const distance = distanceHistory(this._distanceStates || [], start, end);
     const km = value => new Intl.NumberFormat(this._hass.locale?.language || 'en', { maximumFractionDigits: 1 }).format(value);
     const maximum = Math.max(10, Math.ceil((distance.total || 0) / 20) * 20);
@@ -952,7 +969,7 @@ export class TessieCard extends (globalThis.HTMLElement || class {}) {
       <div class="metrics"><div class="metric"><button id="power-info"><span class="label">Charging power</span><strong id="power"></strong></button></div><div class="metric"><button id="time-info"><span class="label">Time remaining</span><strong id="remaining"></strong></button></div><div class="metric"><button id="finish-info"><span class="label">Estimated finish</span><strong id="finish"></strong></button></div><div class="metric"><span class="label">Charge limit</span><strong id="limit-metric"></strong></div></div>
       <div class="costs"><div class="metric"><span id="session-label" class="label">Session so far</span><strong id="session-cost"></strong><p id="session-note" class="note"></p></div><div class="metric"><span class="label">To charge limit (est.)</span><strong id="remaining-cost"></strong><p id="estimate-note" class="note"></p></div></div><p id="tariff" class="note tariff"></p>
       <section id="schedule-section" class="schedule"><h3>One-off start</h3><p id="schedule-summary" class="note"></p><label for="schedule-time" id="schedule-label">Start date and time</label><input id="schedule-time" type="datetime-local"><div class="schedule-actions"><button id="schedule-save">Schedule start</button><button id="schedule-cancel">Cancel start</button></div><p class="note">Saving a start time does not stop charging now.</p></section><div id="feedback" class="feedback" role="status" aria-live="polite"></div>
-      <section id="battery-history" class="history" aria-labelledby="history-heading"><div class="history-head"><div><h3 id="history-heading">Battery state</h3><span>Past 24 hours</span></div><strong id="distance-total" class="distance-total">Distance —</strong></div><div class="history-legend"><span><i class="history-dot"></i>Battery</span><span><i class="history-dot distance-dot"></i>Distance driven</span><span id="history-limit" class="history-limit-legend"></span></div><svg viewBox="0 0 440 204" role="img" aria-labelledby="history-title"><title id="history-title">Battery state over the past 24 hours</title>${[0, 50, 100].map(value => `<line class="history-grid" x1="40" x2="380" y1="${170 - value * 1.4}" y2="${170 - value * 1.4}"/><text x="30" y="${174 - value * 1.4}" text-anchor="end">${value}%</text>`).join('')}<line id="history-limit-line" class="history-limit" x1="40" x2="380"/><path id="history-line" class="history-line"/><path id="distance-line" class="history-line distance-line"/><text id="distance-axis-0" class="distance-axis" x="390" y="174"></text><text id="distance-axis-1" class="distance-axis" x="390" y="104"></text><text id="distance-axis-2" class="distance-axis" x="390" y="34"></text>${[0, 1, 2, 3, 4].map(i => `<text id="history-time-${i}" x="${40 + i * 85}" y="194" text-anchor="${i === 0 ? 'start' : i === 4 ? 'end' : 'middle'}"></text>`).join('')}</svg><p id="history-note" class="note" role="status"></p><p id="distance-note" class="note" role="status" hidden></p><div class="history-footer"><span id="history-low"></span><span id="history-high"></span></div></section></div></ha-card>`;
+      <section id="battery-history" class="history" aria-labelledby="history-heading"><div class="history-head"><div><h3 id="history-heading">Battery state</h3><span id="history-period">Past 24 hours</span></div><strong id="distance-total" class="distance-total">Distance —</strong></div><div class="history-legend"><span><i class="history-dot"></i>Battery</span><span><i class="history-dot distance-dot"></i>Distance driven</span><span id="history-limit" class="history-limit-legend"></span></div><svg viewBox="0 0 440 204" role="img" aria-labelledby="history-title"><title id="history-title">Battery state over the past 24 hours</title>${[0, 50, 100].map(value => `<line class="history-grid" x1="40" x2="380" y1="${170 - value * 1.4}" y2="${170 - value * 1.4}"/><text x="30" y="${174 - value * 1.4}" text-anchor="end">${value}%</text>`).join('')}<line id="history-limit-line" class="history-limit" x1="40" x2="380"/><path id="history-line" class="history-line"/><path id="distance-line" class="history-line distance-line"/><text id="distance-axis-0" class="distance-axis" x="390" y="174"></text><text id="distance-axis-1" class="distance-axis" x="390" y="104"></text><text id="distance-axis-2" class="distance-axis" x="390" y="34"></text>${[0, 1, 2, 3, 4].map(i => `<text id="history-time-${i}" x="${40 + i * 85}" y="194" text-anchor="${i === 0 ? 'start' : i === 4 ? 'end' : 'middle'}"></text>`).join('')}</svg><p id="history-note" class="note" role="status"></p><p id="distance-note" class="note" role="status" hidden></p><div class="history-footer"><span id="history-low"></span><span id="history-high"></span></div></section></div></ha-card>`;
     this._el("vehicle").addEventListener("error", () => { this._vehicleAssetFailed = true; this._el("vehicle").hidden = true; this._el("flow").toggleAttribute("hidden", true); this._el("asset-error").hidden = false; });
     this._el("discovery-retry").onclick = () => this._refreshVehicles(true);
     this._el("power-info").onclick = () => this._more("power");
@@ -1132,6 +1149,7 @@ export class TessieCardEditor extends (globalThis.HTMLElement || class {}) {
         <label for="card-name">Card name (optional)</label><input id="card-name" placeholder="Use the vehicle name">
         <style>.display-option{display:flex;align-items:center;gap:10px}.display-option input{width:18px;height:18px;margin:0;accent-color:var(--primary-color,#20b940)}</style>
         <label class="display-option"><input id="show-battery-graph" type="checkbox">Show battery graph</label>
+        <label for="graph-period">Graph period</label><select id="graph-period"><option value="24h">Past 24 hours</option><option value="today">Today (midnight → now)</option></select><p>Applies to battery history and distance driven. Today uses Home Assistant's timezone.</p>
         <label class="display-option"><input id="show-schedule" type="checkbox">Show schedule control</label><p>Hiding the schedule control does not cancel a saved charging start.</p>
         <div class="grid"><div><label for="tariff-entity">Electricity tariff entity</label><input id="tariff-entity" list="tariff-options" placeholder="sensor.electricity_rate"><datalist id="tariff-options"></datalist></div><div><label for="currency">Currency</label><input id="currency" maxlength="3" placeholder="AUD"></div></div>
         <label for="capacity">Usable battery capacity in kWh (optional)</label><input id="capacity" type="number" min="0.1" step="any" placeholder="Needed for estimated remaining cost without an energy sensor">
@@ -1144,6 +1162,7 @@ export class TessieCardEditor extends (globalThis.HTMLElement || class {}) {
         <p>Vehicle charging entities are detected automatically. Tariff and battery capacity are configured separately.</p>
         <details><summary>Detected entity mappings</summary><ul id="mapping-list"></ul></details><p>Use YAML for individual entity overrides, a custom scene or scheduling helpers. Selecting a different vehicle clears vehicle-specific mappings, capacity, artwork and scheduling, keeping your tariff and card name.</p>`;
       const get = id => this.shadowRoot.getElementById(id);
+      get('graph-period').onchange = event => this._emit({ ...this._config, graph_period: event.target.value });
       for (const [id, key] of [["show-battery-graph", "show_battery_graph"], ["show-schedule", "show_schedule"]]) get(id).onchange = event => this._emit({ ...this._config, [key]: event.target.checked });
       get("vehicle-picker").onchange = event => {
         const config = { ...this._config, entities: { ...this._config.entities } };
@@ -1182,6 +1201,7 @@ export class TessieCardEditor extends (globalThis.HTMLElement || class {}) {
     }
     const get = id => this.shadowRoot.getElementById(id), picker = get("vehicle-picker");
     get('show-battery-graph').checked = this._config.show_battery_graph !== false;
+    get('graph-period').value = this._config.graph_period || '24h';
     get('show-schedule').checked = this._config.show_schedule !== false;
     this.style.colorScheme = this._hass.themes?.darkMode ? "dark" : "light";
     const selected = this._config.device_id || "";

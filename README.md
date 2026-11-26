@@ -18,7 +18,7 @@ Inspired by the rendered scenes and flow presentation in
 - A cable enters from outside the scene with no charger visible. Rear views show
   charging animation; front-view fallbacks are labelled and hide the cable.
 - Battery percentage, target marker, charging power, remaining time and finish time.
-- A rolling 24-hour battery graph with an amber distance-driven overlay,
+- A battery graph for today or the past 24 hours with an amber distance-driven overlay,
   kilometre axis and total distance badge from odometer history.
 - Session cost and estimated additional cost to reach the limit, using a tariff entity.
 - Always-visible start/stop, charge-limit and charging-current controls.
@@ -315,8 +315,13 @@ for all states. Prepared WebP renders are deduplicated and embedded in the card;
 only the selected image is decoded for display. The larger original PNG archive
 stays local. Artwork source details are recorded in [assets/README.md](assets/README.md).
 
-The battery state chart shows a rolling 24 hours of the mapped battery sensor's
+The battery state chart defaults to a rolling 24 hours of the mapped battery sensor's
 recorded percentage, with a teal line, current charge limit, and daily low/high.
+In the visual editor, **Graph period** selects **Past 24 hours** or **Today
+(midnight → now)**. Today starts at midnight in Home Assistant's configured
+timezone and resets automatically each day, including daylight-saving changes.
+Battery readings, distance driven, the total distance badge and low/high all use
+the selected period. YAML: `graph_period: today` or `graph_period: 24h` (default).
 An amber overlay and right-hand kilometre axis show distance driven, calculated
 from the same vehicle's odometer history, with a total distance badge. The Tessie
 odometer is detected automatically; manual mappings use `entities.odometer`.
